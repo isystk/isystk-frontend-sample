@@ -1,0 +1,19 @@
+{
+	"compilerOptions":
+	{
+		"module": "commonjs",
+		"jsx": "react",
+		"removeComments": true,
+		"target": "es5",
+		"lib": [
+			"esnext",
+			"esnext.asynciterable",
+			"dom"],
+		"typeRoots": ["node_modules/@types"]
+	},
+
+	"include":
+	[
+		"src/ts/**/*"
+	]
+}
