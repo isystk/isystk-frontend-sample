@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
+import Header from "./common/header";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -56,6 +57,8 @@ export class EventsIndex extends React.Component<
     };
     return (
       <React.Fragment>
+        <Header>
+        </Header>
         <FloatingActionButton
           style={style}
           containerElement={<Link to="/events/new">新規登録</Link>}
