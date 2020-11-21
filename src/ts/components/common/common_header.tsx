@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-export class Header extends React.Component {
+export class CommonHeader extends React.Component {
   render(): JSX.Element {
     return (
       <React.Fragment>
@@ -49,4 +49,4 @@ export class Header extends React.Component {
 }
 
 
-export default connect(null, null)(Header);
+export default connect(null, null)(CommonHeader);

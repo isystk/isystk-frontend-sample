@@ -8,9 +8,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import reducers from "./reducers";
-import EventsIndex from "./components/events_index";
-import EventsNew from "./components/events_new";
-import EventsShow from "./components/events_show";
+import EventsIndex from "./components/events/events_index";
+import EventsNew from "./components/events/events_new";
+import EventsShow from "./components/events/events_show";
 import { NotFound } from "./components/NotFound";
 
 // 開発環境の場合は、redux-devtools-extension を利用できるようにする

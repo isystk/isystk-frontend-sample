@@ -1,15 +1,18 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+import {CommonHeader, CommonFooter} from "../common";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-
-import { postEvent } from "../actions";
+import { getEvent, deleteEvent, putEvent } from "../../actions";
 
 // ↓ 表示用のデータ型
 interface AppDispatchProperties {
-  postEvent;
+  getEvent;
+  deleteEvent;
+  putEvent;
+  match;
   history;
   handleSubmit;
   pristine;
@@ -17,10 +20,16 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class EventsNew extends React.Component<AppDispatchProperties> {
+export class EventsShow extends React.Component<AppDispatchProperties> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    if (id) this.props.getEvent(id);
   }
 
   renderField(field): JSX.Element {
@@ -42,8 +51,14 @@ export class EventsNew extends React.Component<AppDispatchProperties> {
     );
   }
 
-  async onSubmit(values): Promise<void> {
-    await this.props.postEvent(values);
+  async onDeleteClick() {
+    const { id } = this.props.match.params;
+    await this.props.deleteEvent(id);
+    this.props.history.push("/");
+  }
+
+  async onSubmit(values) {
+    await this.props.putEvent(values);
     this.props.history.push("/");
   }
 
@@ -56,6 +71,7 @@ export class EventsNew extends React.Component<AppDispatchProperties> {
     };
     return (
       <React.Fragment>
+        <CommonHeader></CommonHeader>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
@@ -84,7 +100,13 @@ export class EventsNew extends React.Component<AppDispatchProperties> {
             style={style}
             containerElement={<Link to="/">キャンセル</Link>}
           />
+          <RaisedButton
+            label="削除"
+            style={style}
+            onClick={this.onDeleteClick}
+          />
         </form>
+        <CommonFooter></CommonFooter>
       </React.Fragment>
     );
   }
@@ -100,9 +122,19 @@ const validate = (values) => {
   return errors;
 };
 
-const mapDispatchToProps = { postEvent };
+const mapStateToProps = (state, ownProps) => {
+  const event = state.events[ownProps.match.params.id];
+  return { initialValues: event, event };
+};
+
+const mapDispatchToProps = { getEvent, deleteEvent, putEvent };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "eventNewForm" })(EventsNew));
+)(
+  // enableReinitialize をtrueにすると別ユーザーによってデータが変更されている場合でも常に最新のデータを取得して表示できる。
+  reduxForm({ validate, form: "eventShowForm", enableReinitialize: true })(
+    EventsShow
+  )
+);

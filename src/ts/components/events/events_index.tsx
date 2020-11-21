@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
-import Header from "./common/header";
 import { Link } from "react-router-dom";
+import {CommonHeader, CommonFooter} from "../common";
 import {
   Table,
   TableBody,
@@ -14,9 +14,9 @@ import {
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
-import AppStore from "../Store";
-import { readEvents } from "../actions";
-import { Events, Event } from "../StoreTypes";
+import AppStore from "../../Store";
+import { readEvents } from "../../actions";
+import { Events, Event } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
@@ -57,8 +57,7 @@ export class EventsIndex extends React.Component<
     };
     return (
       <React.Fragment>
-        <Header>
-        </Header>
+        <CommonHeader></CommonHeader>
         <FloatingActionButton
           style={style}
           containerElement={<Link to="/events/new">新規登録</Link>}
@@ -76,6 +75,7 @@ export class EventsIndex extends React.Component<
             {this.renderEvents()}
           </TableBody>
         </Table>
+        <CommonFooter></CommonFooter>
       </React.Fragment>
     );
   }
