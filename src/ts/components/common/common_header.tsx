@@ -18,12 +18,12 @@ export class CommonHeader extends React.Component<{}, IState> {
   }
 
   menuClick(): void {
-    console.log('Click happened');
     this.setState({isOpen: !this.state.isOpen});
   }
 
   render(): JSX.Element {
     let sideMenuClass = this.state.isOpen ? "open" : "";
+    let menuBtnClass = this.state.isOpen ? "menu-btn on" : "menu-btn";
     let layerPanelClass = this.state.isOpen ? "on" : "";
 
     return (
@@ -36,18 +36,18 @@ export class CommonHeader extends React.Component<{}, IState> {
                   <form role="search" method="get" action="#">
                     <FontAwesomeIcon className="search-icon" icon="search" />
                     <label>
-                      <input type="search" placeholder="検索..." value="" name="s"/>
+                      <input type="search" placeholder="検索..." defaultValue="" name="s"/>
                     </label>
                   </form>
                 </div>
-                <div className="menu-btn" onClick={this.menuClick}><figure></figure><figure></figure><figure></figure></div>
+                <div className={menuBtnClass} onClick={this.menuClick}><figure></figure><figure></figure><figure></figure></div>
                 <div id="side-menu" className={sideMenuClass}>
                   <div className="side-menu-header">
                     <div className="search">
                       <form role="search" method="get" action="#">
                         <FontAwesomeIcon className="search-icon" icon="search" />
                         <label>
-                          <input type="search" placeholder="検索..." value="" name="s"/>
+                          <input type="search" placeholder="検索..." defaultValue="" name="s"/>
                         </label>
                       </form>
                     </div>
