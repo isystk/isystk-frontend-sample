@@ -6,6 +6,9 @@ import thunk from "redux-thunk";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fas);
 
 import reducers from "./reducers";
 import EventsIndex from "./components/events/events_index";

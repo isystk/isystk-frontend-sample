@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class CommonFooter extends React.Component {
   render(): JSX.Element {
@@ -10,10 +11,10 @@ export class CommonFooter extends React.Component {
             <div className="wrapper">
               <nav className="footer-nav">
                 <ul>
-                  <li><a href="./top.html" ><i className="fas fa-home"></i></a></li>
-                  <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><i className="fas fa-share-alt"></i></a></li>
-                  <li><a href="#" className="js-open-menu"><i className="fas fa-bars"></i></a></li>
-                  <li><a href="#" className="js-scroll-top"><i className="fas fa-chevron-up"></i></a></li>
+                  <li><a href="./top.html" ><FontAwesomeIcon icon="home" /></a></li>
+                  <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
+                  <li><a href="#" className="js-open-menu"><FontAwesomeIcon icon="bars" /></a></li>
+                  <li><a href="#" className="js-scroll-top"><FontAwesomeIcon icon="chevron-up" /></a></li>
                 </ul>
               </nav>
               <section className="follow-links">

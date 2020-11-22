@@ -1,9 +1,31 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export class CommonHeader extends React.Component {
+interface IState {
+  isOpen: boolean;
+}
+
+export class CommonHeader extends React.Component<{}, IState> {
+
+  constructor(props){
+    super(props);
+    this.state = {
+        isOpen: false
+    }
+    this.menuClick = this.menuClick.bind(this);
+  }
+
+  menuClick(): void {
+    console.log('Click happened');
+    this.setState({isOpen: !this.state.isOpen});
+  }
+
   render(): JSX.Element {
+    let sideMenuClass = this.state.isOpen ? "open" : "";
+    let layerPanelClass = this.state.isOpen ? "on" : "";
+
     return (
       <React.Fragment>
         <header className="header">
@@ -12,18 +34,18 @@ export class CommonHeader extends React.Component {
               <div className="nav">
                 <div className="search">
                   <form role="search" method="get" action="#">
-                    <i className="fas fa-search search-icon"></i>
+                    <FontAwesomeIcon className="search-icon" icon="search" />
                     <label>
                       <input type="search" placeholder="検索..." value="" name="s"/>
                     </label>
                   </form>
                 </div>
-                <div className="menu-btn"><figure></figure><figure></figure><figure></figure></div>
-                <div id="side-menu">
+                <div className="menu-btn" onClick={this.menuClick}><figure></figure><figure></figure><figure></figure></div>
+                <div id="side-menu" className={sideMenuClass}>
                   <div className="side-menu-header">
                     <div className="search">
                       <form role="search" method="get" action="#">
-                        <i className="fas fa-search search-icon"></i>
+                        <FontAwesomeIcon className="search-icon" icon="search" />
                         <label>
                           <input type="search" placeholder="検索..." value="" name="s"/>
                         </label>
@@ -39,7 +61,7 @@ export class CommonHeader extends React.Component {
                     </ul>
                   </nav>
                 </div>
-                <div id="layer-panel"></div>
+                <div id="layer-panel" className={layerPanelClass}></div>
               </div>
           </div>
         </header>
