@@ -7,14 +7,21 @@
 import { combineReducers, createStore, ReducersMapObject } from "redux";
 
 import { EventsReducer } from "./reducers/events";
+import { SideMenuReducer } from "./reducers/side_menu";
 
 const reducers: ReducersMapObject = {
   EventsReducer,
+  SideMenuReducer,
 };
 
 declare let window: any;
 
-export default createStore(
+const rootReducer = combineReducers({
   EventsReducer,
+  SideMenuReducer,
+});
+
+export default createStore(
+  rootReducer,
   window.devToolsExtension ? window.devToolsExtension() : undefined
 );

@@ -6,10 +6,16 @@ import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 
-import { postEvent } from "../../actions";
+import { toggleMenu, postEvent } from "../../actions";
+import { SideMenu } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
+interface AppStateProperties {
+  sideMenu: SideMenu;
+}
+
 interface AppDispatchProperties {
+  toggleMenu;
   postEvent;
   history;
   handleSubmit;
@@ -18,7 +24,7 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class EventsNew extends React.Component<AppDispatchProperties> {
+export class EventsNew extends React.Component<AppStateProperties & AppDispatchProperties> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -57,7 +63,7 @@ export class EventsNew extends React.Component<AppDispatchProperties> {
     };
     return (
       <React.Fragment>
-        <CommonHeader></CommonHeader>
+        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
@@ -87,7 +93,7 @@ export class EventsNew extends React.Component<AppDispatchProperties> {
             containerElement={<Link to="/">キャンセル</Link>}
           />
         </form>
-        <CommonFooter></CommonFooter>
+        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
@@ -103,9 +109,15 @@ const validate = (values) => {
   return errors;
 };
 
-const mapDispatchToProps = { postEvent };
+const mapStateToProps = (state, ownProps) => {
+  return {
+    sideMenu: state.sideMenu
+  };
+};
+
+const mapDispatchToProps = { toggleMenu, postEvent };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(reduxForm({ validate, form: "eventNewForm" })(EventsNew));

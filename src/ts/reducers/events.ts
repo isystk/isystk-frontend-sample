@@ -7,7 +7,7 @@ import * as _ from "lodash";
 
 import { Events } from "../StoreTypes";
 import {
-  ExampleAppAction,
+  EventsAppAction,
   CREATE_EVENT,
   READ_EVENTS,
   READ_EVENT,
@@ -17,7 +17,7 @@ import {
 
 export function EventsReducer(
   events: Events,
-  action: ExampleAppAction
+  action: EventsAppAction
 ): Events {
   if (typeof events == "undefined") {
     return {};

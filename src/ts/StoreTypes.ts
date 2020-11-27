@@ -8,3 +8,7 @@ export interface Event {
   title: string;
   body: string;
 }
+
+export interface SideMenu {
+  isOpen: boolean;
+}

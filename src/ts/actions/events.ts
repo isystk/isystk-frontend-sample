@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 //  ActionCreatorであるstore.dispatch()を使ってStoreに送信しますが、storeについてはこの記事の最後にまとめています。(※ こちら)
 //  ただし、アプリケーションの状態がどのように変化するかはここでは指定しません。(→Reducerがやること)
 //  あくまでどんな挙動があるかだけを定義します。
-export interface ExampleAppAction extends Action {
+export interface EventsAppAction extends Action {
   response?: any;
   id: number;
 }

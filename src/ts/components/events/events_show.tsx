@@ -5,10 +5,16 @@ import {CommonHeader, CommonFooter} from "../common";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-import { getEvent, deleteEvent, putEvent } from "../../actions";
+import { toggleMenu, getEvent, deleteEvent, putEvent } from "../../actions";
+import { SideMenu } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
+interface AppStateProperties {
+  sideMenu: SideMenu;
+}
+
 interface AppDispatchProperties {
+  toggleMenu;
   getEvent;
   deleteEvent;
   putEvent;
@@ -20,7 +26,7 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class EventsShow extends React.Component<AppDispatchProperties> {
+export class EventsShow extends React.Component<AppStateProperties & AppDispatchProperties> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -71,7 +77,7 @@ export class EventsShow extends React.Component<AppDispatchProperties> {
     };
     return (
       <React.Fragment>
-        <CommonHeader></CommonHeader>
+        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
@@ -106,7 +112,7 @@ export class EventsShow extends React.Component<AppDispatchProperties> {
             onClick={this.onDeleteClick}
           />
         </form>
-        <CommonFooter></CommonFooter>
+        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
@@ -124,10 +130,14 @@ const validate = (values) => {
 
 const mapStateToProps = (state, ownProps) => {
   const event = state.events[ownProps.match.params.id];
-  return { initialValues: event, event };
+  return {
+    initialValues: event,
+    event,
+    sideMenu: state.sideMenu
+  };
 };
 
-const mapDispatchToProps = { getEvent, deleteEvent, putEvent };
+const mapDispatchToProps = { toggleMenu, getEvent, deleteEvent, putEvent };
 
 export default connect(
   mapStateToProps,

@@ -15,18 +15,21 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
 import AppStore from "../../Store";
-import { readEvents } from "../../actions";
-import { Events, Event } from "../../StoreTypes";
+import { toggleMenu, readEvents } from "../../actions";
+import { SideMenu, Events, Event } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
+  sideMenu: SideMenu;
   events: AppStateProperty[];
 }
 interface AppStateProperty {
   id: number;
   text: string;
 }
+
 interface AppDispatchProperties {
+  toggleMenu;
   readEvents;
 }
 
@@ -57,7 +60,7 @@ export class EventsIndex extends React.Component<
     };
     return (
       <React.Fragment>
-        <CommonHeader></CommonHeader>
+        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <FloatingActionButton
           style={style}
           containerElement={<Link to="/events/new">新規登録</Link>}
@@ -75,21 +78,34 @@ export class EventsIndex extends React.Component<
             {this.renderEvents()}
           </TableBody>
         </Table>
-        <CommonFooter></CommonFooter>
+        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
 }
+//
+// const mapStateToProps = (state: any, ownProp?: any): AppStateProperties => ({
+//   events: _.map(state.events, function (event) {
+//     return {
+//       id: event.id,
+//       text: event.title + "," + event.body,
+//     };
+//   }),
+//   sideMenu: state.sideMenu
+// });
 
-const mapStateToProps = (state: Events, ownProp?: any): AppStateProperties => ({
-  events: _.map(state.events, function (event) {
-    return {
-      id: event.id,
-      text: event.title + "," + event.body,
-    };
-  }),
-});
+const mapStateToProps = (state, ownProps) => {
+  return {
+    events: _.map(state.events, function (event) {
+      return {
+        id: event.id,
+        text: event.title + "," + event.body,
+      };
+    }),
+    sideMenu: state.sideMenu
+  };
+};
 
-const mapDispatchToProps = { readEvents };
+const mapDispatchToProps = { toggleMenu, readEvents };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex);

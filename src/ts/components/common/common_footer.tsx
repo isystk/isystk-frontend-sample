@@ -1,9 +1,15 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export class CommonFooter extends React.Component {
+import { toggleMenu } from "../../actions";
+
+interface AppDispatchProperties {
+    toggleMenu;
+}
+
+export class CommonFooter extends React.Component<AppDispatchProperties> {
+
   render(): JSX.Element {
     return (
       <React.Fragment>
@@ -13,7 +19,7 @@ export class CommonFooter extends React.Component {
                 <ul>
                   <li><a href="./top.html" ><FontAwesomeIcon icon="home" /></a></li>
                   <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
-                  <li><a href="#" className="js-open-menu"><FontAwesomeIcon icon="bars" /></a></li>
+                  <li><a href="#" className="js-open-menu" onClick={this.props.toggleMenu}><FontAwesomeIcon icon="bars" /></a></li>
                   <li><a href="#" className="js-scroll-top"><FontAwesomeIcon icon="chevron-up" /></a></li>
                 </ul>
               </nav>
@@ -33,4 +39,4 @@ export class CommonFooter extends React.Component {
 }
 
 
-export default connect(null, null)(CommonFooter);
+export default CommonFooter;

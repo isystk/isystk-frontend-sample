@@ -1,30 +1,32 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
+import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface IState {
-  isOpen: boolean;
+import { toggleMenu } from "../../actions";
+
+interface AppStateProperties {
+    sideMenu: SideMenu;
+}
+interface SideMenu {
+    isOpen: boolean;
+}
+interface AppDispatchProperties {
+    toggleMenu;
 }
 
-export class CommonHeader extends React.Component<{}, IState> {
-
-  constructor(props){
-    super(props);
-    this.state = {
-        isOpen: false
-    }
-    this.menuClick = this.menuClick.bind(this);
-  }
-
-  menuClick(): void {
-    this.setState({isOpen: !this.state.isOpen});
-  }
+export class CommonHeader extends React.Component<
+    any,
+    any
+    > {
 
   render(): JSX.Element {
-    let sideMenuClass = this.state.isOpen ? "open" : "";
-    let menuBtnClass = this.state.isOpen ? "menu-btn on" : "menu-btn";
-    let layerPanelClass = this.state.isOpen ? "on" : "";
+
+    let isOpen = this.props.sideMenu.isOpen;
+    let sideMenuClass = isOpen ? "open" : "";
+    let menuBtnClass = isOpen ? "menu-btn on" : "menu-btn";
+    let layerPanelClass = isOpen ? "on" : "";
 
     return (
       <React.Fragment>
@@ -40,7 +42,7 @@ export class CommonHeader extends React.Component<{}, IState> {
                     </label>
                   </form>
                 </div>
-                <div className={menuBtnClass} onClick={this.menuClick}><figure></figure><figure></figure><figure></figure></div>
+                <div className={menuBtnClass} onClick={this.props.toggleMenu}><figure></figure><figure></figure><figure></figure></div>
                 <div id="side-menu" className={sideMenuClass}>
                   <div className="side-menu-header">
                     <div className="search">
@@ -71,4 +73,13 @@ export class CommonHeader extends React.Component<{}, IState> {
 }
 
 
-export default connect(null, null)(CommonHeader);
+// const mapStateToProps = (state, ownProps) => {
+//   return { sideMenu: state.sideMenu };
+// };
+//
+// const mapDispatchToProps = { toggleMenu };
+//
+// export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);
+
+
+export default CommonHeader;
