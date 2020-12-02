@@ -10,6 +10,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fas);
 
+import $ = require('jquery');
+(function() {
+	console.log( 'jquery', $.fn.jquery );
+}());
+
 import reducers from "./reducers";
 import CommonHeader from "./components/common/common_header";
 import EventsIndex from "./components/events/events_index";

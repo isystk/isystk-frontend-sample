@@ -1,16 +1,49 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import $ from 'jquery';
 
 import { toggleMenu } from "../../actions";
 
+interface IState {
+    scrollTop: number;
+}
 interface AppDispatchProperties {
     toggleMenu;
 }
 
-export class CommonFooter extends React.Component<AppDispatchProperties> {
+export class CommonFooter extends React.Component<AppDispatchProperties, IState> {
+
+ constructor(props) {
+    super(props);
+    this.state = { scrollTop: 0 };
+    this.handleScroll = this.handleScroll.bind(this);
+    this.scrollToTop = this.scrollToTop.bind(this);
+  }
+
+  componentWillMount(): void{
+    window.addEventListener('scroll', this.handleScroll);
+  }
+  componentWillUnmount(): void{
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+  handleScroll(): void{
+    this.setState({scrollTop: $(window).scrollTop()});
+  }
+  scrollToTop(): void{
+    $('body,html').animate({
+        scrollTop: 0
+    }, 500);
+  }
 
   render(): JSX.Element {
+    let {scrollTop} = this.state;
+
+    let scrollTopClass = "link hide";
+    if (scrollTop > 100) {
+        scrollTopClass = "link ";
+    }
+
     return (
       <React.Fragment>
          <footer className="footer">
@@ -20,7 +53,7 @@ export class CommonFooter extends React.Component<AppDispatchProperties> {
                   <li><a href="./top.html" ><FontAwesomeIcon icon="home" /></a></li>
                   <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
                   <li><a href="#" className="js-open-menu" onClick={this.props.toggleMenu}><FontAwesomeIcon icon="bars" /></a></li>
-                  <li><a href="#" className="js-scroll-top"><FontAwesomeIcon icon="chevron-up" /></a></li>
+                  <li><a href="#" className="js-scroll-top" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></li>
                 </ul>
               </nav>
               <section className="follow-links">
@@ -33,6 +66,7 @@ export class CommonFooter extends React.Component<AppDispatchProperties> {
               <section className="copylight">© 2020 isystk's blog</section>
             </div>
          </footer>
+         <span id="page-top" className={scrollTopClass}><a href="#" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></span>
       </React.Fragment>
     );
   }
