@@ -10,13 +10,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fas);
 
-import $ = require('jquery');
-(function() {
-	console.log( 'jquery', $.fn.jquery );
-}());
-
 import reducers from "./reducers";
 import CommonHeader from "./components/common/common_header";
+import PostsIndex from "./components/posts/posts_index";
 import EventsIndex from "./components/events/events_index";
 import EventsNew from "./components/events/events_new";
 import EventsShow from "./components/events/events_show";
@@ -34,7 +30,8 @@ ReactDom.render(
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={EventsIndex} />
+          <Route exact path="/" component={PostsIndex} />
+          <Route path="/events" component={EventsIndex} />
           <Route path="/events/new" component={EventsNew} />
           <Route path="/events/:id" component={EventsShow} />
           <Route exact path="/events" component={EventsIndex} />

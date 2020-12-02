@@ -58,9 +58,9 @@ export class CommonFooter extends React.Component<AppDispatchProperties, IState>
               </nav>
               <section className="follow-links">
                 <ul className="menu">
-                  <li><a href="#" >プライバシーポリシー</a></li>
-                  <li><a href="#" >お問い合わせ</a></li>
-                  <li><a href="#" >RSS</a></li>
+                  <li><a href="https://blog.isystk.com/privacy-poricy/" >プライバシーポリシー</a></li>
+                  <li><a href="https://blog.isystk.com/contact/" >お問い合わせ</a></li>
+                  <li><a href="https://profile.isystk.com/" >プロフィール</a></li>
                 </ul>
               </section>
               <section className="copylight">© 2020 isystk's blog</section>
