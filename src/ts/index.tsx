@@ -13,6 +13,7 @@ library.add(fas);
 import reducers from "./reducers";
 import CommonHeader from "./components/common/common_header";
 import PostsIndex from "./components/posts/posts_index";
+import PostsShow from "./components/posts/posts_show";
 import EventsIndex from "./components/events/events_index";
 import EventsNew from "./components/events/events_new";
 import EventsShow from "./components/events/events_show";
@@ -31,10 +32,10 @@ ReactDom.render(
       <Router>
         <Switch>
           <Route exact path="/" component={PostsIndex} />
-          <Route path="/events" component={EventsIndex} />
+          <Route path="/posts/:id" component={PostsShow} />
+          <Route exact path="/events/" component={EventsIndex} />
           <Route path="/events/new" component={EventsNew} />
           <Route path="/events/:id" component={EventsShow} />
-          <Route exact path="/events" component={EventsIndex} />
           <Route component={NotFound} />
         </Switch>
       </Router>

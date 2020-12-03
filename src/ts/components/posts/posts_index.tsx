@@ -42,9 +42,10 @@ export class PostsIndex extends React.Component<
   }
 
   renderPosts(): JSX.Element {
+
     return _.map(this.props.posts, (post) => (
       <section key={post.postId}>
-        <a href="/posts/{post.postId}">
+        <Link to={`/posts/${post.postId}`}>
           <div className="entry-header">
             <div className="category_link">{post.tagName}</div>
             <h2 className="entry-title">{post.title}</h2>
@@ -59,7 +60,7 @@ export class PostsIndex extends React.Component<
             <p>{post.text}</p>
             <div className="clearfix"></div>
           </div>
-        </a>
+        </Link>
       </section>
     ));
   }

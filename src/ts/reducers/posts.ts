@@ -8,11 +8,11 @@ import * as _ from "lodash";
 import { Posts } from "../StoreTypes";
 import {
   PostsAppAction,
-  CREATE_EVENT,
+  CREATE_POST,
   READ_POSTS,
-  READ_EVENT,
-  UPDATE_EVENT,
-  DELETE_EVENT,
+  READ_POST,
+  UPDATE_POST,
+  DELETE_POST,
 } from "../actions/index";
 
 export function PostsReducer(
@@ -24,14 +24,14 @@ export function PostsReducer(
   }
 
   switch (action.type) {
-    case CREATE_EVENT:
-    case READ_EVENT:
-    case UPDATE_EVENT:
-      const data = action.response.data;
-      return { ...posts, [data.id]: data };
+    case CREATE_POST:
+    case READ_POST:
+    case UPDATE_POST:
+      const data = action.response.data.data[0];
+      return { ...posts, [data.postId]: data };
     case READ_POSTS:
-      return action.response.data.data;
-    case DELETE_EVENT:
+      return _.mapKeys(action.response.data.data, "postId");
+    case DELETE_POST:
       delete posts[action.id];
       return { ...posts };
     default:
