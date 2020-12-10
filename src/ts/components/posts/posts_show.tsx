@@ -34,11 +34,16 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
   }
 
   renderPostImages(): JSX.Element {
-    return _.map(this.props.post.imageUrlList, (imageUrl) => (
-      <img alt="sample1" width="644" src={imageUrl} />
+    return _.map(this.props.post.imageUrlList, (imageUrl, index) => (
+      <img alt="sample1" width="644" src={imageUrl} key={index} />
     ));
   }
 
+  renderPostTags(): JSX.Element {
+    return _.map(this.props.post.tagNameList, (tagName, index) => (
+      <li><a href="#" rel="tag" key={index}>{tagName}</a></li>
+    ));
+  }
   render(): JSX.Element {
 
     if (!this.props.post) return (<React.Fragment></React.Fragment>);
@@ -53,10 +58,9 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
           <div className="wrapper">
             <nav>
               <ul>
-                <li><a href="./top.html">HOME</a></li>
-                <li className="page_item "><a href="#">メニューA</a></li>
-                <li className="page_item "><a href="#">メニューB</a></li>
-                <li className="page_item "><a href="#">メニューC</a></li>
+                <li><Link to={`/`}>HOME</Link></li>
+                <li><Link to={`/member/`}>マイページ</Link></li>
+                <li><Link to={`/login/`}>ログイン</Link></li>
               </ul>
             </nav>
           </div>
@@ -75,17 +79,12 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
                 <nav className="breadcrumb">
                   <ul>
                     <li>
-                      <a href="./top.html">
-                        <i className="fas fa-home"></i><span>HOME</span>
-                      </a>
+                      <Link to={`/`}>
+                        <FontAwesomeIcon icon="home" /><span>HOME</span>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">
-                        <span>カテゴリー１</span>
-                      </a>
-                    </li>
-                    <li>
-                      <span>カテゴリー１－１</span>
+                      {this.props.post.title}
                     </li>
                   </ul>
                 </nav>
@@ -95,23 +94,6 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
                   <div className="article-img">
                     {this.renderPostImages()}
                   </div>
-                  <ul className="sns-buttons">
-                    <li className="share-twitter">
-                    <a href="http://twitter.com/intent/tweet?text=タイトル%20http://blog.isystk.com/" target="_blank" rel="noreferrer">Twitter</a>
-                    </li>
-                    <li className="share-facebook">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.isystk.com/" target="_blank" rel="noreferrer">Facebook</a>
-                    </li>
-                    <li className="share-hatena">
-                    <a href="http://b.hatena.ne.jp/add?mode=confirm&url=http://blog.isystk.com/&title=タイトル" target="_blank" rel="noreferrer">はてブ</a>
-                    </li>
-                    <li className="share-pocket">
-                    <a href="http://getpocket.com/edit?url=http://blog.isystk.com/" target="_blank" rel="noreferrer">Pocket</a>
-                    </li>
-                    <li className="share-line">
-                    <a href="http://line.me/R/msg/text/?タイトル%0D%0Ahttp://blog.isystk.com/" rel="noreferrer">LINE</a>
-                    </li>
-                  </ul>
                   <div className=" clearfix"></div>
                 </div>
                 <div className="entry-content">
@@ -127,36 +109,28 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
                 <div className="clearfix"></div>
                 <div className="entry-meta">
                   <FontAwesomeIcon icon="clock" />
-                  2020年3月2日
-                  <span> / </span>
-                  <span className="cat-data">
-                    <a href="#" rel="category tag">カテゴリー</a>
-                  </span>
-                  <span> / </span>
-                  <span className="post_comments_link">
-                    コメント数(0)
-                  </span>
+                  {this.props.post.registTimeMMDD}
                 </div>
                 <div className="entry-tags">
                   <div className="section-tag">
-                    <ul><li>タグ： </li><li><a href="https://blog.isystk.com/tag/docker/" rel="tag">Docker</a></li><li><a href="https://blog.isystk.com/tag/java/" rel="tag">Java</a></li></ul>          </div>
+                    <ul><li>タグ： </li>{this.renderPostTags()}</ul>          </div>
                 </div>
 
                 <ul className="sns-buttons">
                   <li className="share-twitter">
-                  <a href="http://twitter.com/intent/tweet?text=タイトル%20http://blog.isystk.com/" target="_blank" rel="noreferrer">Twitter</a>
+                  <a href={'http://twitter.com/intent/tweet?text='+this.props.post.title+'%20http://blog.isystk.com/'} target="_blank" rel="noreferrer">Twitter</a>
                   </li>
                   <li className="share-facebook">
                   <a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.isystk.com/" target="_blank" rel="noreferrer">Facebook</a>
                   </li>
                   <li className="share-hatena">
-                  <a href="http://b.hatena.ne.jp/add?mode=confirm&url=http://blog.isystk.com/&title=タイトル" target="_blank" rel="noreferrer">はてブ</a>
+                  <a href={'http://b.hatena.ne.jp/add?mode=confirm&url=http://blog.isystk.com/&title='+this.props.post.title} target="_blank" rel="noreferrer">はてブ</a>
                   </li>
                   <li className="share-pocket">
                   <a href="http://getpocket.com/edit?url=http://blog.isystk.com/" target="_blank" rel="noreferrer">Pocket</a>
                   </li>
                   <li className="share-line">
-                  <a href="http://line.me/R/msg/text/?タイトル%0D%0Ahttp://blog.isystk.com/" target="_blank" rel="noreferrer">LINE</a>
+                  <a href={'http://line.me/R/msg/text/?'+this.props.post.title+'%0D%0Ahttp://blog.isystk.com/'} target="_blank" rel="noreferrer">LINE</a>
                   </li>
                 </ul>
                 <div className=" clearfix"></div>

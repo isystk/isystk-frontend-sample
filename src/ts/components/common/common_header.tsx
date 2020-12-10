@@ -32,7 +32,7 @@ export class CommonHeader extends React.Component<
       <React.Fragment>
         <header className="header">
           <div className="wrapper">
-              <div className="header-logo"><a href="#">ブログタイトル</a></div>
+              <div className="header-logo"><Link to={`/`}>Isystk's Frontend Sample</Link></div>
               <div className="nav">
                 <div className="search">
                   <form role="search" method="get" action="#">
@@ -56,10 +56,9 @@ export class CommonHeader extends React.Component<
                   </div>
                   <nav>
                     <ul>
-                      <li><a href="./top.html">HOME</a></li>
-                      <li><a href="#" >メニューA</a></li>
-                      <li><a href="#" >メニューB</a></li>
-                      <li><a href="#" >メニューC</a></li>
+                      <li><Link to={`/`}>HOME</Link></li>
+                      <li><Link to={`/member/`}>マイページ</Link></li>
+                      <li><Link to={`/login/`}>ログイン</Link></li>
                     </ul>
                   </nav>
                 </div>

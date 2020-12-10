@@ -50,7 +50,7 @@ export class CommonFooter extends React.Component<AppDispatchProperties, IState>
             <div className="wrapper">
               <nav className="footer-nav">
                 <ul>
-                  <li><a href="./top.html" ><FontAwesomeIcon icon="home" /></a></li>
+                  <li><Link to={`/`}><FontAwesomeIcon icon="home" /></Link></li>
                   <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
                   <li><a href="#" className="js-open-menu" onClick={this.props.toggleMenu}><FontAwesomeIcon icon="bars" /></a></li>
                   <li><a href="#" className="js-scroll-top" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></li>
@@ -58,12 +58,11 @@ export class CommonFooter extends React.Component<AppDispatchProperties, IState>
               </nav>
               <section className="follow-links">
                 <ul className="menu">
-                  <li><a href="https://blog.isystk.com/privacy-poricy/" >プライバシーポリシー</a></li>
-                  <li><a href="https://blog.isystk.com/contact/" >お問い合わせ</a></li>
-                  <li><a href="https://profile.isystk.com/" >プロフィール</a></li>
+                  <li><a href="https://profile.isystk.com/" target="_blank">About</a></li>
+                  <li><a href="https://github.com/isystk/isystk-frontend-sample"  target="_blank"><FontAwesomeIcon icon={['fab', 'github']}/>Github</a></li>
                 </ul>
               </section>
-              <section className="copylight">© 2020 isystk's blog</section>
+              <section className="copylight">© 2020 isystk's sample</section>
             </div>
          </footer>
          <span id="page-top" className={scrollTopClass}><a href="#" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></span>

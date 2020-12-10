@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {CommonHeader, CommonFooter} from "../common";
 import {
   Table,
@@ -80,7 +81,7 @@ export class PostsIndex extends React.Component<
         <div className="mv">
             <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
             <div className="intro">
-              <div className="box"><p className="title">Wordpress テーマ</p></div>
+              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
             </div>
         </div>
 
@@ -90,10 +91,9 @@ export class PostsIndex extends React.Component<
           <div className="wrapper">
             <nav>
               <ul>
-                <li><a href="./top.html">HOME</a></li>
-                <li className="page_item "><a href="#">メニューA</a></li>
-                <li className="page_item "><a href="#">メニューB</a></li>
-                <li className="page_item "><a href="#">メニューC</a></li>
+                <li><Link to={`/`}>HOME</Link></li>
+                <li><Link to={`/member/`}>マイページ</Link></li>
+                <li><Link to={`/login/`}>ログイン</Link></li>
               </ul>
             </nav>
           </div>
@@ -105,9 +105,9 @@ export class PostsIndex extends React.Component<
           <div className="wrapper">
             <main>
               <div className="archive-top">
-                <h1>TOPページ</h1>
+                <h1>投稿一覧</h1>
                 <p></p>
-                <p>プログラマーとして学んだ知識や役立つ情報を掲載しています。</p>
+                <p>すべてのユーザーの投稿を一覧で表示しています。</p>
               </div>
               <div className="box-list">
                {this.renderPosts()}
