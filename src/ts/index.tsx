@@ -13,6 +13,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 library.add(fab, far, fas);
 
 import reducers from "./reducers";
+import Layout from "./components/layout";
 import CommonHeader from "./components/common/common_header";
 import PostsIndex from "./components/posts/posts_index";
 import PostsShow from "./components/posts/posts_show";
@@ -20,6 +21,7 @@ import EventsIndex from "./components/events/events_index";
 import EventsNew from "./components/events/events_new";
 import EventsShow from "./components/events/events_show";
 import AuthLogin from "./components/auth/auth_login";
+import AuthCheck from "./components/auth/auth_check";
 import { NotFound } from "./components/NotFound";
 
 // 開発環境の場合は、redux-devtools-extension を利用できるようにする
@@ -29,19 +31,34 @@ const enhancer =
     : applyMiddleware(thunk);
 const store = createStore(reducers, enhancer);
 
+const Main = () => (
+  <main>
+    <Switch>
+      <Route exact path="/" component={PostsIndex} />
+      <Route path="/posts/:id" component={PostsShow} />
+      <Route exact path="/events/" component={EventsIndex} />
+      <Route path="/events/new" component={EventsNew} />
+      <Route path="/events/:id" component={EventsShow} />
+      <Route path="/login" component={AuthLogin} />
+
+      { /* ★ログインユーザー専用ここから */ }
+      <AuthCheck>
+        <Route path="/member" component={EventsIndex} />
+      </AuthCheck>
+      { /* ★ログインユーザー専用ここまで */ }
+
+      <Route component={NotFound} />
+    </Switch>
+  </main>
+)
+
 ReactDom.render(
   <MuiThemeProvider>
     <Provider store={store}>
       <Router>
-        <Switch>
-          <Route exact path="/" component={PostsIndex} />
-          <Route path="/posts/:id" component={PostsShow} />
-          <Route exact path="/events/" component={EventsIndex} />
-          <Route path="/events/new" component={EventsNew} />
-          <Route path="/events/:id" component={EventsShow} />
-          <Route path="/login" component={AuthLogin} />
-          <Route component={NotFound} />
-        </Switch>
+        <Layout>
+          <Main />
+        </Layout>
       </Router>
     </Provider>
   </MuiThemeProvider>,

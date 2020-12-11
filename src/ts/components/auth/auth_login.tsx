@@ -1,21 +1,21 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import {CommonHeader, CommonFooter} from "../common";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
+import { withCookies, Cookies } from 'react-cookie';
 
-import { toggleMenu, authLogin } from "../../actions";
-import { SideMenu } from "../../StoreTypes";
+import { Auth } from "../../StoreTypes";
+import { authLogin } from "../../actions";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  sideMenu: SideMenu;
+  auth: Auth;
+  cookies: Cookies;
 }
 
 interface AppDispatchProperties {
-  toggleMenu;
   authLogin;
   history;
   handleSubmit;
@@ -51,7 +51,14 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
 
   async onSubmit(values): Promise<void> {
     await this.props.authLogin(values);
-    this.props.history.push("/");
+
+    const { auth, cookies } = this.props;
+
+    if (auth.isLogin) {
+//       cookies.set('JSESSIONID', auth.token, { path: '/' });
+      this.props.history.push("/member");
+    }
+
   }
 
   render(): JSX.Element {
@@ -63,7 +70,6 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
     };
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
@@ -88,7 +94,6 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
             disabled={pristine || submitting || invalid}
           />
         </form>
-        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
@@ -106,13 +111,13 @@ const validate = (values) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sideMenu: state.sideMenu
+    auth: state.auth
   };
 };
 
-const mapDispatchToProps = { toggleMenu, authLogin };
+const mapDispatchToProps = { authLogin };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "authLoginForm" })(AuthLogin));
+)(reduxForm({ validate, form: "authLoginForm" })(withCookies(AuthLogin)));

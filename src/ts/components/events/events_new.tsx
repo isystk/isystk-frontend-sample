@@ -1,21 +1,17 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import {CommonHeader, CommonFooter} from "../common";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 
-import { toggleMenu, postEvent } from "../../actions";
-import { SideMenu } from "../../StoreTypes";
+import { postEvent } from "../../actions";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  sideMenu: SideMenu;
 }
 
 interface AppDispatchProperties {
-  toggleMenu;
   postEvent;
   history;
   handleSubmit;
@@ -51,7 +47,7 @@ export class EventsNew extends React.Component<AppStateProperties & AppDispatchP
 
   async onSubmit(values): Promise<void> {
     await this.props.postEvent(values);
-    this.props.history.push("/");
+    this.props.history.push("/events/");
   }
 
   render(): JSX.Element {
@@ -63,7 +59,6 @@ export class EventsNew extends React.Component<AppStateProperties & AppDispatchP
     };
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
@@ -93,7 +88,6 @@ export class EventsNew extends React.Component<AppStateProperties & AppDispatchP
             containerElement={<Link to="/">キャンセル</Link>}
           />
         </form>
-        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
@@ -111,11 +105,10 @@ const validate = (values) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sideMenu: state.sideMenu
   };
 };
 
-const mapDispatchToProps = { toggleMenu, postEvent };
+const mapDispatchToProps = { postEvent };
 
 export default connect(
   mapStateToProps,

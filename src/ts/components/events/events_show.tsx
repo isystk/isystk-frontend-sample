@@ -1,20 +1,16 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import {CommonHeader, CommonFooter} from "../common";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-import { toggleMenu, getEvent, deleteEvent, putEvent } from "../../actions";
-import { SideMenu } from "../../StoreTypes";
+import { getEvent, deleteEvent, putEvent } from "../../actions";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  sideMenu: SideMenu;
 }
 
 interface AppDispatchProperties {
-  toggleMenu;
   getEvent;
   deleteEvent;
   putEvent;
@@ -60,12 +56,12 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
   async onDeleteClick() {
     const { id } = this.props.match.params;
     await this.props.deleteEvent(id);
-    this.props.history.push("/");
+    this.props.history.push("/events/");
   }
 
   async onSubmit(values) {
     await this.props.putEvent(values);
-    this.props.history.push("/");
+    this.props.history.push("/events/");
   }
 
   render(): JSX.Element {
@@ -77,7 +73,6 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
     };
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
@@ -112,7 +107,6 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
             onClick={this.onDeleteClick}
           />
         </form>
-        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
@@ -132,12 +126,11 @@ const mapStateToProps = (state, ownProps) => {
   const event = state.events[ownProps.match.params.id];
   return {
     initialValues: event,
-    event,
-    sideMenu: state.sideMenu
+    event
   };
 };
 
-const mapDispatchToProps = { toggleMenu, getEvent, deleteEvent, putEvent };
+const mapDispatchToProps = { getEvent, deleteEvent, putEvent };
 
 export default connect(
   mapStateToProps,

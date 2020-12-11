@@ -8,8 +8,6 @@ import { Dispatch } from "redux";
 //  あくまでどんな挙動があるかだけを定義します。
 export interface AuthAppAction extends Action {
   response?: any;
-  loginId: string;
-  password: string;
 }
 
 export const AUTH_CHECK = "AUTH_CHECK";
@@ -19,16 +17,13 @@ export const AUTH_LOGOUT = "AUTH_LOGOUT";
 const ROOT_URL = "https://localhost/api/v1";
 
 export const authCheck = () => async (dispatch: Dispatch): Promise<void> => {
-  const response = await axios.get(`${ROOT_URL}/auth/`);
-  console.log(response);
-
+  const response = await axios.post(`${ROOT_URL}/loginCheck`);
+  dispatch({ type: AUTH_CHECK, response });
 };
 
 export const authLogin = (values: any) => async (dispatch: Dispatch): Promise<void> => {
   const response = await axios.post(`${ROOT_URL}/authenticate`, makeFormDataFromParams(values) );
-
-  console.log(response);
-
+  dispatch({ type: AUTH_LOGIN, response });
 };
 
 export const makeFormDataFromParams = (params: object): FormData => {

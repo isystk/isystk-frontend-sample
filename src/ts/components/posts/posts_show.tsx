@@ -2,22 +2,19 @@ import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import * as _ from "lodash";
-import {CommonHeader, CommonFooter} from "../common";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-import { toggleMenu, getPost } from "../../actions";
-import { SideMenu, Post } from "../../StoreTypes";
+import { getPost } from "../../actions";
+import { Post } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
   post: Post;
-  sideMenu: SideMenu;
 }
 
 interface AppDispatchProperties {
-  toggleMenu;
   getPost;
   match;
   history;
@@ -50,7 +47,6 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
 
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
 
         {//<!-- ナビゲーション（PC用） -->
         }
@@ -150,7 +146,6 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
           </div>
         </div>
 
-        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
@@ -160,12 +155,11 @@ const mapStateToProps = (state, ownProps) => {
   const post = state.posts[ownProps.match.params.id];
   return {
     initialValues: post,
-    post,
-    sideMenu: state.sideMenu
+    post
   };
 };
 
-const mapDispatchToProps = { toggleMenu, getPost };
+const mapDispatchToProps = { getPost };
 
 export default connect(
   mapStateToProps,

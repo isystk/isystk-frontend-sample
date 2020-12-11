@@ -41,3 +41,8 @@ export interface Event {
 export interface SideMenu {
   isOpen: boolean;
 }
+
+export interface Auth {
+  isLogin: boolean;
+  familyName: string;
+}

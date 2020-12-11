@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
-import {CommonHeader, CommonFooter} from "../common";
 import {
   Table,
   TableBody,
@@ -15,12 +14,11 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
 import AppStore from "../../Store";
-import { toggleMenu, readEvents } from "../../actions";
-import { SideMenu, Events, Event } from "../../StoreTypes";
+import { readEvents } from "../../actions";
+import { Events, Event } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  sideMenu: SideMenu;
   events: AppStateProperty[];
 }
 interface AppStateProperty {
@@ -29,7 +27,6 @@ interface AppStateProperty {
 }
 
 interface AppDispatchProperties {
-  toggleMenu;
   readEvents;
 }
 
@@ -60,7 +57,6 @@ export class EventsIndex extends React.Component<
     };
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
         <FloatingActionButton
           style={style}
           containerElement={<Link to="/events/new">新規登録</Link>}
@@ -78,21 +74,11 @@ export class EventsIndex extends React.Component<
             {this.renderEvents()}
           </TableBody>
         </Table>
-        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
 }
-//
-// const mapStateToProps = (state: any, ownProp?: any): AppStateProperties => ({
-//   events: _.map(state.events, function (event) {
-//     return {
-//       id: event.id,
-//       text: event.title + "," + event.body,
-//     };
-//   }),
-//   sideMenu: state.sideMenu
-// });
+
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -101,11 +87,10 @@ const mapStateToProps = (state, ownProps) => {
         id: event.id,
         text: event.title + "," + event.body,
       };
-    }),
-    sideMenu: state.sideMenu
+    })
   };
 };
 
-const mapDispatchToProps = { toggleMenu, readEvents };
+const mapDispatchToProps = { readEvents };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex);

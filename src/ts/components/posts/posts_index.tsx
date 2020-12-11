@@ -3,7 +3,6 @@ import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {CommonHeader, CommonFooter} from "../common";
 import {
   Table,
   TableBody,
@@ -16,12 +15,11 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
 import AppStore from "../../Store";
-import { toggleMenu, readPosts } from "../../actions";
-import { SideMenu, Posts, Post } from "../../StoreTypes";
+import { readPosts } from "../../actions";
+import { Posts, Post } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  sideMenu: SideMenu;
   posts: AppStateProperty[];
 }
 interface AppStateProperty {
@@ -30,7 +28,6 @@ interface AppStateProperty {
 }
 
 interface AppDispatchProperties {
-  toggleMenu;
   readPosts;
 }
 
@@ -74,8 +71,6 @@ export class PostsIndex extends React.Component<
     };
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} />
-
         {// メインビジュアル
         }
         <div className="mv">
@@ -115,21 +110,10 @@ export class PostsIndex extends React.Component<
             </main>
           </div>
         </div>
-        <CommonFooter toggleMenu={this.props.toggleMenu} />
       </React.Fragment>
     );
   }
 }
-//
-// const mapStateToProps = (state: any, ownProp?: any): AppStateProperties => ({
-//   posts: _.map(state.posts, function (post) {
-//     return {
-//       id: post.id,
-//       text: post.title + "," + post.body,
-//     };
-//   }),
-//   sideMenu: state.sideMenu
-// });
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -142,11 +126,10 @@ const mapStateToProps = (state, ownProps) => {
         registTimeMMDD: post.registTimeMMDD,
         imageUrl: (post.imageUrlList && 0<post.imageUrlList.length) ? post.imageUrlList[0] : ''
       };
-    }),
-    sideMenu: state.sideMenu
+    })
   };
 };
 
-const mapDispatchToProps = { toggleMenu, readPosts };
+const mapDispatchToProps = { readPosts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsIndex);
