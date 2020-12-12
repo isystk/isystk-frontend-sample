@@ -4,7 +4,7 @@ import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { toggleMenu } from "../../actions";
+import { toggleMenu, authLogout } from "../../actions";
 
 interface AppStateProperties {
     sideMenu: SideMenu;
@@ -13,17 +13,42 @@ interface SideMenu {
     isOpen: boolean;
 }
 interface AppDispatchProperties {
+    auth;
+    sideMenu;
+    closeMenu;
     toggleMenu;
+    authLogout;
 }
 
 export class CommonHeader extends React.Component<
-    any,
+    AppDispatchProperties,
     any
     > {
+  constructor(props) {
+    super(props);
+    this.logoutClick = this.logoutClick.bind(this);
+  }
+
+  async logoutClick() {
+    await this.props.authLogout();
+//     this.props.history.push("/");
+  }
+
+  logoutLink(): JSX.Element {
+
+    const {auth} = this.props;
+
+    if (auth.isLogin) {
+      return (<a onClick={this.logoutClick}>ログアウト</a>);
+    }
+    return (<Link to={`/login/`}>ログイン</Link>);
+  }
 
   render(): JSX.Element {
 
-    let isOpen = this.props.sideMenu.isOpen;
+    const {sideMenu} = this.props;
+
+    let isOpen = sideMenu.isOpen;
     let sideMenuClass = isOpen ? "open" : "";
     let menuBtnClass = isOpen ? "menu-btn on" : "menu-btn";
     let layerPanelClass = isOpen ? "on" : "";
@@ -56,9 +81,9 @@ export class CommonHeader extends React.Component<
                   </div>
                   <nav>
                     <ul>
-                      <li><Link to={`/`}>HOME</Link></li>
-                      <li><Link to={`/member/`}>マイページ</Link></li>
-                      <li><Link to={`/login/`}>ログイン</Link></li>
+                      <li><Link to={`/`} onClick={this.props.closeMenu}>HOME</Link></li>
+                      <li><Link to={`/member`} onClick={this.props.closeMenu}>マイページ</Link></li>
+                      <li >{this.logoutLink()}</li>
                     </ul>
                   </nav>
                 </div>
@@ -70,15 +95,5 @@ export class CommonHeader extends React.Component<
     );
   }
 }
-
-
-// const mapStateToProps = (state, ownProps) => {
-//   return { sideMenu: state.sideMenu };
-// };
-//
-// const mapDispatchToProps = { toggleMenu };
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);
-
 
 export default CommonHeader;

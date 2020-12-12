@@ -11,7 +11,12 @@ export interface SideMenuAppAction extends Action {
 }
 
 export const TOGGLE_MENU = "TOGGLE_MENU";
+export const CLOSE_MENU = "CLOSE_MENU";
 
 export const toggleMenu = () => (dispatch: Dispatch): void => {
   dispatch({ type: TOGGLE_MENU });
+};
+
+export const closeMenu = () => (dispatch: Dispatch): void => {
+  dispatch({ type: CLOSE_MENU });
 };

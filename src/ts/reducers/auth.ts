@@ -18,20 +18,26 @@ export function AuthReducer(
   action: AuthAppAction
 ): Auth {
   if (typeof auth == "undefined") {
-    return {isLogin: false, familyName: null};
+    return {isLogin: false};
   }
 
   switch (action.type) {
     case AUTH_CHECK:
     case AUTH_LOGIN:
-      const { data } = action.response.data;
-      console.log(data);
+      const { data, message } = action.response.data;
       if (!data) {
-        return {isLogin: false, familyName: null};
+        return {
+          isLogin: false,
+          message: message,
+        };
       }
-      return { isLogin: (data.length !== 0 && data[0].familyName), familyName: data[0].familyName };
+      return {
+        isLogin: (data.length !== 0 && data[0].familyName),
+        familyName: data[0].familyName,
+        message: message,
+      };
     case AUTH_LOGOUT:
-      return { isLogin: false, familyName: null };
+      return { isLogin: false };
     default:
       return auth;
   }

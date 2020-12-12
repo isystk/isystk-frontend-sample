@@ -44,5 +44,6 @@ export interface SideMenu {
 
 export interface Auth {
   isLogin: boolean;
-  familyName: string;
+  familyName?: string;
+  message?: string;
 }

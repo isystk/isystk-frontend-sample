@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from 'jquery';
 
-import { toggleMenu } from "../../actions";
+// import { toggleMenu, closeMenu } from "../../actions";
 
-interface IState {
-    scrollTop: number;
-}
 interface AppDispatchProperties {
     toggleMenu;
+    closeMenu;
+}
+interface IState {
+    scrollTop: number;
 }
 
 export class CommonFooter extends React.Component<AppDispatchProperties, IState> {
@@ -50,7 +51,7 @@ export class CommonFooter extends React.Component<AppDispatchProperties, IState>
             <div className="wrapper">
               <nav className="footer-nav">
                 <ul>
-                  <li><Link to={`/`}><FontAwesomeIcon icon="home" /></Link></li>
+                  <li><Link to={`/`} onClick={this.props.closeMenu}><FontAwesomeIcon icon="home" /></Link></li>
                   <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
                   <li><a href="#" className="js-open-menu" onClick={this.props.toggleMenu}><FontAwesomeIcon icon="bars" /></a></li>
                   <li><a href="#" className="js-scroll-top" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></li>

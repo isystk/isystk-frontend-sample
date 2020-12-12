@@ -50,7 +50,5 @@ export const makeFormDataFromParams = (params: object): FormData => {
 
 export const authLogout = () => async (dispatch: Dispatch): Promise<void> => {
   const response = await axios.post(`${ROOT_URL}/logout`);
-
-  console.log(response);
-
+  dispatch({ type: AUTH_LOGOUT, response });
 };

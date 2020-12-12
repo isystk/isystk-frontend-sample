@@ -1,21 +1,20 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-import { withCookies, Cookies } from 'react-cookie';
 
 import { Auth } from "../../StoreTypes";
-import { authLogin } from "../../actions";
+import { authCheck, authLogin } from "../../actions";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
   auth: Auth;
-  cookies: Cookies;
 }
 
 interface AppDispatchProperties {
+  authCheck;
   authLogin;
   history;
   handleSubmit;
@@ -28,6 +27,20 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.checkAuth();
+  }
+
+  async checkAuth() {
+
+    await this.props.authCheck();
+
+    // 既にログイン済みの場合はマイページ画面へとばす
+    if (this.props.auth.isLogin) {
+      this.props.history.push("/member");
+    }
   }
 
   renderField(field): JSX.Element {
@@ -52,10 +65,9 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
   async onSubmit(values): Promise<void> {
     await this.props.authLogin(values);
 
-    const { auth, cookies } = this.props;
+    const { auth } = this.props;
 
     if (auth.isLogin) {
-//       cookies.set('JSESSIONID', auth.token, { path: '/' });
       this.props.history.push("/member");
     }
 
@@ -68,6 +80,8 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
     const style = {
       margin: 12,
     };
+//     const { auth } = this.props;
+// console.log(auth)
     return (
       <React.Fragment>
         <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -115,9 +129,9 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = { authLogin };
+const mapDispatchToProps = { authCheck, authLogin };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "authLoginForm" })(withCookies(AuthLogin)));
+)(reduxForm({ validate, form: "authLoginForm" })(withRouter(AuthLogin)));

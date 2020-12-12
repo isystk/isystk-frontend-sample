@@ -71,29 +71,6 @@ export class PostsIndex extends React.Component<
     };
     return (
       <React.Fragment>
-        {// メインビジュアル
-        }
-        <div className="mv">
-            <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
-            <div className="intro">
-              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
-            </div>
-        </div>
-
-        {// ナビゲーション（PC用）
-        }
-        <div id="pc-menu">
-          <div className="wrapper">
-            <nav>
-              <ul>
-                <li><Link to={`/`}>HOME</Link></li>
-                <li><Link to={`/member/`}>マイページ</Link></li>
-                <li><Link to={`/login/`}>ログイン</Link></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-
         {// コンテンツ
         }
         <div className="contents ">

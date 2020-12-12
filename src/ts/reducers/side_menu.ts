@@ -9,6 +9,7 @@ import { SideMenu } from "../StoreTypes";
 import {
   SideMenuAppAction,
   TOGGLE_MENU,
+  CLOSE_MENU,
 } from "../actions/index";
 
 const initialState: SideMenu = {
@@ -23,6 +24,8 @@ export function SideMenuReducer(
   switch (action.type) {
     case TOGGLE_MENU:
       return {isOpen: !state.isOpen };
+    case CLOSE_MENU:
+      return {isOpen: false };
     default:
       return state;
   }
