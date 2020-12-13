@@ -1,23 +1,27 @@
 import * as React from "react";
+import { Children } from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {CommonHeader, CommonFooter} from "./common";
-import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
-import { SideMenu, Auth } from "../StoreTypes";
+import { authCheck, authLogout, toggleMenu, closeMenu, hideMv } from "../actions";
+import { SideMenu, Auth, MainVisual } from "../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
   sideMenu: SideMenu;
   auth: Auth;
+  mainVisual: MainVisual;
 }
 interface AppDispatchProperties {
   authCheck;
   authLogout;
   toggleMenu;
   closeMenu;
+  hideMv;
 }
+
 
 export class Layout extends React.Component<
   AppStateProperties & AppDispatchProperties,
@@ -38,6 +42,18 @@ export class Layout extends React.Component<
 //     this.props.history.push("/");
   }
 
+  // メインビジュアル
+  mainVisual(): JSX.Element {
+    if (this.props.mainVisual.isShow) {
+      return (<div className="mv">
+            <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
+            <div className="intro">
+              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
+            </div>
+        </div>);
+    }
+  }
+
   logoutLink(): JSX.Element {
 
     const {auth} = this.props;
@@ -49,18 +65,20 @@ export class Layout extends React.Component<
   }
 
   render(): JSX.Element {
+
+//     const parentProp = {showMainVisual: this.showMainVisual}
+//     const childrenWithProps = Children.map(
+//       this.props.children,
+//       (child) => {
+//         return React.cloneElement(child as React.ReactElement<any>, parentProp);
+//       },
+//     );
+
     return (
       <React.Fragment>
         <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} closeMenu={this.props.closeMenu} auth={this.props.auth} authLogout={this.props.authLogout} />
 
-        {// メインビジュアル
-        }
-        <div className="mv">
-            <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
-            <div className="intro">
-              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
-            </div>
-        </div>
+        { this.mainVisual() }
 
         {// ナビゲーション（PC用）
         }
@@ -76,7 +94,7 @@ export class Layout extends React.Component<
           </div>
         </div>
 
-        {this.props.children}
+        { this.props.children }
 
         <CommonFooter toggleMenu={this.props.toggleMenu} closeMenu={this.props.closeMenu} />
       </React.Fragment>
@@ -87,10 +105,11 @@ export class Layout extends React.Component<
 const mapStateToProps = (state, ownProps) => {
   return {
     sideMenu: state.sideMenu,
-    auth: state.auth
+    auth: state.auth,
+    mainVisual: state.mainVisual
   };
 };
 
-const mapDispatchToProps = { authCheck, authLogout, toggleMenu, closeMenu };
+const mapDispatchToProps = { authCheck, authLogout, toggleMenu, closeMenu, hideMv };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

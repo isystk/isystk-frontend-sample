@@ -42,6 +42,10 @@ export interface SideMenu {
   isOpen: boolean;
 }
 
+export interface MainVisual {
+  isShow: boolean;
+}
+
 export interface Auth {
   isLogin: boolean;
   familyName?: string;

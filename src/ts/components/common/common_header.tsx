@@ -41,7 +41,7 @@ export class CommonHeader extends React.Component<
     if (auth.isLogin) {
       return (<a onClick={this.logoutClick}>ログアウト</a>);
     }
-    return (<Link to={`/login/`}>ログイン</Link>);
+    return (<Link to={`/login/`} onClick={this.props.closeMenu}>ログイン</Link>);
   }
 
   render(): JSX.Element {

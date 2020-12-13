@@ -48,20 +48,6 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
     return (
       <React.Fragment>
 
-        {//<!-- ナビゲーション（PC用） -->
-        }
-        <div id="pc-menu">
-          <div className="wrapper">
-            <nav>
-              <ul>
-                <li><Link to={`/`}>HOME</Link></li>
-                <li><Link to={`/member/`}>マイページ</Link></li>
-                <li><Link to={`/login/`}>ログイン</Link></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-
         {//<!-- コンテンツ -->
         }
         <div className="contents">

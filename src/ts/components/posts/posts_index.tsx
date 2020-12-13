@@ -15,7 +15,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
 import AppStore from "../../Store";
-import { readPosts } from "../../actions";
+import { readPosts, showMv, hideMv } from "../../actions";
 import { Posts, Post } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
@@ -29,14 +29,22 @@ interface AppStateProperty {
 
 interface AppDispatchProperties {
   readPosts;
+  showMv;
+  hideMv;
 }
 
 export class PostsIndex extends React.Component<
   AppStateProperties & AppDispatchProperties,
   any
 > {
+
   componentDidMount(): void {
     this.props.readPosts();
+    this.props.showMv();
+  }
+
+  componentWillUnmount(): void {
+    this.props.hideMv();
   }
 
   renderPosts(): JSX.Element {
@@ -64,11 +72,7 @@ export class PostsIndex extends React.Component<
   }
 
   render(): JSX.Element {
-    const style = {
-      position: "fixed",
-      right: 12,
-      bottom: 12,
-    };
+
     return (
       <React.Fragment>
         {// コンテンツ
@@ -107,6 +111,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = { readPosts };
+const mapDispatchToProps = { readPosts, showMv, hideMv };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsIndex);
