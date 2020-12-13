@@ -5,7 +5,7 @@ import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {CommonHeader, CommonFooter} from "./common";
-import { authCheck, authLogout, toggleMenu, closeMenu, hideMv } from "../actions";
+import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
 import { SideMenu, Auth, MainVisual } from "../StoreTypes";
 
 // ↓ 表示用のデータ型
@@ -19,9 +19,7 @@ interface AppDispatchProperties {
   authLogout;
   toggleMenu;
   closeMenu;
-  hideMv;
 }
-
 
 export class Layout extends React.Component<
   AppStateProperties & AppDispatchProperties,
@@ -110,6 +108,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = { authCheck, authLogout, toggleMenu, closeMenu, hideMv };
+const mapDispatchToProps = { authCheck, authLogout, toggleMenu, closeMenu };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

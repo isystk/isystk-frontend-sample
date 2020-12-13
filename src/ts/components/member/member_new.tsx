@@ -4,17 +4,15 @@ import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-import { getEvent, deleteEvent, putEvent } from "../../actions";
+
+import { postEvent } from "../../actions";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
 }
 
 interface AppDispatchProperties {
-  getEvent;
-  deleteEvent;
-  putEvent;
-  match;
+  postEvent;
   history;
   handleSubmit;
   pristine;
@@ -22,16 +20,10 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class EventsShow extends React.Component<AppStateProperties & AppDispatchProperties> {
+export class MemberNew extends React.Component<AppStateProperties & AppDispatchProperties> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onDeleteClick = this.onDeleteClick.bind(this);
-  }
-
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    if (id) this.props.getEvent(id);
   }
 
   renderField(field): JSX.Element {
@@ -53,15 +45,9 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
     );
   }
 
-  async onDeleteClick() {
-    const { id } = this.props.match.params;
-    await this.props.deleteEvent(id);
-    this.props.history.push("/events/");
-  }
-
-  async onSubmit(values) {
-    await this.props.putEvent(values);
-    this.props.history.push("/events/");
+  async onSubmit(values): Promise<void> {
+    await this.props.postEvent(values);
+    this.props.history.push("/member/");
   }
 
   render(): JSX.Element {
@@ -99,12 +85,7 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
           <RaisedButton
             label="キャンセル"
             style={style}
-            containerElement={<Link to="/events">キャンセル</Link>}
-          />
-          <RaisedButton
-            label="削除"
-            style={style}
-            onClick={this.onDeleteClick}
+            containerElement={<Link to="/">キャンセル</Link>}
           />
         </form>
       </React.Fragment>
@@ -123,21 +104,13 @@ const validate = (values) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const event = state.events[ownProps.match.params.id];
   return {
-    initialValues: event,
-    event
   };
 };
 
-const mapDispatchToProps = { getEvent, deleteEvent, putEvent };
+const mapDispatchToProps = { postEvent };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  // enableReinitialize をtrueにすると別ユーザーによってデータが変更されている場合でも常に最新のデータを取得して表示できる。
-  reduxForm({ validate, form: "eventShowForm", enableReinitialize: true })(
-    EventsShow
-  )
-);
+)(reduxForm({ validate, form: "memberNewForm" })(MemberNew));

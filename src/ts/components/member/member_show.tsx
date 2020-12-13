@@ -22,7 +22,7 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class EventsShow extends React.Component<AppStateProperties & AppDispatchProperties> {
+export class MemberShow extends React.Component<AppStateProperties & AppDispatchProperties> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -56,12 +56,12 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
   async onDeleteClick() {
     const { id } = this.props.match.params;
     await this.props.deleteEvent(id);
-    this.props.history.push("/events/");
+    this.props.history.push("/member/");
   }
 
   async onSubmit(values) {
     await this.props.putEvent(values);
-    this.props.history.push("/events/");
+    this.props.history.push("/member/");
   }
 
   render(): JSX.Element {
@@ -99,7 +99,7 @@ export class EventsShow extends React.Component<AppStateProperties & AppDispatch
           <RaisedButton
             label="キャンセル"
             style={style}
-            containerElement={<Link to="/events">キャンセル</Link>}
+            containerElement={<Link to="/member/">キャンセル</Link>}
           />
           <RaisedButton
             label="削除"
@@ -137,7 +137,7 @@ export default connect(
   mapDispatchToProps
 )(
   // enableReinitialize をtrueにすると別ユーザーによってデータが変更されている場合でも常に最新のデータを取得して表示できる。
-  reduxForm({ validate, form: "eventShowForm", enableReinitialize: true })(
-    EventsShow
+  reduxForm({ validate, form: "memberShowForm", enableReinitialize: true })(
+    MemberShow
   )
 );

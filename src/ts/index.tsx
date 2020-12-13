@@ -20,6 +20,9 @@ import PostsShow from "./components/posts/posts_show";
 import EventsIndex from "./components/events/events_index";
 import EventsNew from "./components/events/events_new";
 import EventsShow from "./components/events/events_show";
+import MemberIndex from "./components/member/member_index";
+import MemberNew from "./components/member/member_new";
+import MemberShow from "./components/member/member_show";
 import AuthLogin from "./components/auth/auth_login";
 import AuthCheck from "./components/auth/auth_check";
 import { NotFound } from "./components/NotFound";
@@ -43,7 +46,9 @@ const Main = () => (
 
       { /* ★ログインユーザー専用ここから */ }
       <AuthCheck>
-        <Route path="/member" component={EventsIndex} />
+        <Route exact path="/member" component={MemberIndex} />
+        <Route path="/member/new" component={MemberNew} />
+        <Route path="/member/p:id" component={MemberShow} />
       </AuthCheck>
       { /* ★ログインユーザー専用ここまで */ }
 
