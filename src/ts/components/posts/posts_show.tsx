@@ -31,8 +31,8 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
   }
 
   renderPostImages(): JSX.Element {
-    return _.map(this.props.post.imageUrlList, (imageUrl, index) => (
-      <img alt="sample1" width="644" src={imageUrl} key={index} />
+    return _.map(this.props.post.imageList, (image, index) => (
+      <img alt="sample1" width="644" src={image.imageUrl} key={index} />
     ));
   }
 

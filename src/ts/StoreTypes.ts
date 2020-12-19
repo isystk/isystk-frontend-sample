@@ -11,16 +11,12 @@ export interface Post {
   registTime: Date;
   registTimeYYYYMMDD: string;
   registTimeMMDD: string;
-  imageIdList: PostImages[];
-  imageUrlList: PostImagesUrls[];
+  imageList: PostImages[];
   tagNameList: PostTagNames[];
 }
 
 export interface PostImages {
   imageId: number;
-}
-
-export interface PostImagesUrls {
   imageUrl: string;
 }
 

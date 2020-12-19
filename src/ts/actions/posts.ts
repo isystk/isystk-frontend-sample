@@ -12,10 +12,7 @@ export interface PostsAppAction extends Action {
 }
 
 export const READ_POSTS = "READ_POSTS";
-export const CREATE_POST = "CREATE_POST";
 export const READ_POST = "READ_POST";
-export const DELETE_POST = "DELETE_POST";
-export const UPDATE_POST = "UPDATE_POST";
 
 const ROOT_URL = "https://localhost/api/v1";
 
@@ -27,17 +24,4 @@ export const readPosts = () => async (dispatch: Dispatch): Promise<void> => {
 export const getPost = (id: number) => async (dispatch: Dispatch): Promise<void> => {
   const response = await axios.get(`${ROOT_URL}/posts/${id}`);
   dispatch({ type: READ_POST, response });
-};
-
-export const deletePost = (id: number) => async (dispatch: Dispatch): Promise<void> => {
-  await axios.delete(`${ROOT_URL}/posts/${id}`);
-  dispatch({ type: DELETE_POST, id });
-};
-
-export const putPost = (values: any) => async (dispatch: Dispatch): Promise<void> => {
-  const response = await axios.put(
-    `${ROOT_URL}/posts/${values.id}`,
-    values
-  );
-  dispatch({ type: UPDATE_POST, response });
 };

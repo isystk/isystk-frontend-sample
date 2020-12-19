@@ -105,7 +105,7 @@ const mapStateToProps = (state, ownProps) => {
         title: post.title,
         text: post.text,
         registTimeMMDD: post.registTimeMMDD,
-        imageUrl: (post.imageUrlList && 0<post.imageUrlList.length) ? post.imageUrlList[0] : ''
+        imageUrl: (post.imageList && 0<post.imageList.length) ? post.imageList[0].imageUrl : ''
       };
     })
   };

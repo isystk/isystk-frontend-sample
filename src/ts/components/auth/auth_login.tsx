@@ -23,23 +23,54 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class AuthLogin extends React.Component<AppStateProperties & AppDispatchProperties> {
+interface IState {
+  redirectUrl: string
+}
+
+export class AuthLogin extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
+    this.state = {
+      redirectUrl: null
+    }
   }
 
   componentWillMount() {
     this.checkAuth();
+    const params = this.getParams();
+    this.setState({
+      redirectUrl: params.redirectUrl as string
+    });
+  }
+
+  getParams(): any {
+    //?を除去
+    const urlParamStr = window.location.search.substring(1)
+    let params = {}
+    //urlパラメータをオブジェクトにまとめる
+    urlParamStr.split('&').forEach( param => {
+      const temp = param.split('=')
+      //pramsオブジェクトにパラメータを追加
+      params = {
+        ...params,
+        [temp[0]]: temp[1]
+      }
+    });
+    return params;
   }
 
   async checkAuth() {
 
     await this.props.authCheck();
 
-    // 既にログイン済みの場合はマイページ画面へとばす
+    // 既にログイン済みの場合は元のページへとばす
     if (this.props.auth.isLogin) {
-      this.props.history.push("/member");
+      if (this.state.redirectUrl) {
+        location.href = this.state.redirectUrl;
+      } else {
+        this.props.history.push("/member");
+      }
     }
   }
 
@@ -68,7 +99,11 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
     const { auth } = this.props;
 
     if (auth.isLogin) {
-      this.props.history.push("/member");
+      if (this.state.redirectUrl) {
+        location.href = this.state.redirectUrl;
+      } else {
+        this.props.history.push("/member");
+      }
     }
 
   }

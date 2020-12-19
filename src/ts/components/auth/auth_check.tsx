@@ -33,12 +33,11 @@ export class AuthCheck extends React.Component<
 //   }
 
   async checkAuth() {
-
     await this.props.authCheck();
 
     // ログインしてなければログイン画面へとばす
     if (!this.props.auth.isLogin) {
-      this.props.history.push("/login");
+      this.props.history.push("/login?redirectUrl="+ window.location);
     }
   }
 

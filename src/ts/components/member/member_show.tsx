@@ -1,40 +1,64 @@
 import * as React from "react";
+import { Children } from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import { Field, reduxForm } from "redux-form";
+import { Field, FieldArray, Button, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import * as _ from "lodash";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
-import { getEvent, deleteEvent, putEvent } from "../../actions";
+import FileUpload from "../common/file_upload";
+import { getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
+import { Post } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
+  initialValues: Post;
 }
 
 interface AppDispatchProperties {
-  getEvent;
-  deleteEvent;
-  putEvent;
+  getMemberPost;
+  deleteMemberPost;
+  putMemberPost;
   match;
   history;
   handleSubmit;
   pristine;
   submitting;
   invalid;
+  memberPost;
 }
 
-export class MemberShow extends React.Component<AppStateProperties & AppDispatchProperties> {
+interface IState {
+  memberPost: Post;
+}
+
+export class MemberShow extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
+    this.setImageList = this.setImageList.bind(this);
+
+    this.state = {
+      memberPost: {} as Post
+    }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { id } = this.props.match.params;
-    if (id) this.props.getEvent(id);
+    if (id) await this.props.getMemberPost(id);
+
+    this.setState({
+      memberPost: this.props.initialValues
+    });
   }
 
   renderField(field): JSX.Element {
+    const style = {
+      textAlign: 'left' as const,
+      margin: 10
+    };
+
     const {
       input,
       label,
@@ -42,41 +66,64 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
       meta: { touched, error },
     } = field;
     return (
-      <TextField
-        hintText={label}
-        floatingLabelText={label}
-        type={type}
-        errorText={touched && error}
-        {...input}
-        fullWidth={true}
-      />
+      <React.Fragment>
+        <p style={style}>{label}</p>
+        <TextField
+          hintText={label}
+          type={type}
+          errorText={touched && error}
+          {...input}
+          fullWidth={true}
+        />
+      </React.Fragment>
     );
   }
 
   async onDeleteClick() {
     const { id } = this.props.match.params;
-    await this.props.deleteEvent(id);
+    await this.props.deleteMemberPost(id);
     this.props.history.push("/member/");
   }
 
   async onSubmit(values) {
-    await this.props.putEvent(values);
-    this.props.history.push("/member/");
+//     await this.props.putMemberPost(values);
+    await this.props.putMemberPost(this.state.memberPost);
+//     this.props.history.push("/member/");
+  }
+
+  setImageList(imageList) {
+    const { memberPost } = this.state;
+    this.setState({
+      memberPost: {
+        ...memberPost,
+        imageList: _.map(imageList, (image, index) => (
+          {
+            imageId: image.imageId,
+            imageUrl: image.imageUrlSquare
+          }
+        ))
+      }
+    });
   }
 
   render(): JSX.Element {
     // pristineは、フォームが未入力状態の場合にtrueを返す
     // submittingは、既にSubmit済みの場合にtrueを返す
     const { handleSubmit, pristine, submitting, invalid } = this.props;
+
+    const { memberPost } = this.state;
+    if (!memberPost) return null;
+
     const style = {
       margin: 12,
     };
+
     return (
       <React.Fragment>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div>
             <Field
-              label="Title"
+              label="タイトル"
               name="title"
               type="text"
               component={this.renderField}
@@ -84,10 +131,24 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
           </div>
           <div>
             <Field
-              label="Body"
-              name="body"
+              label="本文"
+              name="text"
               type="text"
               component={this.renderField}
+            />
+          </div>
+          <div>
+            <FieldArray
+              label="画像"
+              name="imageList"
+              type="text"
+              component={FileUpload}
+              props={
+                {
+                  imageList: memberPost.imageList
+                }
+              }
+              setImageList={this.setImageList}
             />
           </div>
           <RaisedButton
@@ -115,22 +176,23 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
 const validate = (values) => {
   const errors = {
     title: "",
-    body: "",
+    text: "",
+    imageList: "",
   };
-  if (!values.title) errors.title = "Titleを入力して下さい";
-  if (!values.body) errors.body = "Bodyを入力して下さい";
+  if (!values.title) errors.title = "タイトルを入力して下さい";
+  if (!values.text) errors.text = "本文を入力して下さい";
+  if (!values.imageList) errors.imageList = "画像を選択して下さい";
   return errors;
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const event = state.events[ownProps.match.params.id];
+  const memberPost = state.memberPosts[ownProps.match.params.id];
   return {
-    initialValues: event,
-    event
+    initialValues: memberPost
   };
 };
 
-const mapDispatchToProps = { getEvent, deleteEvent, putEvent };
+const mapDispatchToProps = { getMemberPost, deleteMemberPost, putMemberPost };
 
 export default connect(
   mapStateToProps,

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -14,12 +15,12 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
 import AppStore from "../../Store";
-import { readEvents } from "../../actions";
+import { readMemberPosts } from "../../actions";
 import { Events, Event } from "../../StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  events: AppStateProperty[];
+  posts: AppStateProperty[];
 }
 interface AppStateProperty {
   id: number;
@@ -27,7 +28,7 @@ interface AppStateProperty {
 }
 
 interface AppDispatchProperties {
-  readEvents;
+  readMemberPosts;
 }
 
 export class MemberIndex extends React.Component<
@@ -35,43 +36,44 @@ export class MemberIndex extends React.Component<
   any
 > {
   componentDidMount(): void {
-    this.props.readEvents();
+    this.props.readMemberPosts();
   }
 
-  renderEvents(): JSX.Element {
-    return _.map(this.props.events, (event) => (
-      <TableRow key={event.id}>
-        <TableRowColumn>{event.id}</TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/member/p${event.id}`}>{event.text}</Link>
+  renderPosts(): JSX.Element {
+    return _.map(this.props.posts, (post) => {
+
+      const imageList = _.map(post.imageList, (image, index) => (
+        <img src={image.imageUrl} width="100px" key={`image${index}`} />
+      ));
+
+      return <TableRow key={post.postId}>
+        <TableRowColumn width="60px">{post.postId}</TableRowColumn>
+        <TableRowColumn width="120px">{post.title}</TableRowColumn>
+        <TableRowColumn>{ imageList }</TableRowColumn>
+        <TableRowColumn width="120px">{post.registTime}</TableRowColumn>
+        <TableRowColumn width="100px">
+          <Link to={`/member/p${post.postId}`}>詳細</Link>
         </TableRowColumn>
       </TableRow>
-    ));
+    });
   }
 
   render(): JSX.Element {
-    const style = {
-      position: "fixed",
-      right: 12,
-      bottom: 12,
-    };
     return (
       <React.Fragment>
-        <FloatingActionButton
-          style={style}
-          containerElement={<Link to="/member/new">新規登録</Link>}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
+        <Link to="/member/new">新規登録</Link>
         <Table>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn>ID</TableHeaderColumn>
-              <TableRowColumn>Text</TableRowColumn>
+              <TableRowColumn width="60px">ID</TableRowColumn>
+              <TableRowColumn width="120px">タイトル</TableRowColumn>
+              <TableRowColumn>画像</TableRowColumn>
+              <TableRowColumn width="120px">投稿日時</TableRowColumn>
+              <TableRowColumn width="100px"><br/></TableRowColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {this.renderEvents()}
+            {this.renderPosts()}
           </TableBody>
         </Table>
       </React.Fragment>
@@ -82,15 +84,19 @@ export class MemberIndex extends React.Component<
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    events: _.map(state.events, function (event) {
+    posts: _.map(state.memberPosts, function (post) {
       return {
-        id: event.id,
-        text: event.title + "," + event.body,
+        postId: post.postId,
+        tagName: (post.tagNameList && 0<post.tagNameList.length) ? post.tagNameList[0] : '',
+        title: post.title,
+        text: post.text,
+        registTime: moment(post.registTime).format('yyyy/MM/DD HH:mm:ss'),
+        imageList: (post.imageList && 0<post.imageList.length) ? post.imageList : []
       };
     })
   };
 };
 
-const mapDispatchToProps = { readEvents };
+const mapDispatchToProps = { readMemberPosts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemberIndex);
