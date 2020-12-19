@@ -5,7 +5,7 @@ import { Reducer } from "redux";
 import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
-import { Events } from "../StoreTypes";
+import { Events } from "../store/StoreTypes";
 import {
   EventsAppAction,
   CREATE_EVENT,

@@ -5,7 +5,7 @@ import { Reducer } from "redux";
 import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
-import { SideMenu } from "../StoreTypes";
+import { SideMenu } from "../store/StoreTypes";
 import {
   SideMenuAppAction,
   TOGGLE_MENU,

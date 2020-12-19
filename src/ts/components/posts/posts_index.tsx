@@ -14,9 +14,9 @@ import {
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 
-import AppStore from "../../Store";
+import AppStore from "../../store/Store";
 import { readPosts, showMv, hideMv } from "../../actions";
-import { Posts, Post } from "../../StoreTypes";
+import { Posts, Post } from "../../store/StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {

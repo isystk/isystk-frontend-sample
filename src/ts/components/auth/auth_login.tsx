@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 
-import { Auth } from "../../StoreTypes";
+import { Auth } from "../../store/StoreTypes";
 import { authCheck, authLogin } from "../../actions";
 
 // ↓ 表示用のデータ型

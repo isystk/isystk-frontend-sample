@@ -5,7 +5,7 @@ import { Reducer } from "redux";
 import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
-import { MainVisual } from "../StoreTypes";
+import { MainVisual } from "../store/StoreTypes";
 import {
   MainVisualAppAction,
   SHOW_MV,

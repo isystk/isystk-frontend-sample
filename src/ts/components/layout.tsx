@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {CommonHeader, CommonFooter} from "./common";
 import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
-import { SideMenu, Auth, MainVisual } from "../StoreTypes";
+import { SideMenu, Auth, MainVisual } from "../store/StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {

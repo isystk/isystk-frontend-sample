@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { Auth } from "../../StoreTypes";
+import { Auth } from "../../store/StoreTypes";
 import { Link, withRouter } from "react-router-dom";
 
 import { authCheck } from "../../actions";

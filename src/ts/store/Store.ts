@@ -6,9 +6,9 @@
 
 import { combineReducers, createStore, ReducersMapObject } from "redux";
 
-import { PostsReducer } from "./reducers/posts";
-import { EventsReducer } from "./reducers/events";
-import { SideMenuReducer } from "./reducers/side_menu";
+import { PostsReducer } from "../reducers/posts";
+import { EventsReducer } from "../reducers/events";
+import { SideMenuReducer } from "../reducers/side_menu";
 
 const reducers: ReducersMapObject = {
   PostsReducer,

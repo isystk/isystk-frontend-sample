@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import { getPost } from "../../actions";
-import { Post } from "../../StoreTypes";
+import { Post } from "../../store/StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {

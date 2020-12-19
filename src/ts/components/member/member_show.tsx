@@ -8,7 +8,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import FileUpload from "../common/file_upload";
 import { getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
-import { Post } from "../../StoreTypes";
+import { Post } from "../../store/StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {

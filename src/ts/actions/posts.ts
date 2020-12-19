@@ -1,6 +1,8 @@
 import { Action } from "redux";
 import axios from "axios";
 import { Dispatch } from "redux";
+import { API_ENDPOINT } from "../common/constants/api";
+import { API } from "../utilities";
 
 //  アクションは『何か』が起こった時、Storeに『どんなデータ』を利用するかということを定義します。
 //  ActionCreatorであるstore.dispatch()を使ってStoreに送信しますが、storeについてはこの記事の最後にまとめています。(※ こちら)
@@ -14,14 +16,12 @@ export interface PostsAppAction extends Action {
 export const READ_POSTS = "READ_POSTS";
 export const READ_POST = "READ_POST";
 
-const ROOT_URL = "https://localhost/api/v1";
-
 export const readPosts = () => async (dispatch: Dispatch): Promise<void> => {
-  const response = await axios.get(`${ROOT_URL}/posts/`);
+  const response = await API.get(API_ENDPOINT.POSTS);
   dispatch({ type: READ_POSTS, response });
 };
 
 export const getPost = (id: number) => async (dispatch: Dispatch): Promise<void> => {
-  const response = await axios.get(`${ROOT_URL}/posts/${id}`);
+  const response = await API.get(`${API_ENDPOINT.POSTS}/${id}`);
   dispatch({ type: READ_POST, response });
 };

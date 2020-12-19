@@ -5,7 +5,7 @@ import { Reducer } from "redux";
 import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
-import { Posts } from "../StoreTypes";
+import { Posts } from "../store/StoreTypes";
 import {
   MemberPostsAppAction,
   CREATE_MEMBER_POST,

@@ -5,7 +5,7 @@ import { Reducer } from "redux";
 import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
-import { Auth } from "../StoreTypes";
+import { Auth } from "../store/StoreTypes";
 import {
   AuthAppAction,
   AUTH_CHECK,
