@@ -11,8 +11,7 @@ import {
   TableRow,
   TableRowColumn,
 } from "material-ui/Table";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
+import { URL } from "../../common/constants/url";
 
 import AppStore from "../../store/Store";
 import { readMemberPosts } from "../../actions";
@@ -52,7 +51,7 @@ export class MemberIndex extends React.Component<
         <TableRowColumn>{ imageList }</TableRowColumn>
         <TableRowColumn width="120px">{post.registTime}</TableRowColumn>
         <TableRowColumn width="100px">
-          <Link to={`/member/p${post.postId}`}>詳細</Link>
+          <Link to={`${URL.MEMBER_POSTS}/p${post.postId}`}>詳細</Link>
         </TableRowColumn>
       </TableRow>
     });
@@ -61,7 +60,7 @@ export class MemberIndex extends React.Component<
   render(): JSX.Element {
     return (
       <React.Fragment>
-        <Link to="/member/new">新規登録</Link>
+        <Link to="${URL.MEMBER_POSTS_NEW}">新規登録</Link>
         <Table>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>

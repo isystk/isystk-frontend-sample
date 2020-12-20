@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from 'jquery';
+import { URL } from "../../common/constants/url";
 
 // import { toggleMenu, closeMenu } from "../../actions";
 
@@ -51,7 +52,7 @@ export class CommonFooter extends React.Component<AppDispatchProperties, IState>
             <div className="wrapper">
               <nav className="footer-nav">
                 <ul>
-                  <li><Link to={`/`} onClick={this.props.closeMenu}><FontAwesomeIcon icon="home" /></Link></li>
+                  <li><Link to={URL.HOME} onClick={this.props.closeMenu}><FontAwesomeIcon icon="home" /></Link></li>
                   <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
                   <li><a href="#" className="js-open-menu" onClick={this.props.toggleMenu}><FontAwesomeIcon icon="bars" /></a></li>
                   <li><a href="#" className="js-scroll-top" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></li>

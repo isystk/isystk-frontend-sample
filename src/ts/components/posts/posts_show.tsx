@@ -8,6 +8,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import { getPost } from "../../actions";
 import { Post } from "../../store/StoreTypes";
+import { URL } from "../../common/constants/url";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
@@ -61,7 +62,7 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
                 <nav className="breadcrumb">
                   <ul>
                     <li>
-                      <Link to={`/`}>
+                      <Link to={URL.HOME}>
                         <FontAwesomeIcon icon="home" /><span>HOME</span>
                       </Link>
                     </li>

@@ -34,5 +34,7 @@ export const API_ENDPOINT = {
 //   /** マイページ投稿 削除 */
 //   MEMBER_POSTS_DELETE: getBffUrl("/member/posts/p${values.postId}/delete"),
 
+  /** マイページ投稿 画像アップロード */
+  FILE_UPLOAD: getBffUrl("/fileupload/image"),
 };
 

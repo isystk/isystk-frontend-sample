@@ -3,6 +3,7 @@ import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { URL } from "../../common/constants/url";
 
 import { toggleMenu, authLogout } from "../../actions";
 
@@ -31,7 +32,7 @@ export class CommonHeader extends React.Component<
 
   async logoutClick() {
     await this.props.authLogout();
-//     this.props.history.push("/");
+//     this.props.history.push(URL.HOME);
   }
 
   logoutLink(): JSX.Element {
@@ -41,7 +42,7 @@ export class CommonHeader extends React.Component<
     if (auth.isLogin) {
       return (<a onClick={this.logoutClick}>ログアウト</a>);
     }
-    return (<Link to={`/login/`} onClick={this.props.closeMenu}>ログイン</Link>);
+    return (<Link to={URL.LOGIN} onClick={this.props.closeMenu}>ログイン</Link>);
   }
 
   render(): JSX.Element {
@@ -57,7 +58,7 @@ export class CommonHeader extends React.Component<
       <React.Fragment>
         <header className="header">
           <div className="wrapper">
-              <div className="header-logo"><Link to={`/`}>Isystk's Frontend Sample</Link></div>
+              <div className="header-logo"><Link to={URL.HOME}>Isystk's Frontend Sample</Link></div>
               <div className="nav">
                 <div className="search">
                   <form role="search" method="get" action="#">
@@ -81,8 +82,8 @@ export class CommonHeader extends React.Component<
                   </div>
                   <nav>
                     <ul>
-                      <li><Link to={`/`} onClick={this.props.closeMenu}>HOME</Link></li>
-                      <li><Link to={`/member`} onClick={this.props.closeMenu}>マイページ</Link></li>
+                      <li><Link to={URL.HOME} onClick={this.props.closeMenu}>HOME</Link></li>
+                      <li><Link to={URL.MEMBER} onClick={this.props.closeMenu}>マイページ</Link></li>
                       <li >{this.logoutLink()}</li>
                     </ul>
                   </nav>

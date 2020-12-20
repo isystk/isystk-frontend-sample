@@ -3,6 +3,7 @@ import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { URL } from "../../common/constants/url";
 import {
   Table,
   TableBody,
@@ -51,7 +52,7 @@ export class PostsIndex extends React.Component<
 
     return _.map(this.props.posts, (post) => (
       <section key={post.postId}>
-        <Link to={`/posts/${post.postId}`}>
+        <Link to={`${URL.POSTS}/${post.postId}`}>
           <div className="entry-header">
             <div className="category_link">{post.tagName}</div>
             <h2 className="entry-title">{post.title}</h2>

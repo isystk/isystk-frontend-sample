@@ -2,6 +2,8 @@ import React from 'react'
 import axios from "axios";
 import * as _ from "lodash";
 import TextField from "material-ui/TextField";
+import { API_ENDPOINT } from "../../common/constants/api";
+import { API } from "../../utilities";
 
 interface IProps {
   imageList;
@@ -28,18 +30,19 @@ class FileUpload extends React.Component<IProps, IState> {
       this.props.setImageList(response.data.data);
     })
   }
-  fileUpload(files){
-    const url = 'https://localhost/api/v1/fileupload/image';
-    const formData = new FormData();
-    for(let file of files) {
-      formData.append('imageFile', file);
-    };
+  async fileUpload(files){
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    return axios.post(url, formData,config);
+    let response = null;
+    for(let file of files) {
+      response = await API.post(API_ENDPOINT.FILE_UPLOAD, {
+        'imageFile': file
+      }, config);
+    };
+    return response;
   }
 
   render() {

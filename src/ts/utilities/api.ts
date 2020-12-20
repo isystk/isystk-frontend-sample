@@ -8,16 +8,16 @@ const get = async (url: string): Promise<any> => {
   return response;
 };
 
-const post = async (url: string, values?: any): Promise<any> => {
+const post = async (url: string, values?: any, config?: any): Promise<any> => {
   console.log('Request:%s', url);
-  const response = await axios.post(url, jsonToForm(values, new FormData()));
+  const response = await axios.post(url, jsonToForm(values, new FormData()), config);
   console.log('Response:%s', JSON.stringify(response) );
   return response;
 };
 
-const put = async (url: string, values?: any): Promise<any> => {
+const put = async (url: string, values?: any, config?: any): Promise<any> => {
   console.log('Request:%s', url);
-  const response = await axios.put(url, jsonToForm(values, new FormData()));
+  const response = await axios.put(url, jsonToForm(values, new FormData()), config);
   console.log('Response:%s', JSON.stringify(response) );
   return response;
 };
