@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Children } from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import { Field, FieldArray, Button, reduxForm } from "redux-form";
+import { Field, FieldArray, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import * as _ from "lodash";
 import RaisedButton from "material-ui/RaisedButton";
@@ -9,10 +9,10 @@ import TextField from "material-ui/TextField";
 import FileUpload from "../common/file_upload";
 import { getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
 import { Post } from "../../store/StoreTypes";
+import { URL } from "../../common/constants/url";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
-  initialValues: Post;
 }
 
 interface AppDispatchProperties {
@@ -29,7 +29,6 @@ interface AppDispatchProperties {
 }
 
 interface IState {
-  memberPost: Post;
 }
 
 export class MemberShow extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
@@ -38,19 +37,11 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
     this.onSubmit = this.onSubmit.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.setImageList = this.setImageList.bind(this);
-
-    this.state = {
-      memberPost: {} as Post
-    }
   }
 
   async componentDidMount() {
     const { id } = this.props.match.params;
     if (id) await this.props.getMemberPost(id);
-
-    this.setState({
-      memberPost: this.props.initialValues
-    });
   }
 
   renderField(field): JSX.Element {
@@ -82,28 +73,24 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
   async onDeleteClick() {
     const { id } = this.props.match.params;
     await this.props.deleteMemberPost(id);
-    this.props.history.push("/member/");
+    this.props.history.push(URL.MEMBER);
   }
 
-  async onSubmit(values) {
-//     await this.props.putMemberPost(values);
-    await this.props.putMemberPost(this.state.memberPost);
-//     this.props.history.push("/member/");
+  async onSubmit(values): Promise<void> {
+    await this.props.putMemberPost(values);
+    this.props.history.push(URL.MEMBER);
   }
 
-  setImageList(imageList) {
-    const { memberPost } = this.state;
-    this.setState({
-      memberPost: {
-        ...memberPost,
-        imageList: _.map(imageList, (image, index) => (
-          {
-            imageId: image.imageId,
-            imageUrl: image.imageUrlSquare
-          }
-        ))
+  setImageList(data) {
+    const imageList = _.map(data, (image) => {
+      return {
+        imageId: image.imageId,
+        imageUrl: image.imageUrlSquare
       }
     });
+    // 画像を追加
+    this.props.memberPost.imageList = _.concat(this.props.memberPost.imageList, imageList);
+    this.forceUpdate();
   }
 
   render(): JSX.Element {
@@ -111,7 +98,7 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
     // submittingは、既にSubmit済みの場合にtrueを返す
     const { handleSubmit, pristine, submitting, invalid } = this.props;
 
-    const { memberPost } = this.state;
+    const { memberPost } = this.props;
     if (!memberPost) return null;
 
     const style = {
@@ -141,13 +128,8 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
             <FieldArray
               label="画像"
               name="imageList"
-              type="text"
               component={FileUpload}
-              props={
-                {
-                  imageList: memberPost.imageList
-                }
-              }
+              props={{ imageList: memberPost.imageList }}
               setImageList={this.setImageList}
             />
           </div>
@@ -188,7 +170,8 @@ const validate = (values) => {
 const mapStateToProps = (state, ownProps) => {
   const memberPost = state.memberPosts[ownProps.match.params.id];
   return {
-    initialValues: memberPost
+    initialValues: memberPost,
+    memberPost
   };
 };
 

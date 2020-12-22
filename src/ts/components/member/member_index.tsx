@@ -60,7 +60,7 @@ export class MemberIndex extends React.Component<
   render(): JSX.Element {
     return (
       <React.Fragment>
-        <Link to="${URL.MEMBER_POSTS_NEW}">新規登録</Link>
+        <Link to={URL.MEMBER_POSTS_NEW}>新規登録</Link>
         <Table>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>

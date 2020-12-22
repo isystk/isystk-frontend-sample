@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {CommonHeader, CommonFooter} from "./common";
 import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
 import { SideMenu, Auth, MainVisual } from "../store/StoreTypes";
+import { URL } from "../common/constants/url";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
@@ -59,7 +60,7 @@ export class Layout extends React.Component<
     if (auth.isLogin) {
       return (<a onClick={this.logoutClick}>ログアウト</a>);
     }
-    return (<Link to={`/login/`}>ログイン</Link>);
+    return (<Link to={URL.LOGIN}>ログイン</Link>);
   }
 
   render(): JSX.Element {
@@ -84,8 +85,8 @@ export class Layout extends React.Component<
           <div className="wrapper">
             <nav>
               <ul>
-                <li><Link to={`/`}>HOME</Link></li>
-                <li><Link to={`/member/`}>マイページ</Link></li>
+                <li><Link to={URL.HOME}>HOME</Link></li>
+                <li><Link to={URL.MEMBER}>マイページ</Link></li>
                 <li>{this.logoutLink()}</li>
               </ul>
             </nav>

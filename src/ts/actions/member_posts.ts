@@ -12,6 +12,7 @@ import { API } from "../utilities";
 export interface MemberPostsAppAction extends Action {
   response?: any;
   id: number;
+  imageList: [];
 }
 
 export const READ_MEMBER_POSTS = "READ_MEMBER_POSTS";
@@ -19,6 +20,7 @@ export const READ_MEMBER_POST = "READ_MEMBER_POST";
 export const CREATE_MEMBER_POST = "CREATE_MEMBER_POST";
 export const UPDATE_MEMBER_POST = "UPDATE_MEMBER_POST";
 export const DELETE_MEMBER_POST = "DELETE_MEMBER_POST";
+export const APPEND_IMAGE = "APPEND_IMAGE";
 
 export const readMemberPosts = () => async (dispatch: Dispatch): Promise<void> => {
   const response = await API.get(`${API_ENDPOINT.MEMBER_POSTS}`);
