@@ -55,9 +55,8 @@ export class MemberNew extends React.Component<AppStateProperties & AppDispatchP
   }
 
   async onSubmit(values): Promise<void> {
-    console.log(values);
-//     await this.props.postMemberPost(values);
-//     this.props.history.push(URL.MEMBER);
+    await this.props.postMemberPost(values);
+    this.props.history.push(URL.MEMBER);
   }
 
   setImageList(data) {
@@ -72,8 +71,6 @@ export class MemberNew extends React.Component<AppStateProperties & AppDispatchP
       this.props.memberNewForm.values.imageList = [];
     }
     this.props.memberNewForm.values.imageList = _.concat(this.props.memberNewForm.values.imageList, imageList);
-    console.log(this.props.memberNewForm.values.imageList);
-//     this.setState({ form: {memberNewForm: this.props.memberNewForm}});
     this.forceUpdate();
   }
 

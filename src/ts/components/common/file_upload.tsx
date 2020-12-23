@@ -57,7 +57,7 @@ class FileUpload extends React.Component<IProps, IState> {
     const renderImageList = _.map(this.props.imageList, (image, index) => (
       <div key={`image${index}`}>
         <img src={image.imageUrl} width="100px" />
-        <input type={type} name={`${fields.name}[${index}].imageId`} defaultValue={image.imageId}  />
+        <input type="hidden" name={`${fields.name}[${index}].imageId`} defaultValue={image.imageId}  />
       </div>
     ));
 
