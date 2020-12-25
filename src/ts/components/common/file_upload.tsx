@@ -38,7 +38,7 @@ class FileUpload extends React.Component<IProps, IState> {
     }
     let response = null;
     for(let file of files) {
-      response = await API.post(API_ENDPOINT.FILE_UPLOAD, {
+      response = await API.post(API_ENDPOINT.MEMBER_FILE_UPLOAD, {
         'imageFile': file
       }, config);
     };

@@ -35,6 +35,10 @@ export const API_ENDPOINT = {
 //   MEMBER_POSTS_DELETE: getBffUrl("/member/posts/p${values.postId}/delete"),
 
   /** マイページ投稿 画像アップロード */
-  FILE_UPLOAD: getBffUrl("/fileupload/image"),
+  MEMBER_FILE_UPLOAD: getBffUrl("/member/fileupload/image"),
+  /** 会員 仮登録 */
+  ENTRY_REGIST: getBffUrl("/entry/regist"),
+//   /** 会員 登録完了 */
+//   ENTRY_REGIST_COMPLETE: getBffUrl("/entry/regist/${onetimeKey}"),
 };
 

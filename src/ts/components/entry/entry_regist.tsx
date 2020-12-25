@@ -1,0 +1,232 @@
+import * as React from "react";
+import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
+import { Field, reduxForm } from "redux-form";
+import { Link } from "react-router-dom";
+import RaisedButton from "material-ui/RaisedButton";
+import TextField from "material-ui/TextField";
+
+import { registConfirm } from "../../actions";
+
+// ↓ 表示用のデータ型
+interface AppStateProperties {
+}
+
+interface AppDispatchProperties {
+  registConfirm;
+  history;
+  handleSubmit;
+  pristine;
+  submitting;
+  invalid;
+}
+
+export class EntryRegist extends React.Component<AppStateProperties & AppDispatchProperties> {
+  constructor(props) {
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  renderField(field): JSX.Element {
+    const {
+      input,
+      label,
+      type,
+      meta: { touched, error },
+    } = field;
+    return (
+      <TextField
+        hintText={label}
+        floatingLabelText={label}
+        type={type}
+        errorText={touched && error}
+        {...input}
+        fullWidth={true}
+      />
+    );
+  }
+
+  async onSubmit(values): Promise<void> {
+    await this.props.registConfirm(values);
+    this.props.history.push("/entry/regist/confirm/");
+  }
+
+  render(): JSX.Element {
+    // pristineは、フォームが未入力状態の場合にtrueを返す
+    // submittingは、既にSubmit済みの場合にtrueを返す
+    const { handleSubmit, pristine, submitting, invalid } = this.props;
+    const style = {
+      margin: 12,
+    };
+    return (
+      <React.Fragment>
+        <form onSubmit={handleSubmit(this.onSubmit)}>
+          <div>
+            <Field
+              label="お名前(姓)"
+              name="familyName"
+              type="text"
+              component={this.renderField}
+            />
+            <Field
+              label="お名前(名)"
+              name="name"
+              type="text"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="お名前カナ(セイ)"
+              name="familyNameKana"
+              type="text"
+              component={this.renderField}
+            />
+            <Field
+              label="お名前カナ(メイ)"
+              name="nameKana"
+              type="text"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="メールアドレス"
+              name="email"
+              type="email"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="パスワード"
+              name="password"
+              type="password"
+              component={this.renderField}
+            />
+            <Field
+              label="パスワード確認"
+              name="passwordConf"
+              type="password"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="性別"
+              name="sex"
+              type="text"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="郵便番号"
+              name="zip"
+              type="text"
+              component={this.renderField}
+            />
+            <Field
+              label="都道府県"
+              name="prefectureId"
+              type="text"
+              component={this.renderField}
+            />
+            <Field
+              label="市区町村"
+              name="area"
+              type="text"
+              component={this.renderField}
+            />
+            <Field
+              label="町名番地"
+              name="address"
+              type="text"
+              component={this.renderField}
+            />
+            <Field
+              label="建物名"
+              name="building"
+              type="text"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="電話番号"
+              name="tel"
+              type="tel"
+              component={this.renderField}
+            />
+          </div>
+          <div>
+            <Field
+              label="誕生日"
+              name="birthday"
+              type="date"
+              component={this.renderField}
+            />
+          </div>
+          <RaisedButton
+            label="登録"
+            type="submit"
+            style={style}
+            disabled={pristine || submitting || invalid}
+          />
+          <RaisedButton
+            label="キャンセル"
+            style={style}
+            containerElement={<Link to="/login">キャンセル</Link>}
+          />
+        </form>
+      </React.Fragment>
+    );
+  }
+}
+
+const validate = (values) => {
+  const errors = {
+    familyName: "",
+    name: "",
+    familyNameKana: "",
+    nameKana: "",
+    email: "",
+    password: "",
+    passwordConf: "",
+    sex: null,
+    zip: "",
+    prefectureId: null,
+    area: "",
+    address: "",
+    building: "",
+    tel: "",
+    birthday: null,
+  };
+  if (!values.familyName) errors.familyName = "お名前(姓)を入力して下さい";
+  if (!values.name) errors.name = "お名前(名)を入力して下さい";
+  if (!values.familyName) errors.familyName = "お名前カナ(セイ)を入力して下さい";
+  if (!values.nameKana) errors.nameKana = "お名前カナ(メイ)を入力して下さい";
+  if (!values.email) errors.email = "メールアドレスを入力して下さい";
+  if (!values.password) errors.password = "パスワードを入力して下さい";
+  if (!values.passwordConf) errors.passwordConf = "パスワード確認を入力して下さい";
+  if (!values.sex) errors.sex = "性別を選択して下さい";
+  if (!values.zip) errors.zip = "郵便番号を入力して下さい";
+  if (!values.prefectureId) errors.prefectureId = "都道府県を選択して下さい";
+  if (!values.area) errors.area = "市区町村を入力して下さい";
+  if (!values.address) errors.address = "町名番地を入力して下さい";
+  if (!values.building) errors.building = "建物名を入力して下さい";
+  if (!values.tel) errors.tel = "電話番号を入力して下さい";
+  if (!values.birthday) errors.birthday = "誕生日を入力して下さい";
+  return errors;
+};
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = { registConfirm };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(reduxForm({ validate, form: "entryRegistForm" })(EntryRegist));

@@ -47,3 +47,21 @@ export interface Auth {
   familyName?: string;
   message?: string;
 }
+
+export interface User {
+	familyName?: string;
+	name?: string;
+	familyNameKana?: string;
+	nameKana?: string;
+	email?: string;
+	password?: string;
+	passwordConf?: string;
+	sex?: number;
+	zip?: string;
+	prefectureId?: number;
+	area?: string;
+	address?: string;
+	building?: string;
+	tel?: string;
+	birthday?: Date;
+}

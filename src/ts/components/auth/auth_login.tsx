@@ -4,6 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import { Link, withRouter } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
+import { URL } from "../../common/constants/url";
 
 import { Auth } from "../../store/StoreTypes";
 import { authCheck, authLogin } from "../../actions";
@@ -69,7 +70,7 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
       if (this.state.redirectUrl) {
         location.href = this.state.redirectUrl;
       } else {
-        this.props.history.push("/member");
+        this.props.history.push(URL.MEMBER);
       }
     }
   }
@@ -102,7 +103,7 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
       if (this.state.redirectUrl) {
         location.href = this.state.redirectUrl;
       } else {
-        this.props.history.push("/member");
+        this.props.history.push(URL.MEMBER);
       }
     }
 
@@ -143,6 +144,8 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
             disabled={pristine || submitting || invalid}
           />
         </form>
+        <p style={{textAlign: 'left', margin: '10px 20px'}}><Link to={URL.ENTRY_REGIST} >会員登録</Link></p>
+        <p style={{textAlign: 'left', margin: '10px 20px'}}><Link to={URL.ENTRY_REMIND} >パスワードを忘れた方はこちら</Link></p>
       </React.Fragment>
     );
   }

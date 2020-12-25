@@ -15,7 +15,6 @@ import { URL } from "./common/constants/url";
 
 import reducers from "./reducers";
 import Layout from "./components/layout";
-import CommonHeader from "./components/common/common_header";
 import PostsIndex from "./components/posts/posts_index";
 import PostsShow from "./components/posts/posts_show";
 import EventsIndex from "./components/events/events_index";
@@ -24,6 +23,7 @@ import EventsShow from "./components/events/events_show";
 import MemberIndex from "./components/member/member_index";
 import MemberNew from "./components/member/member_new";
 import MemberShow from "./components/member/member_show";
+import EntryRegist from "./components/entry/entry_regist";
 import AuthLogin from "./components/auth/auth_login";
 import AuthCheck from "./components/auth/auth_check";
 import { NotFound } from "./components/NotFound";
@@ -44,6 +44,9 @@ const Main = () => (
       <Route path="/events/new" component={EventsNew} />
       <Route path="/events/:id" component={EventsShow} />
       <Route path={URL.LOGIN} component={AuthLogin} />
+      <Route path={URL.ENTRY_REGIST} component={EntryRegist} />
+      <Route path={URL.ENTRY_REMIND} component={EntryRegist} />
+      <Route path={URL.ENTRY_REMIND_CONFIG} component={EntryRegist} />
 
       { /* ★ログインユーザー専用ここから */ }
       <AuthCheck>
