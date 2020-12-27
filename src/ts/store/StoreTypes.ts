@@ -1,4 +1,15 @@
 // ↓ 取得用のデータ型
+
+export interface Consts {
+  name?: string;
+  data?: Const[];
+}
+
+export interface Const {
+  code: number;
+  text: string;
+}
+
 export interface Posts {
   posts?: Post[];
 }

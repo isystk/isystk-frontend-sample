@@ -3,6 +3,7 @@ import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import RaisedButton from "material-ui/RaisedButton";
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import {
 } from "material-ui/Table";
 import { URL } from "../../common/constants/url";
 
-import AppStore from "../../store/Store";
 import { readMemberPosts } from "../../actions";
 import { Events, Event } from "../../store/StoreTypes";
 
@@ -28,6 +28,7 @@ interface AppStateProperty {
 
 interface AppDispatchProperties {
   readMemberPosts;
+  history;
 }
 
 export class MemberIndex extends React.Component<
@@ -60,21 +61,30 @@ export class MemberIndex extends React.Component<
   render(): JSX.Element {
     return (
       <React.Fragment>
-        <Link to={URL.MEMBER_POSTS_NEW}>新規登録</Link>
-        <Table>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableRowColumn width="60px">ID</TableRowColumn>
-              <TableRowColumn width="120px">タイトル</TableRowColumn>
-              <TableRowColumn>画像</TableRowColumn>
-              <TableRowColumn width="120px">投稿日時</TableRowColumn>
-              <TableRowColumn width="100px"><br/></TableRowColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {this.renderPosts()}
-          </TableBody>
-        </Table>
+        <section>
+          <div className="entry-header">
+            <h1 className="entry-title">投稿一覧</h1>
+          </div>
+          <div className="entry-content">
+            <p>
+              <input type="button" onClick={(e)=> { e.preventDefault(); this.props.history.push(URL.MEMBER_POSTS_NEW); } } value="新規登録" />
+            </p>
+            <Table>
+              <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                <TableRow>
+                  <TableRowColumn width="60px">ID</TableRowColumn>
+                  <TableRowColumn width="120px">タイトル</TableRowColumn>
+                  <TableRowColumn>画像</TableRowColumn>
+                  <TableRowColumn width="120px">投稿日時</TableRowColumn>
+                  <TableRowColumn width="100px"><br/></TableRowColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false}>
+                {this.renderPosts()}
+              </TableBody>
+            </Table>
+          </div>
+        </section>
       </React.Fragment>
     );
   }

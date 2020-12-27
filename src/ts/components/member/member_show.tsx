@@ -107,49 +107,56 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
 
     return (
       <React.Fragment>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <div>
-            <Field
-              label="タイトル"
-              name="title"
-              type="text"
-              component={this.renderField}
-            />
+        <section>
+          <div className="entry-header">
+            <h1 className="entry-title">投稿編集</h1>
           </div>
-          <div>
-            <Field
-              label="本文"
-              name="text"
-              type="text"
-              component={this.renderField}
-            />
+          <div className="entry-content">
+            <form onSubmit={handleSubmit(this.onSubmit)}>
+              <div>
+                <Field
+                  label="タイトル"
+                  name="title"
+                  type="text"
+                  component={this.renderField}
+                />
+              </div>
+              <div>
+                <Field
+                  label="本文"
+                  name="text"
+                  type="text"
+                  component={this.renderField}
+                />
+              </div>
+              <div>
+                <FieldArray
+                  label="画像"
+                  name="imageList"
+                  component={FileUpload}
+                  props={{ imageList: memberPost.imageList }}
+                  setImageList={this.setImageList}
+                />
+              </div>
+              <RaisedButton
+                label="登録"
+                type="submit"
+                style={style}
+                disabled={pristine || submitting || invalid}
+              />
+              <RaisedButton
+                label="キャンセル"
+                style={style}
+                containerElement={<Link to="/member">キャンセル</Link>}
+              />
+              <RaisedButton
+                label="削除"
+                style={style}
+                onClick={this.onDeleteClick}
+              />
+            </form>
           </div>
-          <div>
-            <FieldArray
-              label="画像"
-              name="imageList"
-              component={FileUpload}
-              props={{ imageList: memberPost.imageList }}
-              setImageList={this.setImageList}
-            />
-          </div>
-          <RaisedButton
-            label="登録"
-            type="submit"
-            style={style}
-            disabled={pristine || submitting || invalid}
-          />
-          <RaisedButton
-            label="キャンセル"
-            style={style}
-            containerElement={<Link to="/member/">キャンセル</Link>}
-          />
-          <RaisedButton
-            label="削除"
-            style={style}
-            onClick={this.onDeleteClick}
-          />
-        </form>
+        </section>
       </React.Fragment>
     );
   }

@@ -32,7 +32,7 @@ export class CommonHeader extends React.Component<
 
   async logoutClick() {
     await this.props.authLogout();
-//     this.props.history.push(URL.HOME);
+    location.reload();
   }
 
   logoutLink(): JSX.Element {

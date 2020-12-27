@@ -38,7 +38,7 @@ export class Layout extends React.Component<
 
   async logoutClick() {
     await this.props.authLogout();
-//     this.props.history.push("/");
+    location.reload();
   }
 
   // メインビジュアル
@@ -93,7 +93,11 @@ export class Layout extends React.Component<
           </div>
         </div>
 
-        { this.props.children }
+        <div className="contents">
+          <div className="wrapper">
+            { this.props.children }
+          </div>
+        </div>
 
         <CommonFooter toggleMenu={this.props.toggleMenu} closeMenu={this.props.closeMenu} />
       </React.Fragment>

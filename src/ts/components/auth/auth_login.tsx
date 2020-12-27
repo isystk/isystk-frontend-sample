@@ -114,38 +114,43 @@ export class AuthLogin extends React.Component<AppStateProperties & AppDispatchP
     // submittingは、既にSubmit済みの場合にtrueを返す
     const { handleSubmit, pristine, submitting, invalid } = this.props;
     const style = {
-      margin: 12,
+      margin: 20,
     };
-//     const { auth } = this.props;
-// console.log(auth)
     return (
       <React.Fragment>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <div>
-            <Field
-              label="ログインID"
-              name="loginId"
-              type="text"
-              component={this.renderField}
-            />
+        <section>
+          <div className="entry-header">
+            <h1 className="entry-title">ログイン</h1>
           </div>
-          <div>
-            <Field
-              label="パスワード"
-              name="password"
-              type="password"
-              component={this.renderField}
-            />
+          <div className="entry-content">
+            <form onSubmit={handleSubmit(this.onSubmit)}>
+              <div>
+                <Field
+                  label="ログインID"
+                  name="loginId"
+                  type="text"
+                  component={this.renderField}
+                />
+              </div>
+              <div>
+                <Field
+                  label="パスワード"
+                  name="password"
+                  type="password"
+                  component={this.renderField}
+                />
+              </div>
+              <RaisedButton
+                label="ログイン"
+                type="submit"
+                style={style}
+                disabled={pristine || submitting || invalid}
+              />
+            </form>
+            <div><Link to={URL.ENTRY_REGIST} >会員登録</Link></div>
+            <div><Link to={URL.ENTRY_REMIND} >パスワードを忘れた方はこちら</Link></div>
           </div>
-          <RaisedButton
-            label="ログイン"
-            type="submit"
-            style={style}
-            disabled={pristine || submitting || invalid}
-          />
-        </form>
-        <p style={{textAlign: 'left', margin: '10px 20px'}}><Link to={URL.ENTRY_REGIST} >会員登録</Link></p>
-        <p style={{textAlign: 'left', margin: '10px 20px'}}><Link to={URL.ENTRY_REMIND} >パスワードを忘れた方はこちら</Link></p>
+        </section>
       </React.Fragment>
     );
   }

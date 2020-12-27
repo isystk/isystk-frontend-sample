@@ -18,6 +18,8 @@ export const API_ENDPOINT = {
   LOGIN: getBffUrl("/authenticate"),
   /** ログアウト */
   LOGOUT: getBffUrl("/logout"),
+  /** 共通定数 */
+  COMMON_CONST: getBffUrl("/common/const"),
 
   /** 投稿一覧 */
   POSTS: getBffUrl("/posts"),
