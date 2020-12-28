@@ -8,6 +8,7 @@ import * as _ from "lodash";
 import { User } from "../store/StoreTypes";
 import {
   UsersAppAction,
+  READ_USER,
   CREATE_USER,
 } from "../actions/index";
 
@@ -20,8 +21,10 @@ export function UsersReducer(
   }
 
   switch (action.type) {
+    case READ_USER:
+      return user;
     case CREATE_USER:
-      const data = action.response.data;
+      const data = action.values;
       return data;
     default:
       return user;

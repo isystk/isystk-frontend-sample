@@ -1,21 +1,22 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, getFormValues } from "redux-form";
 import { Link } from "react-router-dom";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import * as _ from "lodash";
 import { readConst } from "../../actions";
+import { URL } from "../../common/constants/url";
 
 import { registConfirm } from "../../actions";
-import { Consts } from "../../store/StoreTypes";
+import { Consts, User } from "../../store/StoreTypes";
 
 // ↓ 表示用のデータ型
 interface AppStateProperties {
   consts: {
     sex: Consts,
     prefecture: Consts,
-  }
+  },
 }
 
 interface AppDispatchProperties {
@@ -28,7 +29,10 @@ interface AppDispatchProperties {
   invalid;
 }
 
-export class EntryRegist extends React.Component<AppStateProperties & AppDispatchProperties> {
+interface IState {
+}
+
+export class EntryRegist extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -60,7 +64,7 @@ export class EntryRegist extends React.Component<AppStateProperties & AppDispatc
 
   async onSubmit(values): Promise<void> {
     await this.props.registConfirm(values);
-    this.props.history.push("/entry/regist/confirm/");
+    this.props.history.push(URL.ENTRY_REGIST_CONFIRM);
   }
 
   render(): JSX.Element {
@@ -137,13 +141,14 @@ export class EntryRegist extends React.Component<AppStateProperties & AppDispatc
                   {
                     this.props.consts.sex && (
                       _.map(this.props.consts.sex.data, (e, index) => (
-                        <label>
+                        <label key={`sex${index}`}>
                           <Field
                             name="sex"
-                            value={e.value}
+                            value={e.code}
                             type="radio"
                             component="input"
-                            style={{width: '50px'}}
+                            checked={true}
+                            style={{width: '20px'}}
                           />{' '}
                           {e.text}
                         </label>
@@ -169,7 +174,7 @@ export class EntryRegist extends React.Component<AppStateProperties & AppDispatc
                   {
                     this.props.consts.prefecture && (
                       _.map(this.props.consts.prefecture.data, (e, index) => (
-                        <option value={e.code}>{e.text}</option>
+                        <option value={e.code} key={`prefecture${index}`}>{e.text}</option>
                       ))
                     )
                   }
@@ -210,15 +215,15 @@ export class EntryRegist extends React.Component<AppStateProperties & AppDispatc
                 />
               </div>
               <RaisedButton
-                label="登録"
-                type="submit"
-                style={style}
-                disabled={pristine || submitting || invalid}
-              />
-              <RaisedButton
                 label="キャンセル"
                 style={style}
                 containerElement={<Link to="/login">キャンセル</Link>}
+              />
+              <RaisedButton
+                label="確認画面へ進む"
+                type="submit"
+                style={style}
+                disabled={submitting || invalid}
               />
             </form>
           </div>
@@ -237,22 +242,23 @@ const validate = (values) => {
     email: "",
     password: "",
     passwordConf: "",
-    sex: null,
+    sex: "",
     zip: "",
-    prefectureId: null,
+    prefectureId: "",
     area: "",
     address: "",
     building: "",
     tel: "",
-    birthday: null,
+    birthday: "",
   };
   if (!values.familyName) errors.familyName = "お名前(姓)を入力して下さい";
   if (!values.name) errors.name = "お名前(名)を入力して下さい";
-  if (!values.familyName) errors.familyName = "お名前カナ(セイ)を入力して下さい";
+  if (!values.familyNameKana) errors.familyNameKana = "お名前カナ(セイ)を入力して下さい";
   if (!values.nameKana) errors.nameKana = "お名前カナ(メイ)を入力して下さい";
   if (!values.email) errors.email = "メールアドレスを入力して下さい";
   if (!values.password) errors.password = "パスワードを入力して下さい";
   if (!values.passwordConf) errors.passwordConf = "パスワード確認を入力して下さい";
+  if (values.password !== values.passwordConf) errors.passwordConf = "入力されたパスワードが一致しません";
   if (!values.sex) errors.sex = "性別を選択して下さい";
   if (!values.zip) errors.zip = "郵便番号を入力して下さい";
   if (!values.prefectureId) errors.prefectureId = "都道府県を選択して下さい";
@@ -266,7 +272,8 @@ const validate = (values) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    consts: state.consts
+    consts: state.consts,
+    initialValues: state.users,
   };
 };
 
@@ -275,4 +282,4 @@ const mapDispatchToProps = { readConst, registConfirm };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "entryRegistForm" })(EntryRegist));
+)(reduxForm({ validate, form: "entryRegistForm", enableReinitialize: true })(EntryRegist));

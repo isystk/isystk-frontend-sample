@@ -24,6 +24,9 @@ import MemberIndex from "./components/member/member_index";
 import MemberNew from "./components/member/member_new";
 import MemberShow from "./components/member/member_show";
 import EntryRegist from "./components/entry/entry_regist";
+import EntryRegistConfirm from "./components/entry/entry_regist_confirm";
+import EntryRegistMail from "./components/entry/entry_regist_mail";
+import EntryRegistComplete from "./components/entry/entry_regist_complete";
 import AuthLogin from "./components/auth/auth_login";
 import AuthCheck from "./components/auth/auth_check";
 import { NotFound } from "./components/NotFound";
@@ -44,6 +47,9 @@ const Main = () => (
       <Route path="/events/new" component={EventsNew} />
       <Route path="/events/:id" component={EventsShow} />
       <Route path={URL.LOGIN} component={AuthLogin} />
+      <Route path={URL.ENTRY_REGIST_CONFIRM} component={EntryRegistConfirm} />
+      <Route path={URL.ENTRY_REGIST_MAIL} component={EntryRegistMail} />
+      <Route path={`${URL.ENTRY_REGIST}/:token`} component={EntryRegistComplete} />
       <Route path={URL.ENTRY_REGIST} component={EntryRegist} />
       <Route path={URL.ENTRY_REMIND} component={EntryRegist} />
       <Route path={URL.ENTRY_REMIND_CONFIG} component={EntryRegist} />

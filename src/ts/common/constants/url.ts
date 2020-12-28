@@ -14,6 +14,8 @@ export const URL = {
   MEMBER_POSTS_NEW: "/member/posts/new",
   /** 会員登録 */
   ENTRY_REGIST: "/entry/regist",
+  ENTRY_REGIST_CONFIRM: "/entry/regist/confirm",
+  ENTRY_REGIST_MAIL: "/entry/regist/mail",
   /** パスワード忘れ */
   ENTRY_REMIND: "/entry/remind",
   /** パスワード再設定 */

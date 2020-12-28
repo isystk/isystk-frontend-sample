@@ -139,12 +139,6 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
                 />
               </div>
               <RaisedButton
-                label="登録"
-                type="submit"
-                style={style}
-                disabled={pristine || submitting || invalid}
-              />
-              <RaisedButton
                 label="キャンセル"
                 style={style}
                 containerElement={<Link to="/member">キャンセル</Link>}
@@ -153,6 +147,12 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
                 label="削除"
                 style={style}
                 onClick={this.onDeleteClick}
+              />
+              <RaisedButton
+                label="登録"
+                type="submit"
+                style={style}
+                disabled={pristine || submitting || invalid}
               />
             </form>
           </div>

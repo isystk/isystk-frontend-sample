@@ -124,15 +124,15 @@ export class MemberNew extends React.Component<AppStateProperties & AppDispatchP
                 />
               </div>
               <RaisedButton
+                label="キャンセル"
+                style={style}
+                containerElement={<Link to="/member">キャンセル</Link>}
+              />
+              <RaisedButton
                 label="登録"
                 type="submit"
                 style={style}
                 disabled={pristine || submitting || invalid}
-              />
-              <RaisedButton
-                label="キャンセル"
-                style={style}
-                containerElement={<Link to="/member">キャンセル</Link>}
               />
             </form>
           </div>
