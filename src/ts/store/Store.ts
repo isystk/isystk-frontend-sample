@@ -9,23 +9,24 @@ import { combineReducers, createStore, ReducersMapObject } from "redux";
 import { ConstsReducer } from "../reducers/consts";
 import { PostsReducer } from "../reducers/posts";
 import { EventsReducer } from "../reducers/events";
-import { UsersReducer } from "../reducers/users";
+import { EntryReducer } from "../reducers/entry";
 import { SideMenuReducer } from "../reducers/side_menu";
 
 const reducers: ReducersMapObject = {
   ConstsReducer,
   PostsReducer,
   EventsReducer,
-  UsersReducer,
+  EntryReducer,
   SideMenuReducer,
 };
 
 declare let window: any;
 
 const rootReducer = combineReducers({
+  ConstsReducer,
   PostsReducer,
   EventsReducer,
-  UsersReducer,
+  EntryReducer,
   SideMenuReducer,
 });
 

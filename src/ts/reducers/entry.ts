@@ -7,22 +7,19 @@ import * as _ from "lodash";
 
 import { User } from "../store/StoreTypes";
 import {
-  UsersAppAction,
-  READ_USER,
+  EntryAppAction,
   CREATE_USER,
 } from "../actions/index";
 
-export function UsersReducer(
+export function EntryReducer(
   user: User,
-  action: UsersAppAction
+  action: EntryAppAction
 ): User {
   if (typeof user == "undefined") {
     return {};
   }
 
   switch (action.type) {
-    case READ_USER:
-      return user;
     case CREATE_USER:
       const data = action.values;
       return data;
@@ -33,4 +30,4 @@ export function UsersReducer(
   return user;
 }
 
-export default UsersReducer;
+export default EntryReducer;

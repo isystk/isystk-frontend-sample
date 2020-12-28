@@ -76,3 +76,7 @@ export interface User {
 	tel?: string;
 	birthday?: Date;
 }
+
+export interface Remind {
+  isValid: boolean;
+}

@@ -18,6 +18,8 @@ export const URL = {
   ENTRY_REGIST_MAIL: "/entry/regist/mail",
   /** パスワード忘れ */
   ENTRY_REMIND: "/entry/remind",
+  ENTRY_REMIND_MAIL: "/entry/remind/mail",
   /** パスワード再設定 */
-  ENTRY_REMIND_CONFIG: "/entry/remind/config"
+  ENTRY_REMIND_CONFIG: "/entry/remind/config",
+  ENTRY_REMIND_CONFIG_COMPLETE: "/entry/remind/config/complete",
 };

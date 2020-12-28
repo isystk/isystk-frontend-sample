@@ -10,16 +10,11 @@ import { User } from "../store/StoreTypes";
 //  ActionCreatorであるstore.dispatch()を使ってStoreに送信しますが、storeについてはこの記事の最後にまとめています。(※ こちら)
 //  ただし、アプリケーションの状態がどのように変化するかはここでは指定しません。(→Reducerがやること)
 //  あくまでどんな挙動があるかだけを定義します。
-export interface UsersAppAction extends Action {
+export interface EntryAppAction extends Action {
   values?: User;
 }
 
-export const READ_USER = "READ_USER";
 export const CREATE_USER = "CREATE_USER";
-
-export const readUser = () => async (dispatch: Dispatch): Promise<void> => {
-  dispatch({ type: READ_USER });
-};
 
 export const registConfirm = (values: any) => async (dispatch: Dispatch): Promise<void> => {
   dispatch({ type: CREATE_USER, values });

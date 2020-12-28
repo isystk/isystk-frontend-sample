@@ -38,9 +38,15 @@ export const API_ENDPOINT = {
 
   /** マイページ投稿 画像アップロード */
   MEMBER_FILE_UPLOAD: getBffUrl("/member/fileupload/image"),
-  /** 会員 仮登録 */
+  /** 会員登録 仮登録 */
   ENTRY_REGIST: getBffUrl("/entry/regist"),
-//   /** 会員 登録完了 */
+//   /** 会員登録 登録完了 */
 //   ENTRY_REGIST_COMPLETE: getBffUrl("/entry/regist/${onetimeKey}"),
+
+  /** パスワード忘れ メール送信 */
+  ENTRY_REMIND: getBffUrl("/entry/remind"),
+  /** パスワード忘れ パスワード変更 */
+  ENTRY_REMIND_CONFIG: getBffUrl("/entry/remind/config"),
+
 };
 

@@ -27,6 +27,10 @@ import EntryRegist from "./components/entry/entry_regist";
 import EntryRegistConfirm from "./components/entry/entry_regist_confirm";
 import EntryRegistMail from "./components/entry/entry_regist_mail";
 import EntryRegistComplete from "./components/entry/entry_regist_complete";
+import EntryRemind from "./components/entry/remind/entry_remind";
+import EntryRemindMail from "./components/entry/remind/entry_remind_mail";
+import EntryRemindConfig from "./components/entry/remind/entry_remind_config";
+import EntryRemindConfigComplete from "./components/entry/remind/entry_remind_config_complete";
 import AuthLogin from "./components/auth/auth_login";
 import AuthCheck from "./components/auth/auth_check";
 import { NotFound } from "./components/NotFound";
@@ -51,8 +55,10 @@ const Main = () => (
       <Route path={URL.ENTRY_REGIST_MAIL} component={EntryRegistMail} />
       <Route path={`${URL.ENTRY_REGIST}/:token`} component={EntryRegistComplete} />
       <Route path={URL.ENTRY_REGIST} component={EntryRegist} />
-      <Route path={URL.ENTRY_REMIND} component={EntryRegist} />
-      <Route path={URL.ENTRY_REMIND_CONFIG} component={EntryRegist} />
+      <Route path={URL.ENTRY_REMIND_CONFIG_COMPLETE} component={EntryRemindConfigComplete} />
+      <Route path={`${URL.ENTRY_REMIND_CONFIG}/:token`} component={EntryRemindConfig} />
+      <Route path={URL.ENTRY_REMIND_MAIL} component={EntryRemindMail} />
+      <Route path={URL.ENTRY_REMIND} component={EntryRemind} />
 
       { /* ★ログインユーザー専用ここから */ }
       <AuthCheck>
