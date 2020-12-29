@@ -7,17 +7,13 @@ import TextField from "material-ui/TextField";
 import * as _ from "lodash";
 import { URL } from "../../common/constants/url";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-}
-
-interface AppDispatchProperties {
+interface IProps {
 }
 
 interface IState {
 }
 
-export class EntryRegistMail extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class EntryRegistMail extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }
@@ -41,7 +37,4 @@ export class EntryRegistMail extends React.Component<AppStateProperties & AppDis
   }
 }
 
-export default connect(
-  null,
-  null
-)(EntryRegistMail);
+export default EntryRegistMail

@@ -10,11 +10,7 @@ import { URL } from "../../../common/constants/url";
 
 import { Consts, User } from "../../../store/StoreTypes";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-}
-
-interface AppDispatchProperties {
+interface IProps {
   remindMail;
   history;
   handleSubmit;
@@ -26,7 +22,7 @@ interface AppDispatchProperties {
 interface IState {
 }
 
-export class EntryRemind extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class EntryRemind extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);

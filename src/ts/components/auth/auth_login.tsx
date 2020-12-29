@@ -9,12 +9,8 @@ import { URL } from "../../common/constants/url";
 import { Auth } from "../../store/StoreTypes";
 import { authCheck, authLogin } from "../../actions";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
+interface IProps {
   auth: Auth;
-}
-
-interface AppDispatchProperties {
   authCheck;
   authLogin;
   history;
@@ -28,7 +24,7 @@ interface IState {
   redirectUrl: string
 }
 
-export class AuthLogin extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class AuthLogin extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);

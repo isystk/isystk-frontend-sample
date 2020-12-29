@@ -4,53 +4,38 @@ import { Field, reduxForm } from "redux-form";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
 import { getPost } from "../../actions";
 import { Post } from "../../store/StoreTypes";
 import { URL } from "../../common/constants/url";
 
 // ↓ 表示用のデータ型
-interface AppStateProperties {
+interface IProps {
   post: Post;
-}
-
-interface AppDispatchProperties {
   getPost;
   match;
   history;
 }
 
-export class PostsShow extends React.Component<AppStateProperties & AppDispatchProperties> {
+interface IState {
+}
+
+export class PostsShow extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
+    // パスの投稿IDから投稿データを取得する
     const { id } = this.props.match.params;
     if (id) this.props.getPost(id);
   }
 
-  renderPostImages(): JSX.Element {
-    return _.map(this.props.post.imageList, (image, index) => (
-      <img alt="sample1" width="644" src={image.imageUrl} key={index} />
-    ));
-  }
-
-  renderPostTags(): JSX.Element {
-    return _.map(this.props.post.tagNameList, (tagName, index) => (
-      <li><a href="#" rel="tag" key={index}>{tagName}</a></li>
-    ));
-  }
   render(): JSX.Element {
 
-    if (!this.props.post) return (<React.Fragment></React.Fragment>);
+    const { post } = this.props;
 
     return (
       <React.Fragment>
-
-        {//<!-- コンテンツ -->
-        }
         <div className="contents">
           <div className="wrapper">
             <main>
@@ -67,20 +52,24 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
                       </Link>
                     </li>
                     <li>
-                      {this.props.post.title}
+                      {post && post.title}
                     </li>
                   </ul>
                 </nav>
 
                 <div className="entry-header">
-                  <h1 className="entry-title">{this.props.post.title}</h1>
+                  <h1 className="entry-title">{post && post.title}</h1>
                   <div className="article-img">
-                    {this.renderPostImages()}
+                    {post && (
+                      _.map(post.imageList, (image, index) => (
+                        <img alt="sample1" width="644" src={image.imageUrl} key={index} />
+                      ))
+                    )}
                   </div>
                   <div className=" clearfix"></div>
                 </div>
                 <div className="entry-content">
-                  <p>{this.props.post.text}</p>
+                  <p>{post && post.text}</p>
                 </div>
                 <div className="clearfix"></div>
                 <div className="sns-buttons">
@@ -92,28 +81,36 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
                 <div className="clearfix"></div>
                 <div className="entry-meta">
                   <FontAwesomeIcon icon="clock" />
-                  {this.props.post.registTimeMMDD}
+                  {post && post.registTimeMMDD}
                 </div>
                 <div className="entry-tags">
                   <div className="section-tag">
-                    <ul><li>タグ： </li>{this.renderPostTags()}</ul>          </div>
+                    <ul>
+                    <li>タグ： </li>
+                    {post && (
+                      _.map(post.tagNameList, (tagName, index) => (
+                        <li><a href="#" rel="tag" key={index}>{tagName}</a></li>
+                      ))
+                    )}
+                    </ul>
+                  </div>
                 </div>
 
                 <ul className="sns-buttons">
                   <li className="share-twitter">
-                  <a href={'http://twitter.com/intent/tweet?text='+this.props.post.title+'%20http://blog.isystk.com/'} target="_blank" rel="noreferrer">Twitter</a>
+                  <a href={'http://twitter.com/intent/tweet?text='+(post && post.title)+'%20http://blog.isystk.com/'} target="_blank" rel="noreferrer">Twitter</a>
                   </li>
                   <li className="share-facebook">
                   <a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.isystk.com/" target="_blank" rel="noreferrer">Facebook</a>
                   </li>
                   <li className="share-hatena">
-                  <a href={'http://b.hatena.ne.jp/add?mode=confirm&url=http://blog.isystk.com/&title='+this.props.post.title} target="_blank" rel="noreferrer">はてブ</a>
+                  <a href={'http://b.hatena.ne.jp/add?mode=confirm&url=http://blog.isystk.com/&title='+(post && post.title)} target="_blank" rel="noreferrer">はてブ</a>
                   </li>
                   <li className="share-pocket">
                   <a href="http://getpocket.com/edit?url=http://blog.isystk.com/" target="_blank" rel="noreferrer">Pocket</a>
                   </li>
                   <li className="share-line">
-                  <a href={'http://line.me/R/msg/text/?'+this.props.post.title+'%0D%0Ahttp://blog.isystk.com/'} target="_blank" rel="noreferrer">LINE</a>
+                  <a href={'http://line.me/R/msg/text/?'+(post && post.title)+'%0D%0Ahttp://blog.isystk.com/'} target="_blank" rel="noreferrer">LINE</a>
                   </li>
                 </ul>
                 <div className=" clearfix"></div>
@@ -141,7 +138,6 @@ export class PostsShow extends React.Component<AppStateProperties & AppDispatchP
 const mapStateToProps = (state, ownProps) => {
   const post = state.posts[ownProps.match.params.id];
   return {
-    initialValues: post,
     post
   };
 };
@@ -151,6 +147,4 @@ const mapDispatchToProps = { getPost };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  PostsShow
-);
+)(PostsShow);

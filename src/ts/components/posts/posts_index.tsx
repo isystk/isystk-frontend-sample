@@ -2,54 +2,36 @@ import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { URL } from "../../common/constants/url";
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from "material-ui/Table";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import ContentAdd from "material-ui/svg-icons/content/add";
 
-import AppStore from "../../store/Store";
 import { readPosts, showMv, hideMv } from "../../actions";
 import { Posts, Post } from "../../store/StoreTypes";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-  posts: AppStateProperty[];
-}
-interface AppStateProperty {
-  id: number;
-  text: string;
-}
-
-interface AppDispatchProperties {
+interface IProps {
+  posts: Posts;
   readPosts;
   showMv;
   hideMv;
 }
 
-export class PostsIndex extends React.Component<
-  AppStateProperties & AppDispatchProperties,
-  any
-> {
+interface IState {
+}
+
+export class PostsIndex extends React.Component<IProps, IState> {
 
   componentDidMount(): void {
+    // すべての投稿データを取得する
     this.props.readPosts();
+    // メインビジュアルを表示する
     this.props.showMv();
   }
 
   componentWillUnmount(): void {
+    // メインビジュアルを非表示にする
     this.props.hideMv();
   }
 
   renderPosts(): JSX.Element {
-
     return _.map(this.props.posts, (post) => (
       <section key={post.postId}>
         <Link to={`${URL.POSTS}/${post.postId}`}>
@@ -76,8 +58,6 @@ export class PostsIndex extends React.Component<
 
     return (
       <React.Fragment>
-        {// コンテンツ
-        }
         <div className="contents ">
           <div className="wrapper">
             <main>

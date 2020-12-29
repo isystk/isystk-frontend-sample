@@ -3,7 +3,6 @@ import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import RaisedButton from "material-ui/RaisedButton";
 import {
   Table,
   TableBody,
@@ -15,41 +14,34 @@ import {
 import { URL } from "../../common/constants/url";
 
 import { readMemberPosts } from "../../actions";
-import { Events, Event } from "../../store/StoreTypes";
+import { Posts } from "../../store/StoreTypes";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-  posts: AppStateProperty[];
-}
-interface AppStateProperty {
-  id: number;
-  text: string;
-}
-
-interface AppDispatchProperties {
+interface IProps {
+  posts: Posts;
   readMemberPosts;
   history;
 }
 
-export class MemberIndex extends React.Component<
-  AppStateProperties & AppDispatchProperties,
-  any
-> {
+interface IState {
+}
+
+export class MemberIndex extends React.Component<IProps, IState> {
+
   componentDidMount(): void {
+    // 自分の投稿データを取得する
     this.props.readMemberPosts();
   }
 
   renderPosts(): JSX.Element {
     return _.map(this.props.posts, (post) => {
-
-      const imageList = _.map(post.imageList, (image, index) => (
-        <img src={image.imageUrl} width="100px" key={`image${index}`} />
-      ));
-
       return <TableRow key={post.postId}>
         <TableRowColumn width="60px">{post.postId}</TableRowColumn>
         <TableRowColumn width="120px">{post.title}</TableRowColumn>
-        <TableRowColumn>{ imageList }</TableRowColumn>
+        <TableRowColumn>{
+          _.map(post.imageList, (image, index) => (
+            <img src={image.imageUrl} width="100px" key={`image${index}`} />
+          ))
+        }</TableRowColumn>
         <TableRowColumn width="120px">{post.registTime}</TableRowColumn>
         <TableRowColumn width="100px">
           <Link to={`${URL.MEMBER_POSTS}/p${post.postId}`}>詳細</Link>

@@ -9,10 +9,7 @@ import { URL } from "../../common/constants/url";
 import { registComplete } from "../../actions";
 
 // ↓ 表示用のデータ型
-interface AppStateProperties {
-}
-
-interface AppDispatchProperties {
+interface IProps {
   registComplete;
   match;
 }
@@ -20,7 +17,7 @@ interface AppDispatchProperties {
 interface IState {
 }
 
-export class EntryRegistComplete extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class EntryRegistComplete extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }

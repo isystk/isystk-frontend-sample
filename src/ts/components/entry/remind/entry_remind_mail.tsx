@@ -1,17 +1,13 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-}
-
-interface AppDispatchProperties {
+interface IProps {
 }
 
 interface IState {
 }
 
-export class constEntryRemindMail extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class constEntryRemindMail extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }

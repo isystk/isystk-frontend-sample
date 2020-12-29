@@ -7,13 +7,7 @@ import { URL } from "../../common/constants/url";
 
 import { toggleMenu, authLogout } from "../../actions";
 
-interface AppStateProperties {
-    sideMenu: SideMenu;
-}
-interface SideMenu {
-    isOpen: boolean;
-}
-interface AppDispatchProperties {
+interface IProps {
     auth;
     sideMenu;
     closeMenu;
@@ -21,10 +15,12 @@ interface AppDispatchProperties {
     authLogout;
 }
 
-export class CommonHeader extends React.Component<
-    AppDispatchProperties,
-    any
-    > {
+interface IState {
+    isOpen: boolean;
+}
+
+export class CommonHeader extends React.Component<IProps, IState> {
+
   constructor(props) {
     super(props);
     this.logoutClick = this.logoutClick.bind(this);

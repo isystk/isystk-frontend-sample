@@ -12,14 +12,11 @@ import { registConfirm } from "../../actions";
 import { Consts, User } from "../../store/StoreTypes";
 
 // ↓ 表示用のデータ型
-interface AppStateProperties {
+interface IProps {
   consts: {
     sex: Consts,
     prefecture: Consts,
-  },
-}
-
-interface AppDispatchProperties {
+  };
   readConst;
   registConfirm;
   history;
@@ -32,7 +29,7 @@ interface AppDispatchProperties {
 interface IState {
 }
 
-export class EntryRegist extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class EntryRegist extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);

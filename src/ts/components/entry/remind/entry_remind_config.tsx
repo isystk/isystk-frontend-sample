@@ -11,13 +11,9 @@ import { URL } from "../../../common/constants/url";
 import { remindCheck, remindRegist } from "../../../actions";
 import { Remind } from "../../../store/StoreTypes";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
+interface IProps {
   token: string;
   remind: Remind;
-}
-
-interface AppDispatchProperties {
   remindCheck;
   remindRegist;
   match;
@@ -31,7 +27,7 @@ interface AppDispatchProperties {
 interface IState {
 }
 
-export class EntryRemindConfig extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class EntryRemindConfig extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);

@@ -9,23 +9,20 @@ import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
 import { SideMenu, Auth, MainVisual } from "../store/StoreTypes";
 import { URL } from "../common/constants/url";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
+interface IProps {
   sideMenu: SideMenu;
   auth: Auth;
   mainVisual: MainVisual;
-}
-interface AppDispatchProperties {
   authCheck;
   authLogout;
   toggleMenu;
   closeMenu;
 }
 
-export class Layout extends React.Component<
-  AppStateProperties & AppDispatchProperties,
-  any
-> {
+interface IState {
+}
+
+export class Layout extends React.Component<IProps, IState> {
 
   constructor(props) {
     super(props);
@@ -65,6 +62,7 @@ export class Layout extends React.Component<
 
   render(): JSX.Element {
 
+// this.props.childrenに親のPropsを渡す
 //     const parentProp = {showMainVisual: this.showMainVisual}
 //     const childrenWithProps = Children.map(
 //       this.props.children,

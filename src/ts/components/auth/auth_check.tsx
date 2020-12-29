@@ -6,20 +6,16 @@ import { Link, withRouter } from "react-router-dom";
 
 import { authCheck } from "../../actions";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
+interface IProps {
   auth: Auth;
-}
-
-interface AppDispatchProperties {
   authCheck;
   history;
 }
 
-export class AuthCheck extends React.Component<
-  AppStateProperties & AppDispatchProperties,
-  any
-> {
+interface IState {
+}
+
+export class AuthCheck extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }
@@ -27,10 +23,6 @@ export class AuthCheck extends React.Component<
   componentWillMount() {
     this.checkAuth();
   }
-//
-//   componentWillUpdate() {
-//     this.checkAuth();
-//   }
 
   async checkAuth() {
     await this.props.authCheck();

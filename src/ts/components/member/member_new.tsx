@@ -7,15 +7,9 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import FileUpload from "../common/file_upload";
 import { postMemberPost } from "../../actions";
-import { Post } from "../../store/StoreTypes";
 import { URL } from "../../common/constants/url";
-const selector = formValueSelector('memberNewForm')
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-}
-
-interface AppDispatchProperties {
+interface IProps {
   postMemberPost;
   history;
   handleSubmit;
@@ -28,11 +22,36 @@ interface AppDispatchProperties {
 interface IState {
 }
 
-export class MemberNew extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class MemberNew extends React.Component<IProps, IState> {
+
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.setImageList = this.setImageList.bind(this);
+  }
+
+  async onSubmit(values): Promise<void> {
+    // 入力フォームをサーバーに送信する
+    await this.props.postMemberPost(values);
+    // マイページTOPに画面遷移する
+    this.props.history.push(URL.MEMBER);
+  }
+
+  // 画像アップロード後のデータ更新処理
+  setImageList(data) {
+    const imageList = _.map(data, (image) => {
+      return {
+        imageId: image.imageId,
+        imageUrl: image.imageUrlSquare
+      }
+    });
+    if (!this.props.memberNewForm.values.imageList) {
+      this.props.memberNewForm.values.imageList = [];
+    }
+    // 画像を追加
+    this.props.memberNewForm.values.imageList = _.concat(this.props.memberNewForm.values.imageList, imageList);
+    // TODO 自動でレンダリングされないので回避
+    this.forceUpdate();
   }
 
   renderField(field): JSX.Element {
@@ -54,26 +73,6 @@ export class MemberNew extends React.Component<AppStateProperties & AppDispatchP
     );
   }
 
-  async onSubmit(values): Promise<void> {
-    await this.props.postMemberPost(values);
-    this.props.history.push(URL.MEMBER);
-  }
-
-  setImageList(data) {
-    const imageList = _.map(data, (image) => {
-      return {
-        imageId: image.imageId,
-        imageUrl: image.imageUrlSquare
-      }
-    });
-    // 画像を追加
-    if (!this.props.memberNewForm.values.imageList) {
-      this.props.memberNewForm.values.imageList = [];
-    }
-    this.props.memberNewForm.values.imageList = _.concat(this.props.memberNewForm.values.imageList, imageList);
-    this.forceUpdate();
-  }
-
   render(): JSX.Element {
     // pristineは、フォームが未入力状態の場合にtrueを返す
     // submittingは、既にSubmit済みの場合にtrueを返す
@@ -81,10 +80,6 @@ export class MemberNew extends React.Component<AppStateProperties & AppDispatchP
 
     if (!memberNewForm) {
       return null;
-    }
-
-    if (!memberNewForm.values) {
-      memberNewForm.values = {}
     }
 
     const style = {
@@ -119,7 +114,7 @@ export class MemberNew extends React.Component<AppStateProperties & AppDispatchP
                   label="画像"
                   name="imageList"
                   component={FileUpload}
-                  props={{ imageList: memberNewForm.values.imageList }}
+                  props={{ imageList: memberNewForm.values && memberNewForm.values.imageList }}
                   setImageList={this.setImageList}
                 />
               </div>
@@ -146,11 +141,11 @@ const validate = (values) => {
   const errors = {
     title: "",
     text: "",
-    imageList: "",
+//     imageId: "",
   };
   if (!values.title) errors.title = "タイトルを入力して下さい";
   if (!values.text) errors.text = "本文を入力して下さい";
-  if (!values.imageList) errors.imageList = "画像を選択して下さい";
+//   if (!values.imageId) errors.imageId = "画像を選択して下さい";
   return errors;
 };
 

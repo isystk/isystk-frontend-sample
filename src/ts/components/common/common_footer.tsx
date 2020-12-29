@@ -4,9 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from 'jquery';
 import { URL } from "../../common/constants/url";
 
-// import { toggleMenu, closeMenu } from "../../actions";
-
-interface AppDispatchProperties {
+interface IProps {
     toggleMenu;
     closeMenu;
 }
@@ -14,7 +12,7 @@ interface IState {
     scrollTop: number;
 }
 
-export class CommonFooter extends React.Component<AppDispatchProperties, IState> {
+export class CommonFooter extends React.Component<IProps, IState> {
 
  constructor(props) {
     super(props);

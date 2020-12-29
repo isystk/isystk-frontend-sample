@@ -11,11 +11,7 @@ import { getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
 import { Post } from "../../store/StoreTypes";
 import { URL } from "../../common/constants/url";
 
-// ↓ 表示用のデータ型
-interface AppStateProperties {
-}
-
-interface AppDispatchProperties {
+interface IProps {
   getMemberPost;
   deleteMemberPost;
   putMemberPost;
@@ -31,7 +27,8 @@ interface AppDispatchProperties {
 interface IState {
 }
 
-export class MemberShow extends React.Component<AppStateProperties & AppDispatchProperties, IState> {
+export class MemberShow extends React.Component<IProps, IState> {
+
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,8 +37,38 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
   }
 
   async componentDidMount() {
+    // パスの投稿IDから自分の投稿データを取得する
     const { id } = this.props.match.params;
     if (id) await this.props.getMemberPost(id);
+  }
+
+  async onDeleteClick() {
+    // 投稿を削除する
+    const { id } = this.props.match.params;
+    await this.props.deleteMemberPost(id);
+    // マイページTOPに画面遷移する
+    this.props.history.push(URL.MEMBER);
+  }
+
+  async onSubmit(values): Promise<void> {
+    // 入力フォームをサーバーに送信する
+    await this.props.putMemberPost(values);
+    // マイページTOPに画面遷移する
+    this.props.history.push(URL.MEMBER);
+  }
+
+  // 画像アップロード後のデータ更新処理
+  setImageList(data) {
+    const imageList = _.map(data, (image) => {
+      return {
+        imageId: image.imageId,
+        imageUrl: image.imageUrlSquare
+      }
+    });
+    // 画像を追加
+    this.props.memberPost.imageList = _.concat(this.props.memberPost.imageList, imageList);
+    // TODO 自動でレンダリングされないので回避
+    this.forceUpdate();
   }
 
   renderField(field): JSX.Element {
@@ -70,36 +97,10 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
     );
   }
 
-  async onDeleteClick() {
-    const { id } = this.props.match.params;
-    await this.props.deleteMemberPost(id);
-    this.props.history.push(URL.MEMBER);
-  }
-
-  async onSubmit(values): Promise<void> {
-    await this.props.putMemberPost(values);
-    this.props.history.push(URL.MEMBER);
-  }
-
-  setImageList(data) {
-    const imageList = _.map(data, (image) => {
-      return {
-        imageId: image.imageId,
-        imageUrl: image.imageUrlSquare
-      }
-    });
-    // 画像を追加
-    this.props.memberPost.imageList = _.concat(this.props.memberPost.imageList, imageList);
-    this.forceUpdate();
-  }
-
   render(): JSX.Element {
     // pristineは、フォームが未入力状態の場合にtrueを返す
     // submittingは、既にSubmit済みの場合にtrueを返す
-    const { handleSubmit, pristine, submitting, invalid } = this.props;
-
-    const { memberPost } = this.props;
-    if (!memberPost) return null;
+    const { handleSubmit, pristine, submitting, invalid, memberPost } = this.props;
 
     const style = {
       margin: 12,
@@ -134,7 +135,7 @@ export class MemberShow extends React.Component<AppStateProperties & AppDispatch
                   label="画像"
                   name="imageList"
                   component={FileUpload}
-                  props={{ imageList: memberPost.imageList }}
+                  props={{ imageList: memberPost && memberPost.imageList }}
                   setImageList={this.setImageList}
                 />
               </div>

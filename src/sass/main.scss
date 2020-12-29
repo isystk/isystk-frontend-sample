@@ -130,7 +130,8 @@ input, textarea {
 textarea {
   line-height:1.6em;
 }
-input[type=submit] {
+input[type=submit],
+input[type=button]{
   width:100px;
   cursor:pointer;
   font-size:100%;
