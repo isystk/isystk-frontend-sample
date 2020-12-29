@@ -17,9 +17,6 @@ import reducers from "./reducers";
 import Layout from "./components/layout";
 import PostsIndex from "./components/posts/posts_index";
 import PostsShow from "./components/posts/posts_show";
-import EventsIndex from "./components/events/events_index";
-import EventsNew from "./components/events/events_new";
-import EventsShow from "./components/events/events_show";
 import MemberIndex from "./components/member/member_index";
 import MemberNew from "./components/member/member_new";
 import MemberShow from "./components/member/member_show";
@@ -47,18 +44,15 @@ const Main = () => (
     <Switch>
       <Route exact path={URL.HOME} component={PostsIndex} />
       <Route path={`${URL.POSTS}/:id`} component={PostsShow} />
-      <Route exact path="/events/" component={EventsIndex} />
-      <Route path="/events/new" component={EventsNew} />
-      <Route path="/events/:id" component={EventsShow} />
       <Route path={URL.LOGIN} component={AuthLogin} />
+      <Route exact path={URL.ENTRY_REGIST} component={EntryRegist} />
       <Route path={URL.ENTRY_REGIST_CONFIRM} component={EntryRegistConfirm} />
       <Route path={URL.ENTRY_REGIST_MAIL} component={EntryRegistMail} />
       <Route path={`${URL.ENTRY_REGIST}/:token`} component={EntryRegistComplete} />
-      <Route path={URL.ENTRY_REGIST} component={EntryRegist} />
+      <Route exact path={URL.ENTRY_REMIND} component={EntryRemind} />
+      <Route path={URL.ENTRY_REMIND_MAIL} component={EntryRemindMail} />
       <Route path={URL.ENTRY_REMIND_CONFIG_COMPLETE} component={EntryRemindConfigComplete} />
       <Route path={`${URL.ENTRY_REMIND_CONFIG}/:token`} component={EntryRemindConfig} />
-      <Route path={URL.ENTRY_REMIND_MAIL} component={EntryRemindMail} />
-      <Route path={URL.ENTRY_REMIND} component={EntryRemind} />
 
       { /* ★ログインユーザー専用ここから */ }
       <AuthCheck>

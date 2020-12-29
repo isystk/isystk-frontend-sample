@@ -1,6 +1,5 @@
 export * from './consts';
 export * from './posts';
-export * from './events';
 export * from './entry';
 export * from './remind';
 export * from './side_menu';

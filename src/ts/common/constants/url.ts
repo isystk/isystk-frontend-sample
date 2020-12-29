@@ -16,6 +16,7 @@ export const URL = {
   ENTRY_REGIST: "/entry/regist",
   ENTRY_REGIST_CONFIRM: "/entry/regist/confirm",
   ENTRY_REGIST_MAIL: "/entry/regist/mail",
+  ENTRY_REGIST_COMPLETE: "/entry/regist/complete",
   /** パスワード忘れ */
   ENTRY_REMIND: "/entry/remind",
   ENTRY_REMIND_MAIL: "/entry/remind/mail",

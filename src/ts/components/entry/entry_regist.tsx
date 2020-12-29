@@ -270,7 +270,7 @@ const validate = (values) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     consts: state.consts,
-    initialValues: state.users,
+    initialValues: state.entry,
   };
 };
 

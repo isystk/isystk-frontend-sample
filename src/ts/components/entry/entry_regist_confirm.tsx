@@ -6,17 +6,17 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import * as _ from "lodash";
 import { readConst } from "../../actions";
+import { URL } from "../../common/constants/url";
 
 import { registMail } from "../../actions";
 import { Consts, User } from "../../store/StoreTypes";
 
-// ↓ 表示用のデータ型
 interface IProps {
   consts: {
     sex: Consts,
     prefecture: Consts,
   };
-  user: User;
+  entry: User;
   readConst;
   registMail;
   history;
@@ -50,7 +50,7 @@ export class EntryRegistConfirm extends React.Component<IProps, IState> {
   render(): JSX.Element {
     // pristineは、フォームが未入力状態の場合にtrueを返す
     // submittingは、既にSubmit済みの場合にtrueを返す
-    const { handleSubmit, pristine, submitting, invalid, user } = this.props;
+    const { handleSubmit, pristine, submitting, invalid, consts, entry } = this.props;
     const style = {
       margin: 12,
     };
@@ -64,45 +64,45 @@ export class EntryRegistConfirm extends React.Component<IProps, IState> {
           <div className="entry-content">
             <div>
               <p><label>お名前</label></p>
-              {this.renderFields('姓', user.familyName)}
-              {this.renderFields('名', user.name)}
+              {this.renderFields('姓', entry.familyName)}
+              {this.renderFields('名', entry.name)}
             </div>
             <div>
               <p><label>お名前カナ</label></p>
-              {this.renderFields('セイ', user.familyNameKana)}
-              {this.renderFields('メイ', user.nameKana)}
+              {this.renderFields('セイ', entry.familyNameKana)}
+              {this.renderFields('メイ', entry.nameKana)}
             </div>
             <div>
-              {this.renderFields('メールアドレス', user.email)}
+              {this.renderFields('メールアドレス', entry.email)}
             </div>
             <div>
-              {this.renderFields('性別', user.sex && ( () => _.mapKeys(this.props.consts.sex, "code")[user.sex].text) )}
+              {this.renderFields('性別', entry.sex && _.mapKeys(consts.sex.data, "code")[entry.sex].text)}
             </div>
             <div>
-              {this.renderFields('郵便番号', user.zip)}
-              {this.renderFields('都道府県', user.prefectureId && ( () => _.mapKeys(this.props.consts.prefecture, "code")[user.prefectureId].text) )}
-              {this.renderFields('市区町村', user.area)}
-              {this.renderFields('町名番地', user.address)}
-              {this.renderFields('建物名', user.building)}
+              {this.renderFields('郵便番号', entry.zip)}
+              {this.renderFields('都道府県', entry.prefectureId && _.mapKeys(consts.prefecture.data, "code")[entry.prefectureId].text)}
+              {this.renderFields('市区町村', entry.area)}
+              {this.renderFields('町名番地', entry.address)}
+              {this.renderFields('建物名', entry.building)}
             </div>
             <div>
-              {this.renderFields('電話番号', user.tel)}
+              {this.renderFields('電話番号', entry.tel)}
             </div>
             <div>
-              {this.renderFields('誕生日', user.birthday)}
+              {this.renderFields('誕生日', entry.birthday)}
             </div>
             <RaisedButton
               label="戻る"
               style={style}
-              containerElement={<Link to="/entry/regist">戻る</Link>}
+              containerElement={<Link to={URL.ENTRY_REGIST}>戻る</Link>}
             />
             <RaisedButton
               label="登録する"
               type="button"
               onClick={async (e)=> {
                 e.preventDefault();
-                await this.props.registMail(this.props.user);
-                this.props.history.push("/entry/regist/complete/");
+                await this.props.registMail(this.props.entry);
+                this.props.history.push(URL.ENTRY_REGIST_COMPLETE);
               }}
               style={style}
             />
@@ -116,7 +116,7 @@ export class EntryRegistConfirm extends React.Component<IProps, IState> {
 const mapStateToProps = (state, ownProps) => {
   return {
     consts: state.consts,
-    user: state.users,
+    entry: state.entry,
   };
 };
 

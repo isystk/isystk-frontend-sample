@@ -35,16 +35,6 @@ export interface PostTagNames {
   tagName: string;
 }
 
-export interface Events {
-  events?: Event[];
-}
-
-export interface Event {
-  id: number;
-  title: string;
-  body: string;
-}
-
 export interface SideMenu {
   isOpen: boolean;
 }

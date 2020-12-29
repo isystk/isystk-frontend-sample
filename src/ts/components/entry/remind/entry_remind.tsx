@@ -85,7 +85,7 @@ export class EntryRemind extends React.Component<IProps, IState> {
               <RaisedButton
                 label="キャンセル"
                 style={style}
-                containerElement={<Link to="/login">キャンセル</Link>}
+                containerElement={<Link to={URL.LOGIN}>キャンセル</Link>}
               />
               <RaisedButton
                 label="送信する"
