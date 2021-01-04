@@ -255,87 +255,6 @@ table td {
   margin: auto;
 }
 
-body.column1 aside.side-left,
-body.column1 aside.side-right,
-body.column2.side-left aside.side-right,
-body.column2.side-right aside.side-left{
-display:none;
-}
-body.column3 aside.side-left{
-display:none;
-}
-
-/* 画面サイズが992pxより大きい場合に以下を適用 */
-@media screen and (min-width:992px){
-
-  body.column2 aside.side-left .title,
-  body.column3 aside.side-left .title{
-    margin-left:5px;
-  }
-  
-  body.column2 aside.side-right .title,
-  body.column3 aside.side-right .title{
-    margin-right:5px;
-  }
-  
-  body.column2 .side-left{
-    width:270px;
-    margin-top: 60px;
-    margin-left: 60px;
-  }
-  body.column2 .side-right{
-    width:270px;
-    margin-top: 60px;
-    margin-right: 60px;
-  }
-  body.column3 .side-left{
-    width:250px;
-    margin-top: 60px;
-    margin-left: 60px;
-  }
-  body.column3 .side-right{
-    width:250px;
-    margin-top: 60px;
-    margin-right: 60px;
-  }
-  body.column2 .contents>.wrapper,
-  body.column3 .contents>.wrapper{
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
-  }
-  body.column2 .side-left,
-  body.column3 .side-left{
-    -webkit-box-ordinal-group:0;
-    -ms-flex-order:-1;
-    order:-1;
-  }
-  
-  body.column2 main,
-  body.column3 main{
-    -webkit-box-flex:1;
-    -ms-flex:1 1 auto;
-    flex:1 1 auto;
-  }
-  
-  body.column3 aside.side-left{
-    display:block;
-  }
-  body.column3 main{
-    padding: 0 16px 0 16px;
-  }
-  
-  body.column2 .side-left,
-  body.column2 .side-right,
-  body.column3 .side-left,
-  body.column3 .side-right{
-    -webkit-box-flex:0;
-    -ms-flex:0 0 auto;
-    flex:0 0 auto;
-  }
-  
-}  
-
 /*--------------------------------------------------------------------
   3 ヘッダー
 --------------------------------------------------------------------*/
@@ -1933,8 +1852,32 @@ div.reply a {
   
 }
   
-/* Wordpress管理者用ヘッダーの追従を解除 */
-#wpadminbar {
-  position: absolute !important;
-  z-index: 0 !important;
+/* react-slick 画像スライダー */
+.slick-slider {
+margin-bottom: 30px;
+}
+.slick-slider .slick-prev {
+z-index: 1;
+left: 20px;
+}
+.slick-slider .slick-prev:before {
+content: '＜';
+}
+.slick-slider .slick-next {
+z-index: 1;
+right: 20px;
+}
+.slick-slider .slick-next:before {
+content: '＞';
+}
+.slick-slider ul.slick-dots {
+}
+.slick-slider ul.slick-dots li{
+width: 16px;
+height: 16px;
+background-color: #e6e6e6;
+border-radius: 8px;
+}
+.slick-slider ul.slick-dots li.slick-active{
+background-color: #666;
 }

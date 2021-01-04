@@ -23,6 +23,38 @@ module.exports = {
         test: /\.tsx?$/,
         loader: "awesome-typescript-loader",
       },
+
+      /* ↓ここから react-slick で使用 */
+      {
+        test: /\.(sass|less|css)$/,
+        loaders: ['style-loader', 'css-loader', 'less-loader']
+      },
+
+      {
+        test: /\.(jpg|jpeg|gif|png|svg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            publicPath: 'images',
+            outputPath: 'images',
+          }
+        }
+      },
+
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            publicPath: 'fonts',
+            outputPath: 'fonts',
+          }
+        }
+      },
+      /* ↑ここまで react-slick で使用 */
+
     ],
   },
 

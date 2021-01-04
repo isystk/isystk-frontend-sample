@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getPost } from "../../actions";
 import { Post } from "../../store/StoreTypes";
 import { URL } from "../../common/constants/url";
+import { SimpleSlider } from "../common/slider";
 
 // ↓ 表示用のデータ型
 interface IProps {
@@ -60,11 +61,13 @@ export class PostsShow extends React.Component<IProps, IState> {
                 <div className="entry-header">
                   <h1 className="entry-title">{post && post.title}</h1>
                   <div className="article-img">
-                    {post && (
-                      _.map(post.imageList, (image, index) => (
-                        <img alt="sample1" width="644" src={image.imageUrl} key={index} />
-                      ))
-                    )}
+                    <SimpleSlider>
+                      {post && (
+                        _.map(post.imageList, (image, index) => (
+                          <img alt="sample1" width="644" src={image.imageUrl} key={index} />
+                        ))
+                      )}
+                    </SimpleSlider>
                   </div>
                   <div className=" clearfix"></div>
                 </div>

@@ -13,11 +13,15 @@ interface IProps {
 }
 
 interface IState {
+  loaded: boolean
 }
 
 export class AuthCheck extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
+    this.state = {
+      loaded: false
+    }
   }
 
   componentWillMount() {
@@ -27,6 +31,8 @@ export class AuthCheck extends React.Component<IProps, IState> {
   async checkAuth() {
     await this.props.authCheck();
 
+    this.setState({ loaded: true });
+
     // ログインしてなければログイン画面へとばす
     if (!this.props.auth.isLogin) {
       this.props.history.push("/login?redirectUrl="+ window.location);
@@ -34,9 +40,14 @@ export class AuthCheck extends React.Component<IProps, IState> {
   }
 
   render() {
-    return (
-      <React.Fragment>{this.props.children}</React.Fragment>
-    );
+
+    if (!this.state.loaded) {
+      return (<React.Fragment>Loading...</React.Fragment>)
+    } else {
+      return (
+        <React.Fragment>{this.props.children}</React.Fragment>
+      );
+    }
   }
 }
 
