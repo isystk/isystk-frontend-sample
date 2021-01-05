@@ -122,14 +122,6 @@ export class PostsShow extends React.Component<IProps, IState> {
 
             </main>
 
-            {//<!-- サイドメニュー -->
-            }
-            <aside className="side-left" >
-              <div id="sticky">
-                <div id="sticky-navigator"></div>
-              </div>
-            </aside>
-
           </div>
         </div>
 
