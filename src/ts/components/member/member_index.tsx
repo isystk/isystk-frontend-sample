@@ -33,20 +33,33 @@ export class MemberIndex extends React.Component<IProps, IState> {
   }
 
   renderPosts(): JSX.Element {
+    const photoStyle = {
+      display: 'flex',
+      flexDirection: 'row',
+    }
+
     return _.map(this.props.posts, (post) => {
-      return <TableRow key={post.postId}>
-        <TableRowColumn width="60px">{post.postId}</TableRowColumn>
-        <TableRowColumn width="120px">{post.title}</TableRowColumn>
-        <TableRowColumn>{
-          _.map(post.imageList, (image, index) => (
-            <img src={image.imageUrl} width="100px" key={`image${index}`} />
-          ))
-        }</TableRowColumn>
-        <TableRowColumn width="120px">{post.registTime}</TableRowColumn>
+      return (
+      <TableRow key={post.postId}>
+        <TableRowColumn width="30px">{post.postId}</TableRowColumn>
+        <TableRowColumn width="100px">{post.title}</TableRowColumn>
+        <TableRowColumn>
+          <div style={photoStyle as React.CSSProperties}>
+          {
+            _.map(post.imageList, (image, index) => (
+              <span style={{ marginLeft: '10px' }}>
+                <img src={image.imageUrl} width="100px" key={`image${index}`} />
+              </span>
+            ))
+          }
+          </div>
+        </TableRowColumn>
+        <TableRowColumn width="100px">{post.registTime}</TableRowColumn>
         <TableRowColumn width="100px">
-          <Link to={`${URL.MEMBER_POSTS}/p${post.postId}`}>詳細</Link>
+          <input type="button" onClick={(e)=> { e.preventDefault(); this.props.history.push(`${URL.MEMBER_POSTS}/p${post.postId}`); } } value="詳細" />
         </TableRowColumn>
       </TableRow>
+      )
     });
   }
 
@@ -64,10 +77,10 @@ export class MemberIndex extends React.Component<IProps, IState> {
             <Table>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
-                  <TableRowColumn width="60px">ID</TableRowColumn>
-                  <TableRowColumn width="120px">タイトル</TableRowColumn>
+                  <TableRowColumn width="30px">ID</TableRowColumn>
+                  <TableRowColumn width="100px">タイトル</TableRowColumn>
                   <TableRowColumn>画像</TableRowColumn>
-                  <TableRowColumn width="120px">投稿日時</TableRowColumn>
+                  <TableRowColumn width="100px">投稿日時</TableRowColumn>
                   <TableRowColumn width="100px"><br/></TableRowColumn>
                 </TableRow>
               </TableHeader>
