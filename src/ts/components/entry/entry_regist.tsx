@@ -20,6 +20,7 @@ interface IProps {
   readConst;
   registConfirm;
   history;
+  error;
   handleSubmit;
   pristine;
   submitting;
@@ -67,7 +68,7 @@ export class EntryRegist extends React.Component<IProps, IState> {
   render(): JSX.Element {
     // pristineは、フォームが未入力状態の場合にtrueを返す
     // submittingは、既にSubmit済みの場合にtrueを返す
-    const { handleSubmit, pristine, submitting, invalid } = this.props;
+    const { error, handleSubmit, pristine, submitting, invalid } = this.props;
     const style = {
       margin: 12,
     };
@@ -80,6 +81,7 @@ export class EntryRegist extends React.Component<IProps, IState> {
           </div>
           <div className="entry-content">
             <form onSubmit={handleSubmit(this.onSubmit)}>
+              {error && <div className="error">{error}</div>}
               <div>
                 <p><label>お名前</label></p>
                 <Field

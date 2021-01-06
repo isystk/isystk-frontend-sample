@@ -1,33 +1,34 @@
 import axios from "axios";
 import * as _ from "lodash";
+import { SubmissionError } from 'redux-form'
 
 const get = async (url: string): Promise<any> => {
-//   console.log('Request:%s', url);
-  const response = await axios.get(url);
-//   console.log('Response:%s', JSON.stringify(response));
-  return response;
+  return await request('get', url);
 };
 
 const post = async (url: string, values?: any, config?: any): Promise<any> => {
-//   console.log('Request:%s', url);
-  const response = await axios.post(url, jsonToForm(values, new FormData()), config);
-//   console.log('Response:%s', JSON.stringify(response) );
-  return response;
+  return await request('post', url, values, config);
 };
 
 const put = async (url: string, values?: any, config?: any): Promise<any> => {
-//   console.log('Request:%s', url);
-  const response = await axios.put(url, jsonToForm(values, new FormData()), config);
-//   console.log('Response:%s', JSON.stringify(response) );
-  return response;
+  return await request('put', url, values, config);
 };
 
-const del = async (url: string): Promise<any> => {
+const del = async (url: string, values?: any, config?: any): Promise<any> => {
+  return await request('delete', url, values, config);
+};
+
+const request = async (method: string, url: string, values?: any, config?: any): Promise<any> => {
 //   console.log('Request:%s', url);
-  const response = await axios.delete(url);
+  const response = await axios[method](url, jsonToForm(values, new FormData()), config)
+    .catch(function (error) {
+      if (error.response) {
+        throw new SubmissionError({ _error: error.response.data.message })
+      }
+    });
 //   console.log('Response:%s', JSON.stringify(response) );
   return response;
-};
+}
 
 const jsonToForm = (params, formData, name = '') => {
   if (_.isArray(params)) formatArray(params, formData, name);

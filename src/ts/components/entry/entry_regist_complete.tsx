@@ -58,3 +58,4 @@ export default connect(
   null,
   mapDispatchToProps
 )(EntryRegistComplete);
+
