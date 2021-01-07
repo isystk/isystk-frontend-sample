@@ -12,25 +12,25 @@ import {
   READ_POST,
 } from "../actions/index";
 
+const initialState: Posts = {
+};
+
 export function PostsReducer(
-  posts: Posts,
+  state = initialState,
   action: PostsAppAction
 ): Posts {
-  if (typeof posts == "undefined") {
-    return {};
-  }
 
   switch (action.type) {
     case READ_POST:
       const data = action.response.data.data[0];
-      return { ...posts, [data.postId]: data };
+      return { ...state, [data.postId]: data };
     case READ_POSTS:
       return _.mapKeys(action.response.data.data, "postId");
     default:
-      return posts;
+      return state;
   }
 
-  return posts;
+  return state;
 }
 
 export default PostsReducer;

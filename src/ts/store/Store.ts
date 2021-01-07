@@ -6,28 +6,34 @@
 
 import { combineReducers, createStore, ReducersMapObject } from "redux";
 
+import { AuthReducer } from "../reducers/auth";
 import { ConstsReducer } from "../reducers/consts";
+import { EntryReducer } from "../reducers/entry";
+import { MemberPostsReducer } from "../reducers/member_posts";
 import { PartsReducer } from "../reducers/parts";
 import { PostsReducer } from "../reducers/posts";
-import { MemberPostsReducer } from "../reducers/member_posts";
-import { EntryReducer } from "../reducers/entry";
+import { RemindReducer } from "../reducers/remind";
 
 const reducers: ReducersMapObject = {
+  AuthReducer,
   ConstsReducer,
+  EntryReducer,
+  MemberPostsReducer,
   PartsReducer,
   PostsReducer,
-  MemberPostsReducer,
-  EntryReducer,
+  RemindReducer,
 };
 
 declare let window: any;
 
 const rootReducer = combineReducers({
+  AuthReducer,
   ConstsReducer,
+  EntryReducer,
+  MemberPostsReducer,
   PartsReducer,
   PostsReducer,
-  MemberPostsReducer,
-  EntryReducer,
+  RemindReducer,
 });
 
 export default createStore(

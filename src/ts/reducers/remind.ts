@@ -11,22 +11,23 @@ import {
   REMIND_CHECK_OK,
 } from "../actions/index";
 
+const initialState: Remind = {
+  isValid: false
+};
+
 export function RemindReducer(
-  remind: Remind,
+  state = initialState,
   action: RemindAppAction
 ): Remind {
-  if (typeof remind == "undefined") {
-    return {isValid: false};
-  }
 
   switch (action.type) {
     case REMIND_CHECK_OK:
       return {isValid: true};
     default:
-      return remind;
+      return state;
   }
 
-  return remind;
+  return state;
 }
 
 export default RemindReducer;

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
 
 import { readPosts, showMv, hideMv } from "../../actions";
-import { Posts, Post } from "../../store/StoreTypes";
+import { Posts } from "../../store/StoreTypes";
 
 interface IProps {
   posts: Posts;

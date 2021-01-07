@@ -11,23 +11,23 @@ import {
   CREATE_USER,
 } from "../actions/index";
 
+const initialState: User = {
+};
+
 export function EntryReducer(
-  user: User,
+  state = initialState,
   action: EntryAppAction
 ): User {
-  if (typeof user == "undefined") {
-    return {};
-  }
 
   switch (action.type) {
     case CREATE_USER:
       const data = action.values;
       return data;
     default:
-      return user;
+      return state;
   }
 
-  return user;
+  return state;
 }
 
 export default EntryReducer;

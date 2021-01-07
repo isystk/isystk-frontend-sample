@@ -2,7 +2,6 @@
 // また、Reducerは、前の状態とアクションを取り、次の状態を返す純粋な関数です。
 
 import { Reducer } from "redux";
-import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
 import { Consts } from "../store/StoreTypes";
@@ -11,22 +10,22 @@ import {
   READ_CONSTS,
 } from "../actions/index";
 
+const initialState: Consts = {
+};
+
 export function ConstsReducer(
-  consts: Consts,
+  state = initialState,
   action: ConstsAppAction
 ): Consts {
-  if (typeof consts == "undefined") {
-    return {};
-  }
 
   switch (action.type) {
     case READ_CONSTS:
       return _.mapKeys(action.response.data.data, "name");
     default:
-      return consts;
+      return state;
   }
 
-  return consts;
+  return state;
 }
 
 export default ConstsReducer;

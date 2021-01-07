@@ -2,25 +2,24 @@ import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
+import { URL } from "../common/constants/url";
 import CommonHeader from "./common/common_header";
 import CommonFooter from "./common/common_footer";
-import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
 import { Auth, Parts } from "../store/StoreTypes";
-import { URL } from "../common/constants/url";
+
+import { authCheck, authLogout } from "../actions";
 
 interface IProps {
   auth: Auth;
   parts: Parts;
   authCheck;
   authLogout;
-  toggleMenu;
-  closeMenu;
 }
 
 interface IState {
 }
 
-export class Layout extends React.Component<IProps, IState> {
+class Layout extends React.Component<IProps, IState> {
 
   constructor(props) {
     super(props);
@@ -59,7 +58,7 @@ export class Layout extends React.Component<IProps, IState> {
 
     return (
       <React.Fragment>
-        <CommonHeader auth={this.props.auth} authLogout={this.props.authLogout} />
+        <CommonHeader />
 
         {
           (this.props.parts.isShowMv) &&
@@ -102,11 +101,11 @@ export class Layout extends React.Component<IProps, IState> {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.auth,
-    parts: state.parts
+    parts: state.parts,
+    auth: state.auth
   };
 };
 
-const mapDispatchToProps = { authCheck, authLogout, toggleMenu, closeMenu };
+const mapDispatchToProps = { authCheck, authLogout };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

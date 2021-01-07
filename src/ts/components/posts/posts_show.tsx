@@ -1,6 +1,5 @@
 import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import { Field, reduxForm } from "redux-form";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

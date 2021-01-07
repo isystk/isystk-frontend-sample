@@ -1,8 +1,6 @@
 // Reducerは、Stateの状態をデザインして、アクションをハンドリングします。
 // また、Reducerは、前の状態とアクションを取り、次の状態を返す純粋な関数です。
 
-import { Reducer } from "redux";
-import * as object_assign from "object-assign";
 import * as _ from "lodash";
 
 import { Auth } from "../store/StoreTypes";
@@ -13,13 +11,14 @@ import {
   AUTH_LOGOUT,
 } from "../actions/index";
 
+const initialState: Auth = {
+  isLogin: false
+};
+
 export function AuthReducer(
-  auth: Auth,
+  state = initialState,
   action: AuthAppAction
 ): Auth {
-  if (typeof auth == "undefined") {
-    return {isLogin: false};
-  }
 
   switch (action.type) {
     case AUTH_CHECK:
@@ -39,10 +38,10 @@ export function AuthReducer(
     case AUTH_LOGOUT:
       return { isLogin: false };
     default:
-      return auth;
+      return state;
   }
 
-  return auth;
+  return state;
 }
 
 export default AuthReducer;

@@ -77,5 +77,5 @@ ReactDom.render(
       </Router>
     </Provider>
   </MuiThemeProvider>,
-  document.getElementById("appContainer")
+  document.getElementById("root")
 );

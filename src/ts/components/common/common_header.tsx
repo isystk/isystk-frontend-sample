@@ -96,12 +96,12 @@ class CommonHeader extends React.Component<IProps, IState> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { memberNewForm } = state.form;
   return {
-    parts: state.parts
+    parts: state.parts,
+    auth: state.auth
   };
 };
 
-const mapDispatchToProps = { toggleMenu, closeMenu };
+const mapDispatchToProps = { toggleMenu, closeMenu, authLogout };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);
