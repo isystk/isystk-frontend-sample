@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Children } from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, FieldArray, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
@@ -8,7 +7,6 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import FileUpload from "../common/file_upload";
 import { getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
-import { Post } from "../../store/StoreTypes";
 import { URL } from "../../common/constants/url";
 
 interface IProps {

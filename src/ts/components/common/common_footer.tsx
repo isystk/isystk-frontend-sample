@@ -1,8 +1,11 @@
 import * as React from "react";
+import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from 'jquery';
 import { URL } from "../../common/constants/url";
+
+import { toggleMenu, closeMenu, authLogout } from "../../actions";
 
 interface IProps {
     toggleMenu;
@@ -12,7 +15,7 @@ interface IState {
     scrollTop: number;
 }
 
-export class CommonFooter extends React.Component<IProps, IState> {
+class CommonFooter extends React.Component<IProps, IState> {
 
  constructor(props) {
     super(props);
@@ -72,4 +75,6 @@ export class CommonFooter extends React.Component<IProps, IState> {
 }
 
 
-export default CommonFooter;
+const mapDispatchToProps = { toggleMenu, closeMenu };
+
+export default connect(null, mapDispatchToProps)(CommonFooter);

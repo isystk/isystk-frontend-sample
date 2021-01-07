@@ -2,7 +2,6 @@ export * from './consts';
 export * from './posts';
 export * from './entry';
 export * from './remind';
-export * from './side_menu';
 export * from './auth';
-export * from './main_visual';
+export * from './parts';
 export * from './member_posts';

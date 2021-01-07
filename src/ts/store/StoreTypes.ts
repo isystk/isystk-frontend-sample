@@ -35,12 +35,10 @@ export interface PostTagNames {
   tagName: string;
 }
 
-export interface SideMenu {
-  isOpen: boolean;
-}
-
-export interface MainVisual {
-  isShow: boolean;
+export interface Parts {
+  isShowMv: boolean;
+  isShowLoading: boolean;
+  isSideMenuOpen: boolean;
 }
 
 export interface Auth {

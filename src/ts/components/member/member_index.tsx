@@ -47,8 +47,8 @@ export class MemberIndex extends React.Component<IProps, IState> {
           <div style={photoStyle as React.CSSProperties}>
           {
             _.map(post.imageList, (image, index) => (
-              <span style={{ marginLeft: '10px' }}>
-                <img src={image.imageUrl} width="100px" key={`image${index}`} />
+              <span style={{ marginLeft: '10px' }} key={`image${index}`} >
+                <img src={image.imageUrl} width="100px" />
               </span>
             ))
           }

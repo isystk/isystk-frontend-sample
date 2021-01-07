@@ -5,21 +5,20 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { URL } from "../../common/constants/url";
 
-import { toggleMenu, authLogout } from "../../actions";
+import { toggleMenu, closeMenu, authLogout } from "../../actions";
 
 interface IProps {
     auth;
-    sideMenu;
-    closeMenu;
     toggleMenu;
+    closeMenu;
     authLogout;
+    parts;
 }
 
 interface IState {
-    isOpen: boolean;
 }
 
-export class CommonHeader extends React.Component<IProps, IState> {
+class CommonHeader extends React.Component<IProps, IState> {
 
   constructor(props) {
     super(props);
@@ -43,12 +42,12 @@ export class CommonHeader extends React.Component<IProps, IState> {
 
   render(): JSX.Element {
 
-    const {sideMenu} = this.props;
+    const { parts } = this.props;
 
-    let isOpen = sideMenu.isOpen;
-    let sideMenuClass = isOpen ? "open" : "";
-    let menuBtnClass = isOpen ? "menu-btn on" : "menu-btn";
-    let layerPanelClass = isOpen ? "on" : "";
+    let isSideMenuOpen = parts.isSideMenuOpen;
+    let sideMenuClass = isSideMenuOpen ? "open" : "";
+    let menuBtnClass = isSideMenuOpen ? "menu-btn on" : "menu-btn";
+    let layerPanelClass = isSideMenuOpen ? "on" : "";
 
     return (
       <React.Fragment>
@@ -64,7 +63,10 @@ export class CommonHeader extends React.Component<IProps, IState> {
                     </label>
                   </form>
                 </div>
-                <div className={menuBtnClass} onClick={this.props.toggleMenu}><figure></figure><figure></figure><figure></figure></div>
+                <div className={menuBtnClass} onClick={(e) => {
+                  e.preventDefault();
+                  this.props.toggleMenu();
+                }}><figure></figure><figure></figure><figure></figure></div>
                 <div id="side-menu" className={sideMenuClass}>
                   <div className="side-menu-header">
                     <div className="search">
@@ -93,4 +95,13 @@ export class CommonHeader extends React.Component<IProps, IState> {
   }
 }
 
-export default CommonHeader;
+const mapStateToProps = (state, ownProps) => {
+  const { memberNewForm } = state.form;
+  return {
+    parts: state.parts
+  };
+};
+
+const mapDispatchToProps = { toggleMenu, closeMenu };
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);

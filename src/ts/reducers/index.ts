@@ -4,9 +4,8 @@ import consts from "./consts";
 import posts from "./posts";
 import entry from "./entry";
 import remind from "./remind";
-import sideMenu from "./side_menu";
 import auth from "./auth";
-import mainVisual from "./main_visual";
+import parts from "./parts";
 import memberPosts from "./member_posts";
 
-export default combineReducers({ consts, posts, entry, remind, sideMenu, auth, mainVisual, memberPosts, form });
+export default combineReducers({ consts, posts, entry, remind, parts, auth, memberPosts, form });

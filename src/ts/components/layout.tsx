@@ -1,18 +1,16 @@
 import * as React from "react";
-import { Children } from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {CommonHeader, CommonFooter} from "./common";
+import CommonHeader from "./common/common_header";
+import CommonFooter from "./common/common_footer";
 import { authCheck, authLogout, toggleMenu, closeMenu } from "../actions";
-import { SideMenu, Auth, MainVisual } from "../store/StoreTypes";
+import { Auth, Parts } from "../store/StoreTypes";
 import { URL } from "../common/constants/url";
 
 interface IProps {
-  sideMenu: SideMenu;
   auth: Auth;
-  mainVisual: MainVisual;
+  parts: Parts;
   authCheck;
   authLogout;
   toggleMenu;
@@ -38,18 +36,6 @@ export class Layout extends React.Component<IProps, IState> {
     location.reload();
   }
 
-  // メインビジュアル
-  mainVisual(): JSX.Element {
-    if (this.props.mainVisual.isShow) {
-      return (<div className="mv">
-            <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
-            <div className="intro">
-              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
-            </div>
-        </div>);
-    }
-  }
-
   logoutLink(): JSX.Element {
 
     const {auth} = this.props;
@@ -73,9 +59,17 @@ export class Layout extends React.Component<IProps, IState> {
 
     return (
       <React.Fragment>
-        <CommonHeader sideMenu={this.props.sideMenu} toggleMenu={this.props.toggleMenu} closeMenu={this.props.closeMenu} auth={this.props.auth} authLogout={this.props.authLogout} />
+        <CommonHeader auth={this.props.auth} authLogout={this.props.authLogout} />
 
-        { this.mainVisual() }
+        {
+          (this.props.parts.isShowMv) &&
+          <div className="mv">
+            <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
+            <div className="intro">
+              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
+            </div>
+          </div>
+        }
 
         {// ナビゲーション（PC用）
         }
@@ -97,7 +91,10 @@ export class Layout extends React.Component<IProps, IState> {
           </div>
         </div>
 
-        <CommonFooter toggleMenu={this.props.toggleMenu} closeMenu={this.props.closeMenu} />
+        <CommonFooter />
+        {(this.props.parts.isShowLoading) &&
+          <div id="site_loader_overlay"><div className="site_loader_spinner" ></div></div>
+        }
       </React.Fragment>
     );
   }
@@ -105,9 +102,8 @@ export class Layout extends React.Component<IProps, IState> {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    sideMenu: state.sideMenu,
     auth: state.auth,
-    mainVisual: state.mainVisual
+    parts: state.parts
   };
 };
 

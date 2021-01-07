@@ -1,8 +1,9 @@
 import React from 'react'
-import axios from "axios";
+import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as _ from "lodash";
 import { API_ENDPOINT } from "../../common/constants/api";
 import { API } from "../../utilities";
+import { showLoading, hideLoading } from "../../actions";
 
 interface IProps {
   imageList;
@@ -11,6 +12,8 @@ interface IProps {
   type;
   meta;
   setImageList;
+  showLoading;
+  hideLoading;
 }
 
 interface IState {
@@ -27,26 +30,27 @@ class FileUpload extends React.Component<IProps, IState> {
 
   onChange(e) {
     // ファイル選択時に、サーバーにアップロードする。
-    this.fileUpload(e.target.files).then((response)=>{
+    this.fileUpload(e.target.files, (response)=>{
       // アップロードが完了したら画像IDを親コンポーネントにセットする。
       this.props.setImageList(response.data.data);
     })
   }
 
   // 画像アップロード処理
-  async fileUpload(files){
+  async fileUpload(files, callback){
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    let response = null;
+    this.props.showLoading();
     for(let file of files) {
-      response = await API.post(API_ENDPOINT.MEMBER_FILE_UPLOAD, {
+      let response = await API.post(API_ENDPOINT.MEMBER_FILE_UPLOAD, {
         'imageFile': file
       }, config);
+      callback(response);
     };
-    return response;
+    this.props.hideLoading();
   }
 
   render() {
@@ -69,19 +73,22 @@ class FileUpload extends React.Component<IProps, IState> {
         <input type="file"
               multiple
               onChange={this.onChange} />
+        <div style={{ margin: '10px 0', display: 'flex' }} >
         {
           _.map(this.props.imageList, (image, index) => (
-            <div key={`image${index}`}>
+            <div style={{ paddingLeft: '10px' }} key={`image${index}`}>
               <img src={image.imageUrl} width="100px" />
               <input type="hidden" name={`${fields.name}[${index}].imageId`} defaultValue={image.imageId}  />
             </div>
           ))
         }
+        </div>
       </React.Fragment>
    )
   }
 }
 
 
+const mapDispatchToProps = { showLoading, hideLoading };
 
-export default FileUpload
+export default connect(null, mapDispatchToProps)(FileUpload);
