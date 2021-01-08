@@ -23,7 +23,7 @@ export interface Post {
   registTimeYYYYMMDD: string;
   registTimeMMDD: string;
   imageList: PostImages[];
-  tagNameList: PostTagNames[];
+  tagList: PostTags[];
 }
 
 export interface PostImages {
@@ -31,7 +31,8 @@ export interface PostImages {
   imageUrl: string;
 }
 
-export interface PostTagNames {
+export interface PostTags {
+  tagId: number;
   tagName: string;
 }
 

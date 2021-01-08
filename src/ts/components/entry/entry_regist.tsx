@@ -17,6 +17,7 @@ interface IProps {
     sex: Consts,
     prefecture: Consts,
   };
+  entry: User;
   readConst;
   registConfirm;
   history;
@@ -68,7 +69,7 @@ export class EntryRegist extends React.Component<IProps, IState> {
   render(): JSX.Element {
     // pristineは、フォームが未入力状態の場合にtrueを返す
     // submittingは、既にSubmit済みの場合にtrueを返す
-    const { error, handleSubmit, pristine, submitting, invalid } = this.props;
+    const { error, handleSubmit, pristine, submitting, invalid, entry } = this.props;
     const style = {
       margin: 12,
     };
@@ -143,10 +144,9 @@ export class EntryRegist extends React.Component<IProps, IState> {
                         <label key={`sex${index}`}>
                           <Field
                             name="sex"
-                            value={e.code}
+                            value={`${e.code}`}
                             type="radio"
                             component="input"
-                            checked={true}
                             style={{width: '20px'}}
                           />{' '}
                           {e.text}
@@ -273,6 +273,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     consts: state.consts,
     initialValues: state.entry,
+    entry: state.entry,
   };
 };
 

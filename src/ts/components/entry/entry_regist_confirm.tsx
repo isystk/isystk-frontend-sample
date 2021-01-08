@@ -41,7 +41,7 @@ export class EntryRegistConfirm extends React.Component<IProps, IState> {
   }
 
   async onSubmit(values): Promise<void> {
-    await this.props.registMail(this.props.entry);
+    await this.props.registMail(values);
     this.props.history.push(URL.ENTRY_REGIST_COMPLETE);
   }
 
@@ -127,7 +127,8 @@ export class EntryRegistConfirm extends React.Component<IProps, IState> {
 const mapStateToProps = (state, ownProps) => {
   return {
     consts: state.consts,
-    entry: state.entry,
+    initialValues: state.entry,
+    entry: state.entry
   };
 };
 

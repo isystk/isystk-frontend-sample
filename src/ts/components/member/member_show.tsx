@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import * as _ from "lodash";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
+import Checkbox from "material-ui/Checkbox";
 import FileUpload from "../common/file_upload";
-import { getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
+import { readConst, getMemberPost, deleteMemberPost, putMemberPost } from "../../actions";
 import { URL } from "../../common/constants/url";
 
 interface IProps {
+  readConst;
   getMemberPost;
   deleteMemberPost;
   putMemberPost;
@@ -20,6 +22,7 @@ interface IProps {
   submitting;
   invalid;
   memberPost;
+  consts;
 }
 
 interface IState {
@@ -35,6 +38,9 @@ export class MemberShow extends React.Component<IProps, IState> {
   }
 
   async componentDidMount() {
+    
+    this.props.readConst();
+
     // パスの投稿IDから自分の投稿データを取得する
     const { id } = this.props.match.params;
     if (id) await this.props.getMemberPost(id);
@@ -50,7 +56,7 @@ export class MemberShow extends React.Component<IProps, IState> {
 
   async onSubmit(values): Promise<void> {
     // 入力フォームをサーバーに送信する
-    await this.props.putMemberPost(values);
+    await this.props.putMemberPost(this.props.memberPost);
     // マイページTOPに画面遷移する
     this.props.history.push(URL.MEMBER);
   }
@@ -70,11 +76,6 @@ export class MemberShow extends React.Component<IProps, IState> {
   }
 
   renderField(field): JSX.Element {
-    const style = {
-      textAlign: 'left' as const,
-      margin: 10
-    };
-
     const {
       input,
       label,
@@ -83,13 +84,36 @@ export class MemberShow extends React.Component<IProps, IState> {
     } = field;
     return (
       <React.Fragment>
-        <p style={style}>{label}</p>
+        <p>{label}</p>
         <TextField
           hintText={label}
           type={type}
           errorText={touched && error}
           {...input}
           fullWidth={true}
+        />
+      </React.Fragment>
+    );
+  }
+  
+  renderCheckbox(field): JSX.Element {
+
+    const {
+      input,
+      label,
+      type,
+      meta: { touched, error },
+      ...custom
+    } = field;
+
+    return (
+      <React.Fragment>
+        <Checkbox 
+          name={input.name}
+          label={label}
+          checked={custom.checked}
+          onCheck={input.onChange}
+          value={custom.code}
         />
       </React.Fragment>
     );
@@ -137,22 +161,54 @@ export class MemberShow extends React.Component<IProps, IState> {
                   setImageList={this.setImageList}
                 />
               </div>
-              <RaisedButton
-                label="キャンセル"
-                style={style}
-                containerElement={<Link to="/member">キャンセル</Link>}
-              />
-              <RaisedButton
-                label="削除"
-                style={style}
-                onClick={this.onDeleteClick}
-              />
-              <RaisedButton
-                label="登録"
-                type="submit"
-                style={style}
-                disabled={pristine || submitting || invalid}
-              />
+              <div>
+                <p><label>タグ</label></p>
+                <div>
+                  {
+                    this.props.consts.postTag && (
+                      _.map(this.props.consts.postTag.data, (e, index) => (
+                        <label key={`postTag${index}`}>
+                          <Field
+                            name="tagList.tagId"
+                            label={e.text}
+                            component={this.renderCheckbox}
+                            code={e.code}
+                            checked={memberPost && _.includes(_.map(memberPost.tagList, 'tagId'), e.code)}
+                            onChange={(event) => {
+                              if (event.target.checked) {
+                                this.props.memberPost.tagList.push({tagId: e.code});
+                              } else {
+                                this.props.memberPost.tagList = _.filter(memberPost.tagList, (tag) => tag.tagId != e.code);
+                              }
+                              // TODO 自動でレンダリングされないので回避
+                              this.forceUpdate();
+                            }}
+                            style={{width: '20px'}}
+                          />{' '}
+                        </label>
+                      ))
+                    )
+                  }
+                </div>
+              </div>
+              <div style={{margin: '20px 0'}}>
+                <RaisedButton
+                  label="キャンセル"
+                  style={style}
+                  containerElement={<Link to="/member">キャンセル</Link>}
+                />
+                <RaisedButton
+                  label="削除"
+                  style={style}
+                  onClick={this.onDeleteClick}
+                />
+                <RaisedButton
+                  label="登録"
+                  type="submit"
+                  style={style}
+                  disabled={submitting || invalid}
+                />
+              </div>
             </form>
           </div>
         </section>
@@ -174,14 +230,16 @@ const validate = (values) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const memberPost = state.memberPosts[ownProps.match.params.id];
+  const initial = state.memberPosts[ownProps.match.params.id];
+  const { memberShowForm } = state.form;
   return {
-    initialValues: memberPost,
-    memberPost
+    initialValues: initial,
+    memberPost: (memberShowForm) ? memberShowForm.values : initial,
+    consts: state.consts
   };
 };
 
-const mapDispatchToProps = { getMemberPost, deleteMemberPost, putMemberPost };
+const mapDispatchToProps = { readConst, getMemberPost, deleteMemberPost, putMemberPost };
 
 export default connect(
   mapStateToProps,

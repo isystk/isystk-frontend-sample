@@ -90,8 +90,8 @@ export class PostsShow extends React.Component<IProps, IState> {
                     <ul>
                     <li>タグ： </li>
                     {post && (
-                      _.map(post.tagNameList, (tagName, index) => (
-                        <li><a href="#" rel="tag" key={index}>{tagName}</a></li>
+                      _.map(post.tagList, (tag, index) => (
+                        <li><a href="#" rel="tag" key={index}>{tag.tagName}</a></li>
                       ))
                     )}
                     </ul>
