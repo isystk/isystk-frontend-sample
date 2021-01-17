@@ -1,14 +1,12 @@
-  isystk-frontend-sample
+  nextjs-typescript-sample
 ====
 
 ## Description
 
 ### 利用しているモジュール
 
-* Gulp4
+* Next.js
 * TypeScript4
-* Webpack5
-* ReactJS 16
 * Material-UI 4
 
 ## Demo
@@ -36,7 +34,7 @@ https://material-ui.com
 
 ## Licence
 
-[MIT](https://github.com/isystk/isystk-frontend-sample/LICENCE)
+[MIT](https://github.com/isystk/nextjs-typescript-sample/LICENCE)
 
 ## Author
 

@@ -2,6 +2,7 @@
 .github
 node_modules
 dist
+.nuxt
 coverage
 
 # Internals
@@ -11,6 +12,13 @@ internals
 stories
 tools
 
-# js vendor file with import/require
-public/assets/**
+# build file 
+out/**
+
+# static file 
+public/**
+
+# config file 
+.eslintrc.js
+next.config.js
 
