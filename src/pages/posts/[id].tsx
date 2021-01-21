@@ -134,9 +134,9 @@ const PostsShow = (props: IProps) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const posts = state.posts
+  const posts = state.posts;
   return {
-    post: posts ? posts : initialState,
+    post: posts ? posts[0] : initialState,
   }
 }
 

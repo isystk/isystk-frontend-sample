@@ -185,6 +185,8 @@ class MemberNew extends React.Component<IProps, IState> {
                                 (tag) => tag.tagId != e.code
                               )
                             }
+                            // TODO 自動でレンダリングされないので回避
+                            this.forceUpdate()
                           }}
                           style={{ width: '20px' }}
                         />{' '}
@@ -229,18 +231,16 @@ const validate = (values) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const initial = {
+    title: '',
+    text: '',
+    imageList: [],
+    tagList: [],
+  }
   const { memberNewForm } = state.form
-  const memberPost = memberNewForm
-    ? memberNewForm.values
-    : {
-        title: '',
-        text: '',
-        imageList: [],
-        tagList: [],
-      }
   return {
-    initialValues: memberPost,
-    memberPost,
+    initialValues: initial,
+    memberPost: memberNewForm ? memberNewForm.values : initial,
     consts: state.consts,
   }
 }
