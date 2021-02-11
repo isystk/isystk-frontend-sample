@@ -9,10 +9,10 @@ import Modal from '@/components/common/modal'
 import SnsShare from '@/components/common/sns_share'
 
 interface IProps {
-  readPosts
-  showMv
-  hideMv
-  posts
+  readPosts: Promise<void>
+  showMv: Promise<void>
+  hideMv: Promise<void>
+  posts: Promise<void>
 }
 
 const renderPosts = (props: IProps) => {

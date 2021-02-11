@@ -2,8 +2,8 @@ import * as React from 'react'
 
 // ↓ 表示用のデータ型
 interface IProps {
-  title
-  url
+  title: String
+  url: String
 }
 
 const SnsShare = ({ title, url }: IProps) => {

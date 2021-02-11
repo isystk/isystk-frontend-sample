@@ -8,9 +8,9 @@ import { URL } from '@/common/constants/url'
 import { toggleMenu, closeMenu, showOverlay } from '@/actions'
 
 interface IProps {
-  toggleMenu
-  closeMenu
-  showOverlay
+  toggleMenu: Promise<void>
+  closeMenu: Promise<void>
+  showOverlay: Promise<void>
 }
 interface IState {
   scrollTop: number

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
+import Link from 'next/link'
 import * as _ from 'lodash'
 import moment from 'moment'
 import {
@@ -43,7 +44,11 @@ class MemberIndex extends React.Component<IProps, IState> {
         {_.map(this.props.posts, (post) => {
           return (
             <TableRow key={post.postId}>
-              <TableRowColumn width="30px">{post.postId}</TableRowColumn>
+              <TableRowColumn width="30px">
+                <Link href={`${URL.POSTS}/${post.postId}`}>
+                  <a>{post.postId}</a>
+                </Link>
+              </TableRowColumn>
               <TableRowColumn width="100px">{post.title}</TableRowColumn>
               <TableRowColumn>
                 <div style={photoStyle as React.CSSProperties}>
@@ -62,7 +67,7 @@ class MemberIndex extends React.Component<IProps, IState> {
                     e.preventDefault()
                     Router.push(`${URL.MEMBER_POSTS}/p${post.postId}`)
                   }}
-                  value="詳細"
+                  value="修正"
                 />
               </TableRowColumn>
             </TableRow>

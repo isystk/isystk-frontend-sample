@@ -6,14 +6,14 @@ import { API } from '@/utilities'
 import { showLoading, hideLoading } from '@/actions'
 
 interface IProps {
-  imageList
-  fields
-  label
-  type
-  meta
-  setImageList
-  showLoading
-  hideLoading
+  imageList: Promise<void>
+  fields: Promise<void>
+  label: Promise<void>
+  type: Promise<void>
+  meta: Promise<void>
+  setImageList: Promise<void>
+  showLoading: Promise<void>
+  hideLoading: Promise<void>
 }
 
 interface IState {

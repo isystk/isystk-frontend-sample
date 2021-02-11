@@ -8,9 +8,7 @@ exports[`Logo 1`] = `
     href="https://localhost/"
   >
     <a>
-      <styled.h1>
-        Isystk's Frontend Sample
-      </styled.h1>
+      Isystk's Frontend Sample
     </a>
   </Link>
 </div>

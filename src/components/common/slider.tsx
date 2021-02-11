@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React, { ReactNode, useState, useEffect } from 'react'
 import Slider from 'react-slick'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 interface IProps {
-  children
+  children?: ReactNode
 }
 
 export const SimpleSlider = (props: IProps) => {

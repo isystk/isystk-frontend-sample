@@ -9,11 +9,11 @@ import Logo from '@/components/common/logo'
 import { toggleMenu, closeMenu, authLogout } from '@/actions'
 
 interface IProps {
-  auth
-  toggleMenu
-  closeMenu
-  authLogout
-  parts
+  auth: Promise<void>
+  toggleMenu: Promise<void>
+  closeMenu: Promise<void>
+  authLogout: Promise<void>
+  parts: Promise<void>
 }
 
 interface IState {}

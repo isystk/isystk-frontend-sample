@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Portal from './portal'
 
 interface IProps {
-  parts
-  hideOverlay
-  children
+  parts: Promise<void>
+  hideOverlay: Promise<void>
+  children: Promise<void>
 }
 
 const Modal = (props: IProps) => {
